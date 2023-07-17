@@ -24,20 +24,26 @@ public class UserController {
 
     @GetMapping("/users")
     public String getUsersList(Model model){
+        Integer a = 8;
         model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("page", a);
         return "users";
     }
     @GetMapping("/users/edit/{id}")
     public String editUser(@PathVariable Long id, Model model){
+        Integer c = 8;
         model.addAttribute("user",userService.getUserById(id));
         List<String> cities = List.of("Київ","Львів","Харків","Дніпро","Одеса");
         model.addAttribute("cities",cities);
+        model.addAttribute("pagenum", c);
         return "edit_user";
     }
     @PostMapping("/user/{id}")
     public String updateUser(@PathVariable Long id, @Valid @ModelAttribute("user") User user,  BindingResult bindingResult, Model model){
+        Integer d = 8;
         List<String> cities = List.of("Київ","Львів","Харків","Дніпро","Одеса");
         model.addAttribute("cities",cities);
+        model.addAttribute("pagenum", d);
         if (bindingResult.hasErrors()) {
             return "edit_user";
         }

@@ -60,7 +60,7 @@
 
 </head>
 <body>
-<aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all " th:fragment="sidebar">
+<aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all " th:fragment="sidebar(number)">
     <div class="sidebar-header d-flex align-items-center justify-content-start">
         <a href="../dashboard/index.html" class="navbar-brand">
             <!--Logo start-->
@@ -172,7 +172,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="https://templates.iqonic.design/hope-ui/html/dist/" target="_blank">
+                    <a th:class="'nav-link '+${number == 5 ? 'active' : ''}" aria-current="page" th:href="@{/news}" target="_self">
                         <i class="icon">
                             <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2Z" fill="currentColor"></path>
@@ -205,7 +205,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/users}" target="_selfg">
+                    <a th:class="'nav-link '+${number == 8 ? 'active' : ''}" aria-current="page" th:href="@{/users}" target="_self">
                         <i class="icon">
                             <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M11.9488 14.54C8.49884 14.54 5.58789 15.1038 5.58789 17.2795C5.58789 19.4562 8.51765 20.0001 11.9488 20.0001C15.3988 20.0001 18.3098 19.4364 18.3098 17.2606C18.3098 15.084 15.38 14.54 11.9488 14.54Z" fill="currentColor"></path>
