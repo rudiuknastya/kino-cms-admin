@@ -33,12 +33,13 @@ public class User {
     @Column(columnDefinition="VARCHAR(15) NOT NULL UNIQUE")
     private String password;
     @Column(name = "card_number", columnDefinition="VARCHAR(20) UNIQUE")
+    @Size(min=13, max=19, message = "Розмір поля має бути від 13 до 19 символів")
     private String cardNumber;
-    //@NotNull
     @Column(columnDefinition="ENUM('male','female') NOT NULL")
     private String sex;
     @NotEmpty(message = "Поле не може бути порожнім")
-    @Size(max=20, message = "Розмір поля має бути не більше 20 символів")
+    @Size(min=4,max=16, message = "Розмір поля має бути не менше 4 та не більше 15 символів")
+    @Pattern(regexp = "^\\+?[1-9][0-9]{4,15}$", message = "Невірний номер")
     @Column(name = "phone_number", columnDefinition="VARCHAR(20) NOT NULL UNIQUE")
     private String phoneNumber;
     @NotNull(message = "Поле не може бути порожнім")
