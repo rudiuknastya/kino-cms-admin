@@ -1,6 +1,11 @@
 package project.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -10,16 +15,23 @@ public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty(message = "Поле не може бути порожнім")
+    @Size(max=30, message = "Розмір поля має бути не більше 30 символів")
     @Column(columnDefinition="VARCHAR(30) NOT NULL")
     private String name;
+    @NotEmpty(message = "Поле не може бути порожнім")
     @Column(columnDefinition="TINYTEXT NOT NULL")
     private String description;
+    @Size(max=100, message = "Розмір поля має бути не більше 100 символів")
     @Column(name="video_link", columnDefinition="VARCHAR(100)")
     private String videoLink;
+    @NotNull(message = "Поле не може бути порожнім")
     @Column(name="publication_date", columnDefinition="DATE NOT NULL")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate publicationDate;
     @Column(columnDefinition="BOOLEAN NOT NULL")
     private Boolean status = true;
+    @Valid
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="seo_block")
     private SeoBlock seoBlock;

@@ -1,6 +1,8 @@
 package project.controller;
 
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,37 +19,38 @@ import java.util.List;
 @Controller
 public class UserController {
     private final UserService userService;
-
+    private Logger logger = LogManager.getLogger("serviceLogger");
+    private Integer num = 8;
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping("/users")
     public String getUsersList(Model model){
-        Integer a = 8;
         model.addAttribute("users", userService.getAllUsers());
-        model.addAttribute("page", a);
-        return "users";
+        logger.info("Got all users");
+        model.addAttribute("page", num);
+        return "user/users";
     }
     @GetMapping("/users/edit/{id}")
     public String editUser(@PathVariable Long id, Model model){
-        Integer c = 8;
         model.addAttribute("user",userService.getUserById(id));
+        logger.info("Got user by id "+id+" for editing");
         List<String> cities = List.of("Київ","Львів","Харків","Дніпро","Одеса");
         model.addAttribute("cities",cities);
-        model.addAttribute("pagenum", c);
-        return "edit_user";
+        model.addAttribute("pagenum", num);
+        return "user/edit_user";
     }
     @PostMapping("/user/{id}")
     public String updateUser(@PathVariable Long id, @Valid @ModelAttribute("user") User user,  BindingResult bindingResult, Model model){
-        Integer d = 8;
         List<String> cities = List.of("Київ","Львів","Харків","Дніпро","Одеса");
         model.addAttribute("cities",cities);
-        model.addAttribute("pagenum", d);
+        model.addAttribute("pagenum", num);
         if (bindingResult.hasErrors()) {
-            return "edit_user";
+            return "user/edit_user";
         }
         User userInDB = userService.getUserById(id);
+        logger.info("Got user by id "+id+" for updating. First name: "+ userInDB.getFirstName());
         userInDB.setFirstName(user.getFirstName());
         userInDB.setLastName(user.getLastName());
         userInDB.setPseudonym(user.getPseudonym());
@@ -61,11 +64,13 @@ public class UserController {
         userInDB.setAddress(user.getAddress());
         userInDB.setLanguage(user.getLanguage());
         userService.updateUser(userInDB);
+        logger.info("Updated user");
         return "redirect:/users";
     }
     @GetMapping("/users/delete/{id}")
     public String deleteUser(@PathVariable Long id){
         userService.deleteUserById(id);
+        logger.info("Deleted user with id "+id);
         return "redirect:/users";
     }
 }
