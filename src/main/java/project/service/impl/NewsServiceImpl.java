@@ -20,4 +20,13 @@ public class NewsServiceImpl implements NewsService {
     public News saveNews(News news) {
         return newsRepository.save(news);
     }
+    @Override
+    public News getNewById(Long id) {
+        return newsRepository.findById(id).get();
+    }
+
+    @Override
+    public News updateNews(News news) {
+        return newsRepository.save(news);
+    }
 }

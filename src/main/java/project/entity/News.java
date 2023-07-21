@@ -33,10 +33,10 @@ public class News {
     private Boolean status = true;
     @Valid
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="seo_block")
+    @JoinColumn(name="seo_block_id", referencedColumnName = "id")
     private SeoBlock seoBlock;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="image_gallery")
+    @JoinColumn(name="image_gallery_id", referencedColumnName = "id")
     private Gallery imageGallery;
 
     public Long getId() {
