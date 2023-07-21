@@ -6,7 +6,7 @@
 </head>
 <body>
 <div th:fragment="form(obj, link)">
-    <form th:action = "@{/{l}/{id} (id=${object.id}, l=${link})}" th:object = "${object}" method="post" enctype="multipart/form-data" class="row g-3" style="color:black;">
+    <form th:action = "@{/admin/{l}/{id} (id=${object.id}, l=${link})}" th:object = "${object}" method="post" enctype="multipart/form-data" class="row g-3" style="color:black;">
         <div class="col-md-6" >
             <label for="inputName" class="form-label">Назва новини</label>
             <input type="text" class="form-control" id="inputName"  th:field = "*{name}">

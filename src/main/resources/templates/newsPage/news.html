@@ -12,7 +12,7 @@
           <div class="card-header ">
             <div class="header-title row justify-content-between">
               <h4 class="card-title col-4" style="color:black;">Новини</h4>
-              <a th:href="@{news/new}" type="button" class="btn btn-soft-primary col-3" ><i class="bi bi-plus-lg"></i> Створити новину</a>
+              <a th:href="@{/admin/news/new}" type="button" class="btn btn-soft-primary col-3" ><i class="bi bi-plus-lg"></i> Створити новину</a>
             </div>
           </div>
           <div class="card-body">
@@ -32,8 +32,8 @@
       <td th:text = "${showNew.publicationDate}"></td>
       <td th:text = "${showNew.status}"></td>
       <td>
-        <a th:href="@{news/edit/{id}(id=${showNew.id})}" role="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
-        <a th:href="@{news/delete/{id}(id=${showNew.id})}" role="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
+        <a th:href="@{/admin/news/edit/{id}(id=${showNew.id})}" role="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
+        <a th:href="@{/admin/news/delete/{id}(id=${showNew.id})}" role="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
       </td>
     </tr>
     </tbody>

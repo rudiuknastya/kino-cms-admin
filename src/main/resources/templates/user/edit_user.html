@@ -10,7 +10,7 @@
       <div class="col-sm-12">
   <div class="card">
   <div class="card-body">
-  <form th:action = "@{/user/{id} (id=${user.id})}" th:object = "${user}" method="post" class="row g-3" style="color:black;">
+  <form th:action = "@{/admin/user/{id} (id=${user.id})}" th:object = "${user}" method="post" class="row g-3" style="color:black;">
     <div class="col-md-6" >
       <label for="inputName" class="form-label">Імя</label>
       <input type="text" class="form-control" id="inputName"  th:field = "*{firstName}">

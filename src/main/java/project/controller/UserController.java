@@ -25,14 +25,14 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/users")
+    @GetMapping("/admin/users")
     public String getUsersList(Model model){
         model.addAttribute("users", userService.getAllUsers());
         logger.info("Got all users");
         model.addAttribute("page", num);
         return "user/users";
     }
-    @GetMapping("/users/edit/{id}")
+    @GetMapping("/admin/users/edit/{id}")
     public String editUser(@PathVariable Long id, Model model){
         model.addAttribute("user",userService.getUserById(id));
         logger.info("Got user by id "+id+" for editing");
@@ -41,7 +41,7 @@ public class UserController {
         model.addAttribute("pagenum", num);
         return "user/edit_user";
     }
-    @PostMapping("/user/{id}")
+    @PostMapping("/admin/user/{id}")
     public String updateUser(@PathVariable Long id, @Valid @ModelAttribute("user") User user,  BindingResult bindingResult, Model model){
         List<String> cities = List.of("Київ","Львів","Харків","Дніпро","Одеса");
         model.addAttribute("cities",cities);
@@ -65,12 +65,12 @@ public class UserController {
         userInDB.setLanguage(user.getLanguage());
         userService.updateUser(userInDB);
         logger.info("Updated user");
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
-    @GetMapping("/users/delete/{id}")
+    @GetMapping("/admin/users/delete/{id}")
     public String deleteUser(@PathVariable Long id){
         userService.deleteUserById(id);
         logger.info("Deleted user with id "+id);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 }

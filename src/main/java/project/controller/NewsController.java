@@ -32,21 +32,21 @@ public class NewsController {
     private Integer n = 5;
     private String l = "news";
     private Logger logger = LogManager.getLogger("serviceLogger");
-    @GetMapping("/news")
+    @GetMapping("/admin/news")
     public String getNewsList(Model model){
         model.addAttribute("newsList", newsService.getAllNews());
         logger.info("Got all news");
         model.addAttribute("pagen", n);
         return "newsPage/news";
     }
-    @GetMapping("/news/delete/{id}")
+    @GetMapping("/admin/news/delete/{id}")
     public String deleteNews(@PathVariable Long id){
         newsService.deleteNewsById(id);
         logger.info("Deleted user with id "+id);
-        return "redirect:/news";
+        return "redirect:/admin/news";
     }
 
-    @GetMapping("/news/edit/{id}")
+    @GetMapping("/admin/news/edit/{id}")
     public String editNews(@PathVariable Long id, Model model){
         String ln = "news";
         model.addAttribute("object",newsService.getNewById(id));
@@ -55,7 +55,7 @@ public class NewsController {
         model.addAttribute("pageNm", n);
         return "newsPage/edit_news";
     }
-    @PostMapping("/news/{id}")
+    @PostMapping("/admin/news/{id}")
     public String updateNews(@PathVariable("id") Long id,@Valid @ModelAttribute("object") News news, BindingResult bindingResult,
                            @RequestParam("mainImage")MultipartFile mainImage, @RequestParam("mainImageName")String mainImageName,
                            @RequestParam("image1")MultipartFile image1, @RequestParam("image1Name")String image1Name,
@@ -88,11 +88,11 @@ public class NewsController {
         newsInDB.getSeoBlock().setDescription(news.getSeoBlock().getDescription());
         newsService.updateNews(newsInDB);
         logger.info("Updated news");
-        return "redirect:/news";
+        return "redirect:/admin/news";
     }
 
 
-    @GetMapping("/news/new")
+    @GetMapping("/admin/news/new")
     public String createNews(Model model){
         News news = new News();
         logger.info("Created new empty news");
@@ -101,7 +101,7 @@ public class NewsController {
         model.addAttribute("pageN", n);
         return "newsPage/add_news";
     }
-    @PostMapping("/news/new")
+    @PostMapping("/admin/news/new")
     public String saveNews(@Valid @ModelAttribute("object") News news, BindingResult bindingResult,
                            @RequestParam("mainImage")MultipartFile mainImage, @RequestParam("image1")MultipartFile image1,
                            @RequestParam("image2")MultipartFile image2,@RequestParam("image3")MultipartFile image3,
@@ -119,7 +119,7 @@ public class NewsController {
         addImage(image4,"image4", news);
         addImage(image5,"image5", news);
         newsService.saveNews(news);
-        return "redirect:/news";
+        return "redirect:/admin/news";
     }
 
     private void addImage(MultipartFile image,String fileName, News news) {
