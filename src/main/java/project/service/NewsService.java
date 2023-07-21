@@ -8,4 +8,5 @@ public interface NewsService {
     News saveNews(News news);
     News getNewById(Long id);
     News updateNews(News news);
+    void deleteNewsById(Long id);
 }

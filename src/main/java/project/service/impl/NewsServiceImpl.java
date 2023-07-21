@@ -29,4 +29,9 @@ public class NewsServiceImpl implements NewsService {
     public News updateNews(News news) {
         return newsRepository.save(news);
     }
+
+    @Override
+    public void deleteNewsById(Long id) {
+        newsRepository.deleteById(id);
+    }
 }

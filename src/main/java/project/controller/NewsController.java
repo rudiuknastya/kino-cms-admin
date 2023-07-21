@@ -33,15 +33,21 @@ public class NewsController {
     private String l = "news";
     private Logger logger = LogManager.getLogger("serviceLogger");
     @GetMapping("/news")
-    public String getUsersList(Model model){
+    public String getNewsList(Model model){
         model.addAttribute("newsList", newsService.getAllNews());
         logger.info("Got all news");
         model.addAttribute("pagen", n);
         return "newsPage/news";
     }
+    @GetMapping("/news/delete/{id}")
+    public String deleteNews(@PathVariable Long id){
+        newsService.deleteNewsById(id);
+        logger.info("Deleted user with id "+id);
+        return "redirect:/news";
+    }
 
     @GetMapping("/news/edit/{id}")
-    public String editUser(@PathVariable Long id, Model model){
+    public String editNews(@PathVariable Long id, Model model){
         String ln = "news";
         model.addAttribute("object",newsService.getNewById(id));
         logger.info("Got news by id "+id+" for editing");
@@ -50,7 +56,7 @@ public class NewsController {
         return "newsPage/edit_news";
     }
     @PostMapping("/news/{id}")
-    public String editNews(@PathVariable("id") Long id,@Valid @ModelAttribute("object") News news, BindingResult bindingResult,
+    public String updateNews(@PathVariable("id") Long id,@Valid @ModelAttribute("object") News news, BindingResult bindingResult,
                            @RequestParam("mainImage")MultipartFile mainImage, @RequestParam("mainImageName")String mainImageName,
                            @RequestParam("image1")MultipartFile image1, @RequestParam("image1Name")String image1Name,
                            @RequestParam("image2")MultipartFile image2, @RequestParam("image2Name")String image2Name,
@@ -64,8 +70,7 @@ public class NewsController {
             model.addAttribute("pageNm", n);
             return "newsPage/edit_news";
         }
-        //News newsInDB = newsService.getNewById(id);
-        logger.info(mainImageName);
+        logger.info("Got news with id "+id+" for updating");
         editImage(mainImage,"mainImage", newsInDB, mainImageName);
         editImage(image1,"image1", newsInDB, image1Name);
         editImage(image2,"image2", newsInDB, image2Name);
@@ -82,6 +87,7 @@ public class NewsController {
         newsInDB.getSeoBlock().setKeywords(news.getSeoBlock().getKeywords());
         newsInDB.getSeoBlock().setDescription(news.getSeoBlock().getDescription());
         newsService.updateNews(newsInDB);
+        logger.info("Updated news");
         return "redirect:/news";
     }
 
