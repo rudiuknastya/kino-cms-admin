@@ -29,7 +29,7 @@
     <tbody>
     <tr th:each = "showNew: ${newsList}">
       <td th:text = "${showNew.name}"></td>
-      <td th:text = "${showNew.publicationDate}"></td>
+      <td th:text = "${#temporals.format(showNew.publicationDate, 'dd-MM-yyyy')}"></td>
       <td th:text = "${showNew.status}"></td>
       <td>
         <a th:href="@{/admin/news/edit/{id}(id=${showNew.id})}" role="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>

@@ -13,13 +13,14 @@
         <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
     </div>
     <div class="col-md-6">
-        <label for="publicationDate" class="form-label">Дата публікації</label>
-        <input id="publicationDate" class="form-control" type="date" min="1923-01-01"  th:field = "*{publicationDate}" th:value="${publicationDate}">
+        <label for="publDate" class="form-label">Дата публікації</label>
+        <input id="publDate" class="form-control" type="date"  th:field = "*{publicationDate}">
         <div class="text-danger" th:if="${#fields.hasErrors('publicationDate')}" th:errors="*{publicationDate}"> </div>
     </div>
     <div>
         <label for="exampleFormControlTextarea1" class="form-label">Опис</label>
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" th:field = "*{description}"></textarea>
+        <div class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"> </div>
     </div>
 
     <div class="row g-3 align-items-center">
@@ -114,7 +115,7 @@
             <label for="inputSeoKeywords" class="form-label text-center">Keywords:</label>
         </div>
         <div class="col-md-6">
-            <input type="text" class="form-control" id="inputSeoKeywords"  th:field = "*{seoBlock.keywords}" name="keywords">
+            <input type="text" class="form-control" id="inputSeoKeywords"  th:field = "*{seoBlock.keywords}">
         </div>
     </div>
     <div class="row align-items-center justify-content-center my-2">
@@ -122,7 +123,7 @@
             <label for="inputSeoDescription" class="form-label">Description:</label>
         </div>
         <div class="col-7">
-            <textarea class="form-control" id="inputSeoDescription" rows="3"  th:field = "*{seoBlock.description}" name="description"></textarea>
+            <textarea class="form-control" id="inputSeoDescription" rows="3"  th:field = "*{seoBlock.description}"></textarea>
             <div class="text-danger" th:if="${#fields.hasErrors('seoBlock.description')}" th:errors="*{seoBlock.description}"></div>
         </div>
     </div>
@@ -130,6 +131,17 @@
         <button type="submit" class="btn btn-primary">Зберегти</button>
     </div>
 </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+    $('#publDate').val(new Date().toJSON().slice(0,10));
+    </script>
+    <script type="text/javascript">
+    window.onload=function(){
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementById('publDate').setAttribute('min', today);
+    document.getElementById('publDate').setAttribute('max', today);
+    }
+      </script>
 </div>
 </body>
 </html>

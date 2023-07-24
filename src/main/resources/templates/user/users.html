@@ -35,7 +35,7 @@
                 <tr th:each = "user: ${users}">
                     <td th:text = "${user.id}"></td>
                     <td th:text = "${user.registrationDate}"></td>
-                    <td th:text = "${user.birthDate}"></td>
+                    <td th:text = "${#temporals.format(user.birthDate, 'dd-MM-yyyy')}"></td>
                     <td th:text = "${user.email}"></td>
                     <td th:text = "${user.phoneNumber}"></td>
                     <td th:text = "${user.firstName + ' '+user.lastName}"></td>
