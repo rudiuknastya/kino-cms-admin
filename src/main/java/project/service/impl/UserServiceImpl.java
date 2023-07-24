@@ -1,5 +1,7 @@
 package project.service.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import project.entity.User;
 import project.service.UserService;
@@ -14,24 +16,36 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+    private Logger logger = LogManager.getLogger("serviceLogger");
 
     @Override
     public List<User> getAllUsers() {
-        return  userRepository.findAll();
+        logger.info("getAllUsers() - Finding all users");
+        List<User> users = userRepository.findAll();
+        logger.info("getAllUsers() - All users were found");
+        return users;
     }
 
     @Override
     public User updateUser(User user) {
-        return userRepository.save(user);
+        logger.info("updateUser() - Updating user");
+        User userSaved = userRepository.save(user);
+        logger.info("updateUser() - User was updated");
+        return userSaved;
     }
 
     @Override
     public User getUserById(Long id) {
-        return userRepository.findById(id).get();
+        logger.info("getUserById() - Finding user by id "+id);
+        User foundUser = userRepository.findById(id).get();
+        logger.info("getUserById() - User was found");
+        return foundUser;
     }
 
     @Override
     public void deleteUserById(Long id) {
+        logger.info("deleteUserById() - Deleting user by id "+id);
         userRepository.deleteById(id);
+        logger.info("getUserById() - User was deleted");
     }
 }

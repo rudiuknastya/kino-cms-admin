@@ -31,18 +31,15 @@ public class NewsController {
     }
     private Integer n = 5;
     private String l = "news";
-    private Logger logger = LogManager.getLogger("serviceLogger");
     @GetMapping("/admin/news")
     public String getNewsList(Model model){
         model.addAttribute("newsList", newsService.getAllNews());
-        logger.info("Got all news");
         model.addAttribute("pagen", n);
         return "newsPage/news";
     }
     @GetMapping("/admin/news/delete/{id}")
     public String deleteNews(@PathVariable Long id){
         newsService.deleteNewsById(id);
-        logger.info("Deleted user with id "+id);
         return "redirect:/admin/news";
     }
 
@@ -50,7 +47,6 @@ public class NewsController {
     public String editNews(@PathVariable Long id, Model model){
         String ln = "news";
         model.addAttribute("object",newsService.getNewById(id));
-        logger.info("Got news by id "+id+" for editing");
         model.addAttribute("lin",l);
         model.addAttribute("pageNm", n);
         return "newsPage/edit_news";
@@ -68,9 +64,9 @@ public class NewsController {
         news.setImageGallery(newsInDB.getImageGallery());
         if (bindingResult.hasErrors()) {
             model.addAttribute("pageNm", n);
+            model.addAttribute("lin",l);
             return "newsPage/edit_news";
         }
-        logger.info("Got news with id "+id+" for updating");
         editImage(mainImage,"mainImage", newsInDB, mainImageName);
         editImage(image1,"image1", newsInDB, image1Name);
         editImage(image2,"image2", newsInDB, image2Name);
@@ -87,7 +83,6 @@ public class NewsController {
         newsInDB.getSeoBlock().setKeywords(news.getSeoBlock().getKeywords());
         newsInDB.getSeoBlock().setDescription(news.getSeoBlock().getDescription());
         newsService.updateNews(newsInDB);
-        logger.info("Updated news");
         return "redirect:/admin/news";
     }
 
@@ -95,7 +90,6 @@ public class NewsController {
     @GetMapping("/admin/news/new")
     public String createNews(Model model){
         News news = new News();
-        logger.info("Created new empty news");
         model.addAttribute("object", news);
         model.addAttribute("lin", l);
         model.addAttribute("pageN", n);
@@ -108,10 +102,10 @@ public class NewsController {
                            @RequestParam("image4")MultipartFile image4,@RequestParam("image5")MultipartFile image5, Model model) throws IOException {
         if (bindingResult.hasErrors()) {
             model.addAttribute("pageN", n);
+            model.addAttribute("lin", l);
             return "newsPage/add_news";
         }
         news.setImageGallery(new Gallery());
-        logger.info("Created new empty gallery");
         addImage(mainImage,"mainImage", news);
         addImage(image1,"image1", news);
         addImage(image2,"image2", news);
@@ -123,7 +117,6 @@ public class NewsController {
     }
 
     private void addImage(MultipartFile image,String fileName, News news) {
-        logger.info("file name: |"+image.getOriginalFilename()+"|");
         if(image != null && !image.getOriginalFilename().equals("")){
             File uploadDir = new File(uploadPath);
             if(!uploadDir.exists()){
@@ -134,34 +127,27 @@ public class NewsController {
             switch(fileName){
                 case "mainImage":
                     news.getImageGallery().setMainImage(uniqueName);
-                    logger.info("Added mainImage to gallery. Image name: "+uniqueName);
                     break;
                 case "image1":
                     news.getImageGallery().setImage1(uniqueName);
-                    logger.info("Added image1 to gallery. Image name: "+uniqueName);
                     break;
                 case "image2":
                     news.getImageGallery().setImage2(uniqueName);
-                    logger.info("Added image2 to gallery. Image name: "+uniqueName);
                     break;
                 case "image3":
                     news.getImageGallery().setImage3(uniqueName);
-                    logger.info("Added image3 to gallery. Image name: "+uniqueName);
                     break;
                 case "image4":
                     news.getImageGallery().setImage4(uniqueName);
-                    logger.info("Added image4 to gallery. Image name: "+uniqueName);
                     break;
                 case "image5":
                     news.getImageGallery().setImage5(uniqueName);
-                    logger.info("Added image5 to gallery. Image name: "+uniqueName);
                     break;
             }
             Path path = Paths.get(uploadPath+"/"+uniqueName);
             try {
                 image.transferTo(new File(path.toUri()));
             } catch (IOException e) {
-                logger.error(e.getMessage());
             }
         }
     }
@@ -174,14 +160,14 @@ public class NewsController {
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile+"."+image.getOriginalFilename();
                     news.getImageGallery().setMainImage(uniqueName);
-                    logger.info("Added mainImage to gallery. Image name: " + uniqueName);
                     Path path = Paths.get(uploadPath+"/"+uniqueName);
                     try {
                         image.transferTo(new File(path.toUri()));
                     } catch (IOException e) {
-                        logger.error(e.getMessage());
                     }
                 } else if(image.getOriginalFilename().equals("") && name.equals("")){
+                    File file = new File(uploadPath+"/"+news.getImageGallery().getMainImage());
+                    file.delete();
                     news.getImageGallery().setMainImage(null);
                 }
                 break;
@@ -190,14 +176,14 @@ public class NewsController {
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile + "." + image.getOriginalFilename();
                     news.getImageGallery().setImage1(uniqueName);
-                    logger.info("Added image1 to gallery. Image name: " + uniqueName);
                     Path path = Paths.get(uploadPath+"/"+uniqueName);
                     try {
                         image.transferTo(new File(path.toUri()));
                     } catch (IOException e) {
-                        logger.error(e.getMessage());
                     }
                 }else if(image.getOriginalFilename().equals("") && name.equals("")){
+                    File file = new File(uploadPath+"/"+news.getImageGallery().getImage1());
+                    file.delete();
                     news.getImageGallery().setImage1(null);
                 }
                 break;
@@ -206,15 +192,16 @@ public class NewsController {
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile + "." + image.getOriginalFilename();
                     news.getImageGallery().setImage2(uniqueName);
-                    logger.info("Added image2 to gallery. Image name: " + uniqueName);
                     Path path = Paths.get(uploadPath+"/"+uniqueName);
                     try {
                         image.transferTo(new File(path.toUri()));
                     } catch (IOException e) {
-                        logger.error(e.getMessage());
                     }
                 }else if(image.getOriginalFilename().equals("") && name.equals("")){
+                    File file = new File(uploadPath+"/"+news.getImageGallery().getImage2());
+                    file.delete();
                     news.getImageGallery().setImage2(null);
+
                 }
                 break;
             case "image3":
@@ -222,14 +209,14 @@ public class NewsController {
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile + "." + image.getOriginalFilename();
                     news.getImageGallery().setImage3(uniqueName);
-                    logger.info("Added image3 to gallery. Image name: " + uniqueName);
                     Path path = Paths.get(uploadPath+"/"+uniqueName);
                     try {
                         image.transferTo(new File(path.toUri()));
                     } catch (IOException e) {
-                        logger.error(e.getMessage());
                     }
                 }else if(image.getOriginalFilename().equals("") && name.equals("")){
+                    File file = new File(uploadPath+"/"+news.getImageGallery().getImage3());
+                    file.delete();
                     news.getImageGallery().setImage3(null);
                 }
                 break;
@@ -238,14 +225,14 @@ public class NewsController {
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile + "." + image.getOriginalFilename();
                     news.getImageGallery().setImage4(uniqueName);
-                    logger.info("Added image4 to gallery. Image name: " + uniqueName);
                     Path path = Paths.get(uploadPath+"/"+uniqueName);
                     try {
                         image.transferTo(new File(path.toUri()));
                     } catch (IOException e) {
-                        logger.error(e.getMessage());
                     }
                 }else if(image.getOriginalFilename().equals("") && name.equals("")){
+                    File file = new File(uploadPath+"/"+news.getImageGallery().getImage4());
+                    file.delete();
                     news.getImageGallery().setImage4(null);
                 }
                 break;
@@ -254,15 +241,15 @@ public class NewsController {
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile + "." + image.getOriginalFilename();
                     news.getImageGallery().setImage5(uniqueName);
-                    logger.info("Added image5 to gallery. Image name: " + uniqueName);
                     Path path = Paths.get(uploadPath+"/"+uniqueName);
                     try {
                         image.transferTo(new File(path.toUri()));
                     } catch (IOException e) {
-                        logger.error(e.getMessage());
                     }
                 }
                 else if(image.getOriginalFilename().equals("") && name.equals("")){
+                    File file = new File(uploadPath+"/"+news.getImageGallery().getImage5());
+                    file.delete();
                     news.getImageGallery().setImage5(null);
                 }
                 break;
