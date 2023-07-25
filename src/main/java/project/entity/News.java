@@ -30,7 +30,7 @@ public class News {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate publicationDate;
     @Column(columnDefinition="BOOLEAN NOT NULL")
-    private Boolean status = true;
+    private Boolean status;
     @Valid
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="seo_block_id", referencedColumnName = "id")
