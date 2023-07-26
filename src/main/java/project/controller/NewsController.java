@@ -39,6 +39,8 @@ public class NewsController {
     }
     @GetMapping("/admin/news/delete/{id}")
     public String deleteNews(@PathVariable Long id){
+        News news = newsService.getNewById(id);
+        deleteImages(news);
         newsService.deleteNewsById(id);
         return "redirect:/admin/news";
     }
@@ -253,6 +255,32 @@ public class NewsController {
                     news.getImageGallery().setImage5(null);
                 }
                 break;
+        }
+    }
+    private void deleteImages(News news){
+        if(news.getImageGallery().getMainImage() != null){
+            File file = new File(uploadPath+"/"+news.getImageGallery().getMainImage());
+            file.delete();
+        }
+        if(news.getImageGallery().getImage1() != null){
+            File file = new File(uploadPath+"/"+news.getImageGallery().getImage1());
+            file.delete();
+        }
+        if(news.getImageGallery().getImage2() != null){
+            File file = new File(uploadPath+"/"+news.getImageGallery().getImage2());
+            file.delete();
+        }
+        if(news.getImageGallery().getImage3() != null){
+            File file = new File(uploadPath+"/"+news.getImageGallery().getImage3());
+            file.delete();
+        }
+        if(news.getImageGallery().getImage4() != null){
+            File file = new File(uploadPath+"/"+news.getImageGallery().getImage4());
+            file.delete();
+        }
+        if(news.getImageGallery().getImage5() != null){
+            File file = new File(uploadPath+"/"+news.getImageGallery().getImage5());
+            file.delete();
         }
     }
 }
