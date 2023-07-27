@@ -30,7 +30,7 @@ public class NewsController {
         this.newsService = newsService;
     }
     private Integer n = 5;
-    private String l = "news";
+    //private String l = "news";
     @GetMapping("/admin/news")
     public String getNewsList(Model model){
         model.addAttribute("newsList", newsService.getAllNews());
@@ -47,7 +47,7 @@ public class NewsController {
 
     @GetMapping("/admin/news/edit/{id}")
     public String editNews(@PathVariable Long id, Model model){
-        String ln = "news";
+        String l ="news/"+id;
         model.addAttribute("object",newsService.getNewById(id));
         model.addAttribute("lin",l);
         model.addAttribute("pageNm", n);
@@ -63,19 +63,20 @@ public class NewsController {
                            @RequestParam("image5")MultipartFile image5, @RequestParam("image5Name")String image5Name,
                            Model model) throws IOException {
         News newsInDB = newsService.getNewById(id);
+        saveImage(mainImage,"mainImage", newsInDB, mainImageName);
+        saveImage(image1,"image1", newsInDB, image1Name);
+        saveImage(image2,"image2", newsInDB, image2Name);
+        saveImage(image3,"image3", newsInDB, image3Name);
+        saveImage(image4,"image4", newsInDB, image4Name);
+        saveImage(image5,"image5", newsInDB, image5Name);
         news.setImageGallery(newsInDB.getImageGallery());
         if (bindingResult.hasErrors()) {
+            String l ="news/"+id;
+            model.addAttribute("object",news);
             model.addAttribute("pageNm", n);
             model.addAttribute("lin",l);
             return "newsPage/edit_news";
         }
-        editImage(mainImage,"mainImage", newsInDB, mainImageName);
-        editImage(image1,"image1", newsInDB, image1Name);
-        editImage(image2,"image2", newsInDB, image2Name);
-        editImage(image3,"image3", newsInDB, image3Name);
-        editImage(image4,"image4", newsInDB, image4Name);
-        editImage(image5,"image5", newsInDB, image5Name);
-
         newsInDB.setName(news.getName());
         newsInDB.setDescription(news.getDescription());
         newsInDB.setVideoLink(news.getVideoLink());
@@ -92,6 +93,8 @@ public class NewsController {
     @GetMapping("/admin/news/new")
     public String createNews(Model model){
         News news = new News();
+        news.setImageGallery(new Gallery());
+        String l ="news/new";
         model.addAttribute("object", news);
         model.addAttribute("lin", l);
         model.addAttribute("pageN", n);
@@ -99,62 +102,30 @@ public class NewsController {
     }
     @PostMapping("/admin/news/new")
     public String saveNews(@Valid @ModelAttribute("object") News news, BindingResult bindingResult,
-                           @RequestParam("mainImage")MultipartFile mainImage, @RequestParam("image1")MultipartFile image1,
-                           @RequestParam("image2")MultipartFile image2,@RequestParam("image3")MultipartFile image3,
-                           @RequestParam("image4")MultipartFile image4,@RequestParam("image5")MultipartFile image5, Model model) throws IOException {
+                           @RequestParam("mainImage")MultipartFile mainImage, @RequestParam("mainImageName")String mainImageName,
+                           @RequestParam("image1")MultipartFile image1, @RequestParam("image1Name")String image1Name,
+                           @RequestParam("image2")MultipartFile image2, @RequestParam("image2Name")String image2Name,
+                           @RequestParam("image3")MultipartFile image3, @RequestParam("image3Name")String image3Name,
+                           @RequestParam("image4")MultipartFile image4, @RequestParam("image4Name")String image4Name,
+                           @RequestParam("image5")MultipartFile image5, @RequestParam("image5Name")String image5Name,
+                           Model model) throws IOException {
+        news.setImageGallery(new Gallery());
+        saveImage(mainImage,"mainImage", news, mainImageName);
+        saveImage(image1,"image1", news, image1Name);
+        saveImage(image2,"image2", news, image2Name);
+        saveImage(image3,"image3", news, image3Name);
+        saveImage(image4,"image4", news, image4Name);
+        saveImage(image5,"image5", news, image5Name);
         if (bindingResult.hasErrors()) {
+            String l ="news/new";
             model.addAttribute("pageN", n);
             model.addAttribute("lin", l);
             return "newsPage/add_news";
         }
-        news.setImageGallery(new Gallery());
-        addImage(mainImage,"mainImage", news);
-        addImage(image1,"image1", news);
-        addImage(image2,"image2", news);
-        addImage(image3,"image3", news);
-        addImage(image4,"image4", news);
-        addImage(image5,"image5", news);
         newsService.saveNews(news);
         return "redirect:/admin/news";
     }
-
-    private void addImage(MultipartFile image,String fileName, News news) {
-        if(image != null && !image.getOriginalFilename().equals("")){
-            File uploadDir = new File(uploadPath);
-            if(!uploadDir.exists()){
-                uploadDir.mkdir();
-            }
-            String uuidFile = UUID.randomUUID().toString();
-            String uniqueName = uuidFile+"."+image.getOriginalFilename();
-            switch(fileName){
-                case "mainImage":
-                    news.getImageGallery().setMainImage(uniqueName);
-                    break;
-                case "image1":
-                    news.getImageGallery().setImage1(uniqueName);
-                    break;
-                case "image2":
-                    news.getImageGallery().setImage2(uniqueName);
-                    break;
-                case "image3":
-                    news.getImageGallery().setImage3(uniqueName);
-                    break;
-                case "image4":
-                    news.getImageGallery().setImage4(uniqueName);
-                    break;
-                case "image5":
-                    news.getImageGallery().setImage5(uniqueName);
-                    break;
-            }
-            Path path = Paths.get(uploadPath+"/"+uniqueName);
-            try {
-                image.transferTo(new File(path.toUri()));
-            } catch (IOException e) {
-            }
-        }
-    }
-
-    private void editImage(MultipartFile image,String fileName, News news, String name){
+    private void saveImage(MultipartFile image,String fileName, News news, String name){
 
         switch(fileName){
             case "mainImage":

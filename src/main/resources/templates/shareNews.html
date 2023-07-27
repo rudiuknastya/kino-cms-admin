@@ -6,13 +6,13 @@
 </head>
 <body>
 <div th:fragment="form(obj, link)">
-<form th:action = "@{/admin/{l}/new (l=${link})}" th:object = "${object}" method="post" enctype="multipart/form-data" class="row g-3" style="color:black;">
+<form th:action = "@{/admin/{l} (l=${link})}" th:object = "${object}" method="post" enctype="multipart/form-data" class="row g-3" style="color:black;">
     <div class="form-check form-switch d-flex justify-content-end">
         <input class="form-check-input mx-1" type="checkbox" role="switch" id="flexSwitchCheckDefault" th:field = "*{status}">
         <label class="form-check-label" for="flexSwitchCheckDefault"> Увімкнути</label>
     </div>
     <div class="col-md-6" >
-        <label for="inputName" class="form-label">Назва новини</label>
+        <label for="inputName" class="form-label">Назва</label>
         <input type="text" class="form-control" id="inputName"  th:field = "*{name}">
         <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
     </div>
@@ -32,14 +32,15 @@
             <label class="col-form-label" for="inputMainImage" style="color:black;">Головна картинка</label>
         </div>
         <div class="col-auto">
-            <img th:src="@{https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg}" style="width:150px; height:150px;" id="main_image">
+            <img th:src="*{imageGallery?.mainImage} != null? @{'/uploads/'+ *{imageGallery?.mainImage}}: @{'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'}" style="width:150px; height:150px;" id="main_image">
             <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="inputMainImage" onchange="main_image.src=window.URL.createObjectURL(this.files[0])" name="mainImage">
         </div>
         <div class="col-auto">
             <label class="input-group-text col-form-label" for="inputMainImage" style="color:black;">Завантажити</label>
+            <input type="text" class="d-none"  th:value = "*{imageGallery?.mainImage}" id="mainImageName" name="mainImageName">
         </div>
         <div class="col-auto">
-            <button type="button" class="btn btn-outline-danger" onclick="main_image.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; inputMainImage.value = '';">Видалити</button>
+            <button type="button" class="btn btn-outline-danger" onclick="main_image.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; inputMainImage.value = ''; mainImageName.value = ''">Видалити</button>
         </div>
     </div>
     <label class="col-form-label" for="inputSeoTitle" style="color:black;">Галерея картинок</label>
@@ -49,43 +50,48 @@
         </div>
         <div class="col-auto">
             <div style="position:relative;">
-                <button type="button" class="btn" style="position: absolute; z-index: 1; left: 88px; bottom:100px" onclick="img1.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; Image1.value = '';"><h4><i class="bi bi-x-circle"></i></h4></button>
-                <img th:src="@{https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg}" style="width:120px; height:120px;" id="img1">
+                <button type="button" class="btn" style="position: absolute; z-index: 1; left: 88px; bottom:100px" onclick="img1.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; Image1.value = ''; image1Name.value='';"><h4><i class="bi bi-x-circle"></i></h4></button>
+                <img th:src="*{imageGallery.image1} != null? @{'/uploads/'+ *{imageGallery.image1}}: @{'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'}" style="width:120px; height:120px;" id="img1">
             </div>
             <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="Image1" onchange="img1.src=window.URL.createObjectURL(this.files[0])" name="image1">
             <label class="input-group-text col-form-label px-3 my-2" for="Image1" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+            <input type="text" class="d-none"  th:value = "*{imageGallery.image1}" id="image1Name" name="image1Name">
         </div>
         <div class="col-auto mx-1">
             <div style="position:relative;">
-                <button type="button" class="btn " style="position: absolute; z-index: 1; left: 88px; bottom:100px" onclick="img_2.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; Image2.value = '';"><h4><i class="bi bi-x-circle"></i></h4></button>
-                <img th:src="@{https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg}" style="width:120px; height:120px;" id="img_2">
+                <button type="button" class="btn " style="position: absolute; z-index: 1; left: 88px; bottom:100px" onclick="img_2.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; Image2.value = ''; image2Name.value='';"><h4><i class="bi bi-x-circle"></i></h4></button>
+                <img th:src="*{imageGallery.image2} != null? @{'/uploads/'+ *{imageGallery.image2}}: @{'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'}" style="width:120px; height:120px;" id="img_2">
             </div>
             <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="Image2" onchange="img_2.src=window.URL.createObjectURL(this.files[0])" name="image2">
             <label class="input-group-text col-form-label px-3 my-2" for="Image2" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+            <input type="text" class="d-none"  th:value = "*{imageGallery.image2}" id="image2Name" name="image2Name">
         </div>
         <div class="col-auto mx-1">
             <div style="position:relative;">
-                <button type="button" class="btn " style="position: absolute; z-index: 1; left: 88px; bottom:100px" onclick="img_3.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; Image3.value = '';"><h4><i class="bi bi-x-circle"></i></h4></button>
-                <img th:src="@{https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg}" style="width:120px; height:120px;" id="img_3">
+                <button type="button" class="btn " style="position: absolute; z-index: 1; left: 88px; bottom:100px" onclick="img_3.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; Image3.value = ''; image3Name.value='';"><h4><i class="bi bi-x-circle"></i></h4></button>
+                <img th:src="*{imageGallery.image3} != null? @{'/uploads/'+ *{imageGallery.image3}}: @{'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'}" style="width:120px; height:120px;" id="img_3">
                 <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="Image3" onchange="img_3.src=window.URL.createObjectURL(this.files[0])" name="image3">
             </div>
             <label class="input-group-text col-form-label px-3 my-2" for="Image3" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+            <input type="text" class="d-none"  th:value = "*{imageGallery.image3}" id="image3Name" name="image3Name">
         </div>
         <div class="col-auto mx-1">
             <div style="position:relative;">
-                <button type="button" class="btn " style="position: absolute; z-index: 1; left: 88px; bottom:100px" onclick="img_4.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; Image4.value = '';"><h4><i class="bi bi-x-circle"></i></h4></button>
-                <img th:src="@{https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg}" style="width:120px; height:120px;" id="img_4">
+                <button type="button" class="btn " style="position: absolute; z-index: 1; left: 88px; bottom:100px" onclick="img_4.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; Image4.value = ''; image4Name.value='';"><h4><i class="bi bi-x-circle"></i></h4></button>
+                <img th:src="*{imageGallery.image4} != null? @{'/uploads/'+ *{imageGallery.image4}}: @{'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'}" style="width:120px; height:120px;" id="img_4">
                 <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="Image4" onchange="img_4.src=window.URL.createObjectURL(this.files[0])" name="image4">
             </div>
             <label class="input-group-text col-form-label px-3 my-2" for="Image4" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+            <input type="text" class="d-none"  th:value = "*{imageGallery.image4}" id="image4Name" name="image4Name">
         </div>
         <div class="col-auto mx-1">
             <div style="position:relative;">
-                <button type="button" class="btn " style="position: absolute; z-index: 1; left: 88px; bottom:100px" onclick="img_5.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; Image5.value = '';"><h4><i class="bi bi-x-circle"></i></h4></button>
-                <img th:src="@{https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg}" style="width:120px; height:120px;" id="img_5">
+                <button type="button" class="btn " style="position: absolute; z-index: 1; left: 88px; bottom:100px" onclick="img_5.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; Image5.value = ''; image5Name.value='';"><h4><i class="bi bi-x-circle"></i></h4></button>
+                <img th:src="*{imageGallery.image5} != null? @{'/uploads/'+ *{imageGallery.image5}}: @{'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'}" style="width:120px; height:120px;" id="img_5">
                 <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="Image5" onchange="img_5.src=window.URL.createObjectURL(this.files[0])" name="image5">
             </div>
             <label class="input-group-text col-form-label px-3 my-2" for="Image5" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+            <input type="text" class="d-none"  th:value = "*{imageGallery.image5}" id="image5Name" name="image5Name">
         </div>
     </div>
     <div class="row g-3 align-items-center">
@@ -119,7 +125,7 @@
             <label for="inputSeoKeywords" class="form-label text-center">Keywords:</label>
         </div>
         <div class="col-md-6">
-            <input type="text" class="form-control" id="inputSeoKeywords"  th:field = "*{seoBlock.keywords}">
+            <input type="text" class="form-control" id="inputSeoKeywords"  th:field = "*{seoBlock.keywords}" name="keywords">
         </div>
     </div>
     <div class="row align-items-center justify-content-center my-2">
@@ -127,7 +133,7 @@
             <label for="inputSeoDescription" class="form-label">Description:</label>
         </div>
         <div class="col-7">
-            <textarea class="form-control" id="inputSeoDescription" rows="3"  th:field = "*{seoBlock.description}"></textarea>
+            <textarea class="form-control" id="inputSeoDescription" rows="3"  th:field = "*{seoBlock.description}" name="description"></textarea>
             <div class="text-danger" th:if="${#fields.hasErrors('seoBlock.description')}" th:errors="*{seoBlock.description}"></div>
         </div>
     </div>
