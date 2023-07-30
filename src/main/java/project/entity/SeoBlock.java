@@ -2,6 +2,8 @@ package project.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 @Entity
 @Table(name = "seo_block")
 public class SeoBlock {
@@ -13,6 +15,7 @@ public class SeoBlock {
     @NotEmpty(message = "Поле не може бути порожнім")
     @Column(columnDefinition="VARCHAR(30) NOT NULL")
     private String title;
+    @Size(max=45, message = "Розмір поля має бути не більше 45 символів")
     @Column(columnDefinition="VARCHAR(45)")
     private String keywords;
     @NotEmpty(message = "Поле не може бути порожнім")

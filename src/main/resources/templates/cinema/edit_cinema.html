@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head}"></head>
+<body class="  ">
+<aside th:replace="~{fragments :: sidebar(number=${pageM})}"></aside>
+<main class="main-content">
+  <div th:replace="~{fragments :: navbar}"></div>
+  <div class="conatiner-fluid content-inner mt-n5 py-0">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+              <div th:replace="~{cinemaForm :: form(${object},${lin},${hallList},${editLink},${deleteLink},${createLink})}">
+
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

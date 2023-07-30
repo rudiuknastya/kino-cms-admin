@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head}"></head>
+<body class="  ">
+<aside th:replace="~{fragments :: sidebar(number=${pageM})}"></aside>
+<main class="main-content">
+  <div th:replace="~{fragments :: navbar}"></div>
+  <div class="conatiner-fluid content-inner mt-n5 py-0">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row  g-5">
+              <th:block th:each="cinema : ${cinemas}">
+                <div class="col-3">
+                  <a th:href="@{/admin/cinemas/edit/{id}(id=${cinema.id})}">
+                  <div class="card" style="position:relative;">
+                    <img th:src="@{'/uploads/'+ ${cinema.logo}}" class="card-img-top" style="height:150px">
+                    <a th:href="@{/admin/cinemas/delete/{id}(id=${cinema.id})}" style="position: absolute; z-index: 1; left: 180px; bottom:220px"><h4><i class="bi bi-x-circle"></i></h4></a>
+                    <div class="card-body text-center">
+                      <h5 class="card-title" th:text="${cinema.name}" style="color:black;"></h5>
+                    </div>
+                  </div>
+                  </a>
+                </div>
+              </th:block>
+              <div class="col-3">
+                <a th:href="@{/admin/cinemas/new}">
+                <div class="card">
+                  <img th:src="@{'https://media.istockphoto.com/id/1147277650/vector/plus-add-button-vector-icon-concept-isolated-on-white-background.jpg?s=170667a&w=0&k=20&c=qzcCvnVGThrHnbH2onjjRup83B_TMcEWD5_7vjYW27I='}" class="card-img-top" style="height:150px">
+                  <div class="card-body text-center">
+                    <h5 class="card-title" style="color:black;">Додати</h5>
+                  </div>
+                </div>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script type="text/javascript">
+  window.onload = function() {
+  localStorage.clear();
+  }
+</script>
+</body>
+</html>
