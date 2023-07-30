@@ -110,7 +110,7 @@ public class ShareController {
             model.addAttribute("lin",l);
             return "share/edit_share";
         }
-
+        shareInDB.setStatus(share.getStatus());
         shareInDB.setName(share.getName());
         shareInDB.setDescription(share.getDescription());
         shareInDB.setVideoLink(share.getVideoLink());

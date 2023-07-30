@@ -77,6 +77,7 @@ public class NewsController {
             model.addAttribute("lin",l);
             return "newsPage/edit_news";
         }
+        newsInDB.setStatus(news.getStatus());
         newsInDB.setName(news.getName());
         newsInDB.setDescription(news.getDescription());
         newsInDB.setVideoLink(news.getVideoLink());
