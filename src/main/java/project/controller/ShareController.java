@@ -139,6 +139,17 @@ public class ShareController {
                     File file = new File(uploadPath+"/"+share.getImageGallery().getMainImage());
                     file.delete();
                     share.getImageGallery().setMainImage(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    share.getImageGallery().setMainImage(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image1":
@@ -155,6 +166,17 @@ public class ShareController {
                     File file = new File(uploadPath+"/"+share.getImageGallery().getImage1());
                     file.delete();
                     share.getImageGallery().setImage1(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    share.getImageGallery().setImage1(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image2":
@@ -171,7 +193,17 @@ public class ShareController {
                     File file = new File(uploadPath+"/"+share.getImageGallery().getImage2());
                     file.delete();
                     share.getImageGallery().setImage2(null);
-
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    share.getImageGallery().setImage2(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image3":
@@ -188,6 +220,17 @@ public class ShareController {
                     File file = new File(uploadPath+"/"+share.getImageGallery().getImage3());
                     file.delete();
                     share.getImageGallery().setImage3(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    share.getImageGallery().setImage3(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image4":
@@ -204,6 +247,17 @@ public class ShareController {
                     File file = new File(uploadPath+"/"+share.getImageGallery().getImage4());
                     file.delete();
                     share.getImageGallery().setImage4(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    share.getImageGallery().setImage4(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image5":
@@ -221,6 +275,17 @@ public class ShareController {
                     File file = new File(uploadPath+"/"+share.getImageGallery().getImage5());
                     file.delete();
                     share.getImageGallery().setImage5(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    share.getImageGallery().setImage5(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
         }

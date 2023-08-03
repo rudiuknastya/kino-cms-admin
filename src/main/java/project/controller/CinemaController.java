@@ -380,6 +380,17 @@ public class CinemaController {
                     File file = new File(uploadPath + "/" + cinema.getImageGallery().getMainImage());
                     file.delete();
                     cinema.getImageGallery().setMainImage(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    cinema.getImageGallery().setMainImage(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image1":
@@ -396,6 +407,17 @@ public class CinemaController {
                     File file = new File(uploadPath + "/" + cinema.getImageGallery().getImage1());
                     file.delete();
                     cinema.getImageGallery().setImage1(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    cinema.getImageGallery().setImage1(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image2":
@@ -412,7 +434,17 @@ public class CinemaController {
                     File file = new File(uploadPath + "/" + cinema.getImageGallery().getImage2());
                     file.delete();
                     cinema.getImageGallery().setImage2(null);
-
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    cinema.getImageGallery().setImage2(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image3":
@@ -429,6 +461,17 @@ public class CinemaController {
                     File file = new File(uploadPath + "/" + cinema.getImageGallery().getImage3());
                     file.delete();
                     cinema.getImageGallery().setImage3(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    cinema.getImageGallery().setImage3(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image4":
@@ -445,6 +488,17 @@ public class CinemaController {
                     File file = new File(uploadPath + "/" + cinema.getImageGallery().getImage4());
                     file.delete();
                     cinema.getImageGallery().setImage4(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    cinema.getImageGallery().setImage4(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image5":
@@ -461,6 +515,17 @@ public class CinemaController {
                     File file = new File(uploadPath + "/" + cinema.getImageGallery().getImage5());
                     file.delete();
                     cinema.getImageGallery().setImage5(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    cinema.getImageGallery().setImage5(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "logoImage":
@@ -477,6 +542,17 @@ public class CinemaController {
                     File file = new File(uploadPath + "/" + cinema.getLogo());
                     file.delete();
                     cinema.setLogo(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    cinema.setLogo(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
         }
@@ -530,6 +606,17 @@ public class CinemaController {
                     File file = new File(uploadPath + "/" + hall.getImageGallery().getMainImage());
                     file.delete();
                     hall.getImageGallery().setMainImage(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    hall.getImageGallery().setMainImage(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image1":
@@ -546,6 +633,17 @@ public class CinemaController {
                     File file = new File(uploadPath + "/" + hall.getImageGallery().getImage1());
                     file.delete();
                     hall.getImageGallery().setImage1(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    hall.getImageGallery().setImage1(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image2":
@@ -562,7 +660,17 @@ public class CinemaController {
                     File file = new File(uploadPath + "/" + hall.getImageGallery().getImage2());
                     file.delete();
                     hall.getImageGallery().setImage2(null);
-
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    hall.getImageGallery().setImage2(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image3":
@@ -579,6 +687,17 @@ public class CinemaController {
                     File file = new File(uploadPath + "/" + hall.getImageGallery().getImage3());
                     file.delete();
                     hall.getImageGallery().setImage3(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    hall.getImageGallery().setImage3(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image4":
@@ -595,6 +714,17 @@ public class CinemaController {
                     File file = new File(uploadPath + "/" + hall.getImageGallery().getImage4());
                     file.delete();
                     hall.getImageGallery().setImage4(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    hall.getImageGallery().setImage4(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image5":
@@ -611,6 +741,17 @@ public class CinemaController {
                     File file = new File(uploadPath + "/" + hall.getImageGallery().getImage5());
                     file.delete();
                     hall.getImageGallery().setImage5(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    hall.getImageGallery().setImage5(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "schemaImg":
@@ -627,6 +768,17 @@ public class CinemaController {
                     File file = new File(uploadPath + "/" + hall.getSchemaImage());
                     file.delete();
                     hall.setSchemaImage(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    hall.setSchemaImage(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
         }

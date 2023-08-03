@@ -1,9 +1,6 @@
 package project.controller;
 
 import jakarta.validation.Valid;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,15 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.entity.Gallery;
 import project.entity.News;
-import project.entity.SeoBlock;
-import project.entity.User;
 import project.service.NewsService;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -144,6 +138,18 @@ public class NewsController {
                     file.delete();
                     news.getImageGallery().setMainImage(null);
                 }
+                else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    news.getImageGallery().setMainImage(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
+                }
                 break;
             case "image1":
                 if(!image.getOriginalFilename().equals("")&& name.equals("")) {
@@ -159,6 +165,17 @@ public class NewsController {
                     File file = new File(uploadPath+"/"+news.getImageGallery().getImage1());
                     file.delete();
                     news.getImageGallery().setImage1(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    news.getImageGallery().setImage1(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image2":
@@ -175,7 +192,17 @@ public class NewsController {
                     File file = new File(uploadPath+"/"+news.getImageGallery().getImage2());
                     file.delete();
                     news.getImageGallery().setImage2(null);
-
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    news.getImageGallery().setImage2(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image3":
@@ -192,6 +219,17 @@ public class NewsController {
                     File file = new File(uploadPath+"/"+news.getImageGallery().getImage3());
                     file.delete();
                     news.getImageGallery().setImage3(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    news.getImageGallery().setImage3(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image4":
@@ -208,6 +246,17 @@ public class NewsController {
                     File file = new File(uploadPath+"/"+news.getImageGallery().getImage4());
                     file.delete();
                     news.getImageGallery().setImage4(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    news.getImageGallery().setImage4(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
             case "image5":
@@ -225,6 +274,17 @@ public class NewsController {
                     File file = new File(uploadPath+"/"+news.getImageGallery().getImage5());
                     file.delete();
                     news.getImageGallery().setImage5(null);
+                }else if(!image.getOriginalFilename().equals(name)){
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile+"."+image.getOriginalFilename();
+                    news.getImageGallery().setImage5(uniqueName);
+                    Path path = Paths.get(uploadPath+"/"+uniqueName);
+                    try {
+                        image.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
+                    File file = new File(uploadPath+"/"+name);
+                    file.delete();
                 }
                 break;
         }
