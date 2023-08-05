@@ -234,7 +234,7 @@ public class FilmController {
                     file.delete();
                     film.getImageGallery().setMainImage(null);
                 }
-                 else if(!image.getOriginalFilename().equals(name)){
+                 else if(!image.getOriginalFilename().equals(name) && !image.getOriginalFilename().equals("")){
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile+"."+image.getOriginalFilename();
                     film.getImageGallery().setMainImage(uniqueName);
@@ -261,7 +261,7 @@ public class FilmController {
                     File file = new File(uploadPath+"/"+film.getImageGallery().getImage1());
                     file.delete();
                     film.getImageGallery().setImage1(null);
-                }else if(!image.getOriginalFilename().equals(name)){
+                }else if(!image.getOriginalFilename().equals(name)&& !image.getOriginalFilename().equals("")){
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile+"."+image.getOriginalFilename();
                     film.getImageGallery().setImage1(uniqueName);
@@ -289,7 +289,7 @@ public class FilmController {
                     file.delete();
                     film.getImageGallery().setImage2(null);
 
-                }else if(!image.getOriginalFilename().equals(name)){
+                }else if(!image.getOriginalFilename().equals(name)&& !image.getOriginalFilename().equals("")){
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile+"."+image.getOriginalFilename();
                     film.getImageGallery().setImage2(uniqueName);
@@ -312,11 +312,11 @@ public class FilmController {
                         image.transferTo(new File(path.toUri()));
                     } catch (IOException e) {
                     }
-                }else if(image.getOriginalFilename().equals("") && name.equals("")){
-                    File file = new File(uploadPath+"/"+film.getImageGallery().getImage3());
+                }else if(image.getOriginalFilename().equals("") && name.equals("")) {
+                    File file = new File(uploadPath + "/" + film.getImageGallery().getImage3());
                     file.delete();
                     film.getImageGallery().setImage3(null);
-                }else if(!image.getOriginalFilename().equals(name)){
+                } else if(!image.getOriginalFilename().equals(name) && !image.getOriginalFilename().equals("")){
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile+"."+image.getOriginalFilename();
                     film.getImageGallery().setImage3(uniqueName);
@@ -343,7 +343,7 @@ public class FilmController {
                     File file = new File(uploadPath+"/"+film.getImageGallery().getImage4());
                     file.delete();
                     film.getImageGallery().setImage4(null);
-                }else if(!image.getOriginalFilename().equals(name)){
+                }else if(!image.getOriginalFilename().equals(name)&& !image.getOriginalFilename().equals("")){
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile+"."+image.getOriginalFilename();
                     film.getImageGallery().setImage4(uniqueName);
@@ -371,7 +371,7 @@ public class FilmController {
                     File file = new File(uploadPath+"/"+film.getImageGallery().getImage5());
                     file.delete();
                     film.getImageGallery().setImage5(null);
-                }else if(!image.getOriginalFilename().equals(name)){
+                }else if(!image.getOriginalFilename().equals(name) && !image.getOriginalFilename().equals("")){
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile+"."+image.getOriginalFilename();
                     film.getImageGallery().setImage5(uniqueName);

@@ -115,6 +115,7 @@ public class NewsController {
             String l ="news/new";
             model.addAttribute("pageN", n);
             model.addAttribute("lin", l);
+            model.addAttribute("object", news);
             return "newsPage/add_news";
         }
         newsService.saveNews(news);
@@ -138,7 +139,7 @@ public class NewsController {
                     file.delete();
                     news.getImageGallery().setMainImage(null);
                 }
-                else if(!image.getOriginalFilename().equals(name)){
+                else if(!image.getOriginalFilename().equals(name)&& !image.getOriginalFilename().equals("")){
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile+"."+image.getOriginalFilename();
                     news.getImageGallery().setMainImage(uniqueName);
@@ -165,7 +166,7 @@ public class NewsController {
                     File file = new File(uploadPath+"/"+news.getImageGallery().getImage1());
                     file.delete();
                     news.getImageGallery().setImage1(null);
-                }else if(!image.getOriginalFilename().equals(name)){
+                }else if(!image.getOriginalFilename().equals(name)&& !image.getOriginalFilename().equals("")){
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile+"."+image.getOriginalFilename();
                     news.getImageGallery().setImage1(uniqueName);
@@ -192,7 +193,7 @@ public class NewsController {
                     File file = new File(uploadPath+"/"+news.getImageGallery().getImage2());
                     file.delete();
                     news.getImageGallery().setImage2(null);
-                }else if(!image.getOriginalFilename().equals(name)){
+                }else if(!image.getOriginalFilename().equals(name)&& !image.getOriginalFilename().equals("")){
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile+"."+image.getOriginalFilename();
                     news.getImageGallery().setImage2(uniqueName);
@@ -219,7 +220,7 @@ public class NewsController {
                     File file = new File(uploadPath+"/"+news.getImageGallery().getImage3());
                     file.delete();
                     news.getImageGallery().setImage3(null);
-                }else if(!image.getOriginalFilename().equals(name)){
+                }else if(!image.getOriginalFilename().equals(name)&& !image.getOriginalFilename().equals("")){
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile+"."+image.getOriginalFilename();
                     news.getImageGallery().setImage3(uniqueName);
@@ -246,7 +247,7 @@ public class NewsController {
                     File file = new File(uploadPath+"/"+news.getImageGallery().getImage4());
                     file.delete();
                     news.getImageGallery().setImage4(null);
-                }else if(!image.getOriginalFilename().equals(name)){
+                }else if(!image.getOriginalFilename().equals(name)&& !image.getOriginalFilename().equals("")){
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile+"."+image.getOriginalFilename();
                     news.getImageGallery().setImage4(uniqueName);
@@ -274,7 +275,7 @@ public class NewsController {
                     File file = new File(uploadPath+"/"+news.getImageGallery().getImage5());
                     file.delete();
                     news.getImageGallery().setImage5(null);
-                }else if(!image.getOriginalFilename().equals(name)){
+                }else if(!image.getOriginalFilename().equals(name)&& !image.getOriginalFilename().equals("")){
                     String uuidFile = UUID.randomUUID().toString();
                     String uniqueName = uuidFile+"."+image.getOriginalFilename();
                     news.getImageGallery().setImage5(uniqueName);
