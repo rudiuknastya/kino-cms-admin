@@ -52,7 +52,7 @@
               <div class="row g-3 align-items-center">
                 <div class="col-auto">
                   <div class="form-check ">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioImage" th:field = "*{image}" th:value="*{image}">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioImage" th:field = "*{image}" onchange="inputMainImage.disabled=false;" th:value="*{image}">
                     <label class="form-check-label" for="inlineRadioImage">Фото на фон</label>
                   </div>
                 </div>
@@ -62,14 +62,14 @@
                 </div>
                 <div class="col-auto">
                   <label class="input-group-text col-form-label" for="inputMainImage" style="color:black;">Завантажити</label>
-                  <input type="text" class="d-none"  th:value = "*{image}" id="mainImageName" name="mainImageName">
+                  <input type="text"  th:value = "*{image}" id="mainImageName" name="mainImageName">
                 </div>
                 <div class="col-auto">
                   <button type="button" class="btn btn-outline-danger" onclick="main_image.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; inputMainImage.value = ''; mainImageName.value = ''">Видалити</button>
                 </div>
               </div>
               <div class="form-check ms-2">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadiofemale" th:field = "*{image}" value="noImage">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadiofemale" th:field = "*{image}" onchange="main_image.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; inputMainImage.value = ''; mainImageName.value = ''; inputMainImage.disabled = true;" value="noImage">
                 <label class="form-check-label" for="inlineRadioFemale">Просто фон</label>
               </div>
               <div class="col-md-12 text-center">

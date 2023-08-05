@@ -128,38 +128,39 @@ public class BannerController {
 
     @PostMapping("/admin/banners/background")
     public String saveBackgroundImage(@Valid @ModelAttribute("backgroundImage") BackgroundImage backgroundImage, BindingResult bindingResult,
-                                      @RequestParam("mainImage")MultipartFile mainImage, @RequestParam("mainImageName")String mainImageName,
+                                      @RequestParam(name="mainImage", required = false)MultipartFile mainImage, @RequestParam("mainImageName")String mainImageName,
                                       Model model){
-        System.out.println(backgroundImage.getImage());
-        System.out.println(mainImage.getOriginalFilename());
-        System.out.println(mainImageName);
+//        System.out.println(backgroundImage.getImage());
+//        System.out.println(mainImage.getOriginalFilename());
+//        System.out.println(mainImageName);
         BackgroundImage backgroundImageInDb = bannerService.getBackgroundImage();
-        if(!mainImage.getOriginalFilename().equals("")&& (mainImageName.equals("") || mainImageName.equals("noImage")) && !backgroundImage.getImage().equals("noImage")) {
-            String uuidFile = UUID.randomUUID().toString();
-            String uniqueName = uuidFile + "." + mainImage.getOriginalFilename();
-            backgroundImage.setImage(uniqueName);
-            Path path = Paths.get(uploadPath+"/"+uniqueName);
-            try {
-                mainImage.transferTo(new File(path.toUri()));
-            } catch (IOException e) {
+        if(mainImage != null) {
+            if (!mainImage.getOriginalFilename().equals("") && (mainImageName.equals("") || mainImageName.equals("noImage")) && !backgroundImage.getImage().equals("noImage")) {
+                String uuidFile = UUID.randomUUID().toString();
+                String uniqueName = uuidFile + "." + mainImage.getOriginalFilename();
+                backgroundImage.setImage(uniqueName);
+                Path path = Paths.get(uploadPath + "/" + uniqueName);
+                try {
+                    mainImage.transferTo(new File(path.toUri()));
+                } catch (IOException e) {
+                }
+            } else if (mainImage.getOriginalFilename().equals("") && mainImageName.equals("") && backgroundImage.getImage().equals("noImage")) {
+                File file = new File(uploadPath + "/" + backgroundImageInDb.getImage());
+                file.delete();
+                backgroundImageInDb.setImage(null);
+            } else if (!mainImageName.equals("") && !mainImage.getOriginalFilename().equals(mainImageName)) {
+                String uuidFile = UUID.randomUUID().toString();
+                String uniqueName = uuidFile + "." + mainImage.getOriginalFilename();
+                backgroundImage.setImage(uniqueName);
+                Path path = Paths.get(uploadPath + "/" + uniqueName);
+                try {
+                    mainImage.transferTo(new File(path.toUri()));
+                } catch (IOException e) {
+                }
+                File file = new File(uploadPath + "/" + mainImageName);
+                file.delete();
             }
-        }else if(mainImage.getOriginalFilename().equals("") && mainImageName.equals("") && backgroundImage.getImage().equals("noImage")){
-            File file = new File(uploadPath+"/"+backgroundImageInDb.getImage());
-            file.delete();
-            backgroundImageInDb.setImage(null);
-        } else if(!mainImageName.equals("") && !mainImage.getOriginalFilename().equals(mainImageName)){
-            String uuidFile = UUID.randomUUID().toString();
-            String uniqueName = uuidFile + "." + mainImage.getOriginalFilename();
-            backgroundImage.setImage(uniqueName);
-            Path path = Paths.get(uploadPath+"/"+uniqueName);
-            try {
-                mainImage.transferTo(new File(path.toUri()));
-            } catch (IOException e) {
-            }
-            File file = new File(uploadPath+"/"+mainImageName);
-            file.delete();
         }
-
         if (bindingResult.hasErrors()) {
             String l = "banners/main";
             String ln = "banners/news";
