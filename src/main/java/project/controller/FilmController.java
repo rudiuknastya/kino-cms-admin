@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Controller
@@ -42,6 +43,7 @@ public class FilmController {
     public String createFilm(Model model){
         Film film = new Film();
         film.setImageGallery(new Gallery());
+        film.setDate(LocalDate.now());
         String l = "films/new";
         model.addAttribute("film", film);
         model.addAttribute("pagenUm", n);
