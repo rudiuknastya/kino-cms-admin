@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head}"></head>
+<body class="  ">
+<aside th:replace="~{fragments :: sidebar(number=${pagenuM})}"></aside>
+<main class="main-content">
+  <div th:replace="~{fragments :: navbar}"></div>
+  <div class="conatiner-fluid content-inner mt-n5 py-0">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header ">
+            <div class="header-title row justify-content-between">
+              <h4 class="card-title col-4" style="color:black;">Сторінки</h4>
+              <a th:href="@{/admin/pages/new/new_page}" type="button" class="btn btn-soft-primary col-3" ><i class="bi bi-plus-lg"></i> Створити сторінку</a>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered" >
+                <thead>
+                <tr>
+                  <th scope="col">Назва</th>
+                  <th scope="col">Дата створення</th>
+                  <th scope="col">Статус</th>
+                  <th scope="col"> </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td th:text = "${mainPage.name}"></td>
+                  <td th:text = "${#temporals.format(mainPage.creationDate, 'dd-MM-yyyy')}"></td>
+                  <td th:text = "${mainPage.status == true? 'Увім': 'Вимк'}"></td>
+                  <td>
+                    <a th:href="@{/admin/pages/edit/main}" role="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td th:text = "${aboutCinema.name}"></td>
+                  <td th:text = "${#temporals.format(aboutCinema.creationDate, 'dd-MM-yyyy')}"></td>
+                  <td th:text = "${aboutCinema.status == true? 'Увім': 'Вимк'}"></td>
+                  <td>
+                    <a th:href="@{/admin/pages/edit/about_cinema}" role="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td th:text = "${cafe.name}"></td>
+                  <td th:text = "${#temporals.format(cafe.creationDate, 'dd-MM-yyyy')}"></td>
+                  <td th:text = "${cafe.status == true? 'Увім': 'Вимк'}"></td>
+                  <td>
+                    <a th:href="@{/admin/pages/edit/cafe}" role="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td th:text = "${vipHall.name}"></td>
+                  <td th:text = "${#temporals.format(vipHall.creationDate, 'dd-MM-yyyy')}"></td>
+                  <td th:text = "${vipHall.status == true? 'Увім': 'Вимк'}"></td>
+                  <td>
+                    <a th:href="@{/admin/pages/edit/vip_hall}" role="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td th:text = "${advertisement.name}"></td>
+                  <td th:text = "${#temporals.format(advertisement.creationDate, 'dd-MM-yyyy')}"></td>
+                  <td th:text = "${advertisement.status == true? 'Увім': 'Вимк'}"></td>
+                  <td>
+                    <a th:href="@{/admin/pages/edit/advertisement}" role="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td th:text = "${childrenRoom.name}"></td>
+                  <td th:text = "${#temporals.format(childrenRoom.creationDate, 'dd-MM-yyyy')}"></td>
+                  <td th:text = "${childrenRoom.status == true? 'Увім': 'Вимк'}"></td>
+                  <td>
+                    <a th:href="@{/admin/pages/edit/children_room}" role="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Контакти</td>
+                  <td th:text = "${#temporals.format(contactsPage.creationDate, 'dd-MM-yyyy')}"></td>
+                  <td th:text = "${contactsPage.status == true? 'Увім': 'Вимк'}"></td>
+                  <td>
+                    <a th:href="@{/admin/pages/edit/contacts}" role="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                  </td>
+                </tr>
+                <tr th:each = "newPage: ${newPages}">
+                  <td th:text = "${newPage.name}"></td>
+                  <td th:text = "${#temporals.format(newPage.creationDate, 'dd-MM-yyyy')}"></td>
+                  <td th:text = "${newPage.status == true? 'Увім': 'Вимк'}"></td>
+                  <td>
+                    <a th:href="@{/admin/pages/edit/new_page/{id}(id=${newPage.id})}" role="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                    <a th:href="@{/admin/pages/new_page/delete/{id}(id=${newPage.id})}" role="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

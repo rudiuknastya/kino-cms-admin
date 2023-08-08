@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head}"></head>
+<body class="  ">
+<aside th:replace="~{fragments :: sidebar(number=${pagenuM})}"></aside>
+<main class="main-content">
+    <div th:replace="~{fragments :: navbar}"></div>
+    <div class="conatiner-fluid content-inner mt-n5 py-0">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form th:action = "@{/admin/pages/edit/contacts}" th:object = "${contacts}" method="post" enctype="multipart/form-data" class="row g-3" style="color:black;">
+                            <div class="form-check form-switch d-flex justify-content-end">
+                                <input class="form-check-input mx-1" type="checkbox" role="switch" id="flexSwitchCheckDefault" th:field = "*{contactsList[0].status}">
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Статус</label>
+                            </div>
+                            <th:block th:each="contact, stat : *{contactsList}">
+                                <div class="py-5 px-5" style="color:black; border:solid;border-radius: 20px;">
+                                    <div class="mb-3 row">
+                                        <label  class="col-3 col-form-label">Назва кінотеатру</label>
+                                        <div class="col-md-6" >
+                                            <input type="text" class="form-control " id="inputName"  th:field="*{contactsList[__${stat.index}__].cinemaName}">
+                                            <div class="text-danger" th:if="${#fields.hasErrors('contactsList[__${stat.index}__].cinemaName')}" th:errors="*{contactsList[__${stat.index}__].cinemaName}"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="exampleFormControlTextarea1" class="col-sm-2 col-form-label">Адреса</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" th:field="*{contactsList[__${stat.index}__].address}"></textarea>
+                                            <div class="text-danger" th:if="${#fields.hasErrors('contactsList[__${stat.index}__].address')}" th:errors="*{contactsList[__${stat.index}__].address}"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label  class="col-3 col-form-label">Координати для мапи</label>
+                                        <div class="col-md-6" >
+                                            <input type="text" class="form-control mb-3" id="inputCoordinates"  th:field="*{contactsList[__${stat.index}__].coordinates}">
+                                        </div>
+                                    </div>
+                                    <div class="row g-3 align-items-center">
+                                        <div class="col-auto">
+                                            <label class="col-form-label" style="color:black;">Логотип</label>
+                                        </div>
+                                        <div class="col-auto">
+                                            <img th:src="*{contactsList[__${stat.index}__].logo} != null? @{'/uploads/'+ *{contactsList[__${stat.index}__].logo}}: @{'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'}" style="width:150px; height:150px;" th:id="logo+${stat.index}">
+                                            <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  th:id="logoImage+${stat.index}" th:onchange="|logo${stat.index}.src=window.URL.createObjectURL(this.files[0]); logoImageName${stat.index}.value=this.files[0].name;|" name="logoImage">
+                                        </div>
+                                        <div class="col-auto">
+                                            <label class="input-group-text col-form-label" th:for="logoImage+${stat.index}" style="color:black;">Завантажити</label>
+                                            <input type="text" class="d-none"  th:field = "*{contactsList[__${stat.index}__].logo}" th:id="logoImageName+${stat.index}" name="logoImageName">
+                                            <div class="text-danger" th:if="${#fields.hasErrors('contactsList[__${stat.index}__].logo')}" th:errors="*{contactsList[__${stat.index}__].logo}"> </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <button type="button" class="btn btn-outline-danger" th:onclick="|logo${stat.index}.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; logoImage${stat.index}.value = ''; logoImageName${stat.index}.value='';|">Видалити</button>
+                                        </div>
+                                    </div>
+                                    <div th:if="${stat.index} != 0" class="col-md-12 text-center my-3">
+                                        <a th:href="@{/admin/pages/edit/contacts/delete/{id} (id=${stat.index})}" type="button" class="btn btn-soft-danger col-4" >Видалити кінотеатр</a>
+                                    </div>
+                                </div>
+                            </th:block>
+                            <div class="col-md-12 text-center my-5 ">
+                                <a th:href="@{/admin/pages/edit/contacts/new}" type="button" class="btn btn-soft-primary col-3" ><i class="bi bi-plus-lg"></i> Додати кінотеатр</a>
+                            </div>
+                            <label class="col-form-label" for="inputSeoTitle" style="color:black;">SEO блок</label>
+                            <div class="row align-items-center d-flex justify-content-center">
+                                <div class="col-auto">
+                                    <label for="inputSeoURL" class="form-label text-center">URL:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="inputSeoURL"  th:field = "*{contactsList[0].seoBlock.url}" name="url">
+                                </div>
+                            </div>
+                            <div class="row align-items-center d-flex justify-content-center my-2">
+                                <div class="col-auto">
+                                    <label for="inputSeoTitle" class="form-label text-center">Title:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="inputSeoTitle"  th:field = "*{contactsList[0].seoBlock.title}" >
+                                    <div class="text-danger" th:if="${#fields.hasErrors('contactsList[0].seoBlock.title')}" th:errors="*{contactsList[0].seoBlock.title}"></div>
+                                </div>
+                            </div>
+                            <div class="row align-items-center d-flex justify-content-center my-2">
+                                <div class="col-auto">
+                                    <label for="inputSeoKeywords" class="form-label text-center">Keywords:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="inputSeoKeywords"  th:field = "*{contactsList[0].seoBlock.keywords}" name="keywords">
+                                </div>
+                            </div>
+                            <div class="row align-items-center justify-content-center my-2">
+                                <div class="col-auto">
+                                    <label for="inputSeoDescription" class="form-label">Description:</label>
+                                </div>
+                                <div class="col-7">
+                                    <textarea class="form-control" id="inputSeoDescription" rows="3"  th:field = "*{contactsList[0].seoBlock.description}" name="description"></textarea>
+                                    <div class="text-danger" th:if="${#fields.hasErrors('contactsList[0].seoBlock.description')}" th:errors="*{contactsList[0].seoBlock.description}"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <button type="submit" class="btn btn-primary">Зберегти</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>-->
+<!--<script type="text/javascript">-->
+<!--    $(document).ready(function(){-->
+<!--        $("input[name='logoImage']").each(function(index){-->
+<!--            $(this).change(function(){-->
+<!--            showImage(this, index);-->
+<!--            });-->
+<!--        });-->
+
+<!--    });-->
+<!--    function showImage(fileInput, index){-->
+<!--        file = fileInput.files[0];-->
+<!--        reader = new FileReader();-->
+<!--        reader.onload = function(e){-->
+<!--            $('#logo'+index).attr('src', e.target.result);-->
+<!--        };-->
+<!--        reader.readAsDataURL(file);-->
+<!--    }-->
+<!--</script>-->
+</body>
+</html>
+
+</body>
+</html>
