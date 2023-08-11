@@ -48,4 +48,12 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
         logger.info("getUserById() - User was deleted");
     }
+
+    @Override
+    public Long getUsersCount() {
+        logger.info("getUsersCount() - Getting users count");
+        Long usersCount = userRepository.count();
+        logger.info("getUsersCount() - Got users count");
+        return usersCount;
+    }
 }
