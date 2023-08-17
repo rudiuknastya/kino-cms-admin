@@ -17,7 +17,7 @@ public class Cinema {
     @Column(columnDefinition="VARCHAR(30) NOT NULL")
     private String name;
     @NotEmpty(message = "Поле не може бути порожнім")
-    @Column(columnDefinition="TINYTEXT NOT NULL")
+    @Column(columnDefinition="TEXT NOT NULL")
     private String description;
     @NotEmpty(message = "Поле не може бути порожнім")
     @Column(columnDefinition="TINYTEXT NOT NULL")

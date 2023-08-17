@@ -17,7 +17,7 @@ public class Hall {
     @Column(nullable = false)
     private Integer number;
     @NotEmpty(message = "Поле не може бути порожнім")
-    @Column(columnDefinition="TINYTEXT NOT NULL")
+    @Column(columnDefinition="TEXT NOT NULL")
     private String description;
     @Column(name = "schema_image")
     private String schemaImage;

@@ -4,13 +4,23 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import project.dto.FilmSessionDTO;
 import project.entity.FilmSession;
 
-public interface FilmSessionRepository extends JpaRepository<FilmSession, Long> {
-    @Query(value = "SELECT COUNT(session_date) FROM film_session WHERE month(session_date)= ?1", nativeQuery = true)
-    Long filmSessionsInMonth(Integer monthNumber);
+import java.util.List;
 
-    @Query(value = "SELECT SUM(price) FROM film_session WHERE month(session_date)= ?1", nativeQuery = true)
-    Long filmSessionsPriceInMonth(Integer monthNumber);
+public interface FilmSessionRepository extends JpaRepository<FilmSession, Long> {
+    @Query(value = "SELECT COUNT(session_date) FROM film_session where year(session_date) = year(now()) group by month(session_date) order by month(session_date)", nativeQuery = true)
+    List<Long> filmSessionsInMonth();
+
+    @Query(value = "select sum(price) session_date from film_session where year(session_date) = year(now()) group by month(session_date) order by month(session_date)", nativeQuery = true)
+    List<Long> filmSessionsPriceInMonth();
+    @Query(value = "SELECT * FROM film_session where session_date > now()", nativeQuery = true)
+    List<FilmSession> filmsToday();
+    @Query(value = "select name as filmName, film_session.id as filmSessionId from film_session inner join hall on film_session.hall_id = hall.id inner join film on film_session.film_id = film.id where cinema_id= :cinemaId and session_date > now()", nativeQuery = true)
+    List<FilmSessionDTO> filmsForTodayForCinema(@Param("cinemaId")Long id);
+    @Query(value = "select name as filmName, film_session.id as filmSessionId from film_session inner join hall on film_session.hall_id = hall.id inner join film on film_session.film_id = film.id where hall_id= :hallId and session_date > now()", nativeQuery = true)
+    List<FilmSessionDTO> filmsForTodayForHall(@Param("hallId")Long id);
+
 
 }

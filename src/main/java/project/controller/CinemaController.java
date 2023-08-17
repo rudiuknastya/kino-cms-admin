@@ -11,7 +11,7 @@ import project.entity.Cinema;
 import project.entity.Gallery;
 import project.entity.Hall;
 import project.entity.News;
-import project.service.CinemaService;
+import project.service.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,9 +26,17 @@ import java.util.UUID;
 @Controller
 public class CinemaController {
     private final CinemaService cinemaService;
+    private final MainPageService mainPageService;
+    private final BannerService bannerService;
+    private final FilmSessionService filmSessionService;
+    private final HallService hallService;
 
-    public CinemaController(CinemaService cinemaService) {
+    public CinemaController(CinemaService cinemaService, MainPageService mainPageService, BannerService bannerService, FilmSessionService filmSessionService, HallService hallService) {
         this.cinemaService = cinemaService;
+        this.mainPageService = mainPageService;
+        this.bannerService = bannerService;
+        this.filmSessionService = filmSessionService;
+        this.hallService = hallService;
     }
 
     private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
@@ -38,6 +46,32 @@ public class CinemaController {
     private List<Integer> hallsToDelete = new ArrayList<>();
     private Long cinemaId;
     private int count = 0;
+
+    @GetMapping("/cinemas")
+    public String getCinemas(Model model) {
+        model.addAttribute("cinemas", cinemaService.getAllCinemas());
+        model.addAttribute("mainPage",mainPageService.getMainPage());
+        model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
+        model.addAttribute("pageM", n);
+        return "cinema/public_cinemas";
+    }
+    @GetMapping("/cinemas/cinema/{id}")
+    public String showCinema(@PathVariable Long id,Model model) {
+        model.addAttribute("cinema", cinemaService.getCinemaById(id));
+        model.addAttribute("mainPage",mainPageService.getMainPage());
+        model.addAttribute("films",filmSessionService.getFilmsForTodayForCinema(id));
+        model.addAttribute("pageM", n);
+
+        return "cinema/cinema_page";
+    }
+    @GetMapping("/cinemas/cinema/hall/{id}")
+    public String showHall(@PathVariable Long id,Model model) {
+        model.addAttribute("hall", hallService.getHallById(id));
+        model.addAttribute("mainPage",mainPageService.getMainPage());
+        model.addAttribute("pageM", n);
+        model.addAttribute("films",filmSessionService.getFilmsForTodayForHall(id));
+        return "hall/hall_page";
+    }
 
     @GetMapping("/admin/cinemas")
     public String getCinemasList(Model model) {

@@ -15,7 +15,7 @@
                 <div class="col-3">
                   <a th:href="@{/admin/cinemas/edit/{id}(id=${cinema.id})}">
                   <div class="card" style="position:relative;">
-                    <img th:src="@{'/uploads/'+ ${cinema.logo}}" class="card-img-top" style="height:150px">
+                    <img th:src="@{'/uploads/'+ ${cinema.imageGallery.mainImage}}" class="card-img-top" style="height:150px">
                     <a th:href="@{/admin/cinemas/delete/{id}(id=${cinema.id})}" style="position: absolute; z-index: 1; left: 180px; bottom:220px"><h4><i class="bi bi-x-circle"></i></h4></a>
                     <div class="card-body text-center">
                       <h5 class="card-title" th:text="${cinema.name}" style="color:black;"></h5>
