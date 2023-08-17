@@ -1,9 +1,9 @@
 package project.controller;
 
 import jakarta.validation.Valid;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +18,8 @@ import java.util.List;
 
 @Controller
 public class UserController {
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
     private Integer num = 8;
     public UserController(UserService userService) {
@@ -51,7 +53,8 @@ public class UserController {
         userInDB.setLastName(user.getLastName());
         userInDB.setPseudonym(user.getPseudonym());
         userInDB.setEmail(user.getEmail());
-        userInDB.setPassword(user.getPassword());
+        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        userInDB.setPassword(encodedPassword);
         userInDB.setCardNumber(user.getCardNumber());
         userInDB.setSex(user.getSex());
         userInDB.setPhoneNumber(user.getPhoneNumber());

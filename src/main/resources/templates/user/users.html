@@ -32,7 +32,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each = "user: ${users}">
+                <tr th:each = "user: ${users}" th:if="${user.role} != 'ADMIN'">
                     <td th:text = "${user.id}"></td>
                     <td th:text = "${user.registrationDate}"></td>
                     <td th:text = "${#temporals.format(user.birthDate, 'dd-MM-yyyy')}"></td>

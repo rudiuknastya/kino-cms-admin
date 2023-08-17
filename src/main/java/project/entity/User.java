@@ -29,8 +29,8 @@ public class User {
     @Column(columnDefinition="VARCHAR(30) NOT NULL UNIQUE")
     private String email;
     @NotEmpty(message = "Поле не може бути порожнім")
-    @Size(min=5, max=15, message = "Розмір поля має бути від 5 до 15 символів")
-    @Column(columnDefinition="VARCHAR(15) NOT NULL UNIQUE")
+    //@Size(min=5, max=15, message = "Розмір поля має бути від 5 до 15 символів")
+    @Column(columnDefinition="NOT NULL UNIQUE")
     private String password;
     @Column(name = "card_number", columnDefinition="VARCHAR(20) UNIQUE")
     @Size(min=13, max=19, message = "Розмір поля має бути від 13 до 19 символів")
@@ -43,7 +43,7 @@ public class User {
     @Column(name = "phone_number", columnDefinition="VARCHAR(20) NOT NULL UNIQUE")
     private String phoneNumber;
     @NotNull(message = "Поле не може бути порожнім")
-    @Column(name = "birth_date", columnDefinition="DATE NOT NULL")
+    @Column(name = "birth_date", columnDefinition="DATE")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
     //@NotNull
@@ -51,15 +51,24 @@ public class User {
     private String city;
     @NotEmpty(message = "Поле не може бути порожнім")
     @Size(max=100, message = "Розмір поля має бути не більше 100 символів")
-    @Column(columnDefinition="VARCHAR(100) NOT NULL")
+    @Column(columnDefinition="VARCHAR(100)")
     private String address;
     //@NotNull
-    @Column(columnDefinition="ENUM('ukr','eng') NOT NULL")
+    @Column(columnDefinition="ENUM('ukr','eng')")
     private String language;
 
     @Column(name = "registration_date", columnDefinition="DATE NOT NULL")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate registrationDate;
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public String getAddress() {
         return address;
