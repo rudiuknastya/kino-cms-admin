@@ -41,21 +41,13 @@ public class StatisticServiceImpl implements StatisticService {
 
     @Override
     public List<Long> getFilmSessionsInMonth() {
-        List<Long> filmSessionsInMonth = new ArrayList<>();
-        for(int i = 1; i < 13; i++){
-            Long n = filmSessionRepository.filmSessionsInMonth(i);
-            filmSessionsInMonth.add(n);
-        }
+        List<Long> filmSessionsInMonth = filmSessionRepository.filmSessionsInMonth();
         return filmSessionsInMonth;
     }
 
     @Override
     public List<Long> getFilmSessionsPriceInMonth() {
-        List<Long> filmSessionsPriceInMonth = new ArrayList<>();
-        for(int i = 1; i < 13; i++){
-            Long n = filmSessionRepository.filmSessionsPriceInMonth(i);
-            filmSessionsPriceInMonth.add(n);
-        }
+        List<Long> filmSessionsPriceInMonth = filmSessionRepository.filmSessionsPriceInMonth();
         return filmSessionsPriceInMonth;
     }
 
