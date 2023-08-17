@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.entity.MainPage;
 import project.entity.News;
+import project.service.BannerService;
+import project.service.FilmService;
+import project.service.FilmSessionService;
 import project.service.MainPageService;
 
 import java.io.IOException;
@@ -15,10 +18,17 @@ import java.io.IOException;
 @Controller
 public class MainPageController {
     private final MainPageService mainPageService;
+    private final BannerService bannerService;
+    private final FilmService filmService;
+    private final FilmSessionService filmSessionService;
 
-    public MainPageController(MainPageService mainPageService) {
+    public MainPageController(MainPageService mainPageService, BannerService bannerService, FilmService filmService, FilmSessionService filmSessionService) {
         this.mainPageService = mainPageService;
+        this.bannerService = bannerService;
+        this.filmService = filmService;
+        this.filmSessionService = filmSessionService;
     }
+
     private Integer n = 7;
     @GetMapping("/admin/pages/edit/main")
     public String editMainPage(Model model){
@@ -44,5 +54,16 @@ public class MainPageController {
         mainPageService.saveMainPage(mainPageInDb);
         return "redirect:/admin/pages";
     }
+    @GetMapping("/main_page")
+    public String getMainPage(Model model){
+        model.addAttribute("mainPage",mainPageService.getMainPage());
+        model.addAttribute("mainBanners", bannerService.getAllMainBanners());
+        model.addAttribute("newsBanners", bannerService.getAllNewsBanners());
+        model.addAttribute("todayFilms", filmSessionService.getFilmsToday());
+        model.addAttribute("soonFilms", filmService.getSoonFilms());
+        model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
+        return "mainPage/main_page";
+    }
+
 
 }

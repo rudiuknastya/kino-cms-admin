@@ -20,7 +20,7 @@ public class Film {
     @Column(columnDefinition="VARCHAR(100) NOT NULL")
     private String name;
     @NotEmpty(message = "Поле не може бути порожнім")
-    @Column(columnDefinition="TINYTEXT NOT NULL")
+    @Column(columnDefinition="TEXT NOT NULL")
     private String description;
     private String trailer;
     //@NotEmpty(message = "Поле не може бути порожнім")

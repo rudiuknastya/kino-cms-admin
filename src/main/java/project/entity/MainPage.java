@@ -26,7 +26,7 @@ public class MainPage {
     @Column(name = "phone_number2", columnDefinition="VARCHAR(20) UNIQUE")
     private String phone2;
     @NotEmpty(message = "Поле не може бути порожнім")
-    @Column(name="seo_text",columnDefinition="TINYTEXT NOT NULL")
+    @Column(name="seo_text",columnDefinition="TEXT NOT NULL")
     private String seoText;
     @Column(columnDefinition="BOOLEAN NOT NULL")
     private Boolean status;

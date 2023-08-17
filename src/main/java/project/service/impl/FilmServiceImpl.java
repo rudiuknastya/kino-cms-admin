@@ -46,4 +46,13 @@ public class FilmServiceImpl implements FilmService {
         filmRepository.deleteById(id);
         logger.info("deleteFilmById() - Film was deleted");
     }
+
+
+    @Override
+    public List<Film> getSoonFilms() {
+        logger.info("getTodayFilms() - Finding films that will be soon");
+        List<Film> soonFilms = filmRepository.soonFilms();
+        logger.info("getTodayFilms() - Films that will be soon were found");
+        return soonFilms;
+    }
 }

@@ -9,4 +9,5 @@ public interface FilmService {
     Film getFilmById(Long id);
     Film saveFilm(Film film);
     void deleteFilmById(Long id);
+    List<Film>getSoonFilms();
 }
