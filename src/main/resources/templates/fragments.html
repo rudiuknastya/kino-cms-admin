@@ -368,7 +368,7 @@
                         <li class="nav-item mx-3"><a th:class="'nav-link '+${linkNumber == 10 ? 'active' : ''}" href="../dashboard/index-dual-horizontal.html" style="color:black"> Розклад </a></li>
                         <li class="nav-item mx-3"><a class="nav-link " th:href="@{/soon}" style="color:black"> Скоро </a></li>
                         <li class="nav-item mx-3"><a th:class="'nav-link '+${linkNumber == 4 ? 'active' : ''}" th:href="@{/cinemas}" style="color:black"> Кінотеатри </a></li>
-                        <li class="nav-item mx-3"><a class="nav-link" href="../dashboard/index-boxed-fancy.html" style="color:black"> Акції </a></li>
+                        <li class="nav-item mx-3"><a th:class="'nav-link '+${linkNumber == 6 ? 'active' : ''}" th:href="@{/shares}" style="color:black"> Акції </a></li>
                         <li class="nav-item dropdown mx-3"> <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:black">Про кінотеатр </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Новини</a></li>
@@ -410,7 +410,7 @@
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0" style="color:black">Розклад</a></li>
                     <li class="nav-item mb-2"><a th:href="@{/soon}" class="nav-link p-0" style="color:black">Скоро в прокаті</a></li>
                     <li class="nav-item mb-2"><a th:href="@{/cinemas}" class="nav-link p-0"style="color:black">Кінотеатри</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0"style="color:black">Акції</a></li>
+                    <li class="nav-item mb-2"><a th:href="@{/shares}" class="nav-link p-0"style="color:black">Акції</a></li>
                 </ul>
             </div>
 

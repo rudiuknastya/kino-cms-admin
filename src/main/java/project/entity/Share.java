@@ -20,7 +20,7 @@ public class Share {
     @Column(columnDefinition="VARCHAR(30) NOT NULL")
     private String name;
     @NotEmpty(message = "Поле не може бути порожнім")
-    @Column(columnDefinition="TINYTEXT NOT NULL")
+    @Column(columnDefinition="TEXT NOT NULL")
     private String description;
     @Size(max=100, message = "Розмір поля має бути не більше 100 символів")
     @Column(name="video_link", columnDefinition="VARCHAR(100)")

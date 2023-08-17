@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.entity.Gallery;
 import project.entity.Share;
+import project.service.BannerService;
+import project.service.MainPageService;
 import project.service.ShareService;
 
 import java.io.File;
@@ -20,10 +22,32 @@ import java.util.UUID;
 public class ShareController {
     private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
     private final ShareService shareService;
+    private final BannerService bannerService;
+    private final MainPageService mainPageService;
+
+    public ShareController(ShareService shareService, BannerService bannerService, MainPageService mainPageService) {
+        this.shareService = shareService;
+        this.bannerService = bannerService;
+        this.mainPageService = mainPageService;
+    }
+
     private Integer n = 6;
 
-    public ShareController(ShareService shareService) {
-        this.shareService = shareService;
+    @GetMapping("/shares")
+    public String getShares(Model model){
+        model.addAttribute("shares", shareService.getAllShares());
+        model.addAttribute("mainPage",mainPageService.getMainPage());
+        model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
+        model.addAttribute("pagenm", n);
+        return "share/public_shares";
+    }
+    @GetMapping("/shares/share/{id}")
+    public String showShare(@PathVariable Long id, Model model){
+        model.addAttribute("share", shareService.getShareById(id));
+        model.addAttribute("mainPage",mainPageService.getMainPage());
+        model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
+        model.addAttribute("pagenm", n);
+        return "share/public_share";
     }
 
     @GetMapping("/admin/shares")

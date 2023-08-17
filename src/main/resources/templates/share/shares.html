@@ -30,7 +30,7 @@
                                 <tr th:each = "share: ${shares}">
                                     <td th:text = "${share.name}"></td>
                                     <td th:text = "${#temporals.format(share.publicationDate, 'dd-MM-yyyy')}"></td>
-                                    <td th:text = "${share.status}"></td>
+                                    <td th:text = "${share.status == true? 'Увім': 'Вимк'}"></td>
                                     <td>
                                         <a th:href="@{/admin/shares/edit/{id}(id=${share.id})}" role="button" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
                                         <a th:href="@{/admin/shares/delete/{id}(id=${share.id})}" role="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
