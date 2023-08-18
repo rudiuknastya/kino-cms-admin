@@ -13,6 +13,7 @@ import project.entity.Cafe;
 import project.entity.Gallery;
 import project.entity.SeoBlock;
 import project.service.CafeService;
+import project.service.MainPageService;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,12 +25,23 @@ import java.util.UUID;
 @Controller
 public class CafeController {
     private final CafeService cafeService;
+    private final MainPageService mainPageService;
 
-    public CafeController(CafeService cafeService) {
+    public CafeController(CafeService cafeService, MainPageService mainPageService) {
         this.cafeService = cafeService;
+        this.mainPageService = mainPageService;
     }
+
     private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
     private Integer n = 7;
+
+    @GetMapping("/cafe")
+    public String showCafe(Model model){
+        model.addAttribute("object", cafeService.getCafe());
+        model.addAttribute("mainPage",mainPageService.getMainPage());
+        model.addAttribute("pageNum", n);
+        return "page/cafe_page";
+    }
     @GetMapping("/admin/pages/edit/cafe")
     public String editCafePage(Model model){
         String l = "edit/cafe";
