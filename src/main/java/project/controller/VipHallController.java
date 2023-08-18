@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import project.entity.Gallery;
 import project.entity.SeoBlock;
 import project.entity.VipHall;
+import project.service.MainPageService;
 import project.service.VipHallService;
 
 import java.io.File;
@@ -24,12 +25,23 @@ import java.util.UUID;
 @Controller
 public class VipHallController {
     private final VipHallService vipHallService;
+    private final MainPageService mainPageService;
 
-    public VipHallController(VipHallService vipHallService) {
+    public VipHallController(VipHallService vipHallService, MainPageService mainPageService) {
         this.vipHallService = vipHallService;
+        this.mainPageService = mainPageService;
     }
+
     private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
     private Integer n = 7;
+    @GetMapping("/vip_hall")
+    public String showVipHall(Model model){
+        model.addAttribute("object", vipHallService.getVipHall());
+        model.addAttribute("mainPage",mainPageService.getMainPage());
+        model.addAttribute("pageNum", n);
+        return "page/public_page";
+    }
+
     @GetMapping("/admin/pages/edit/vip_hall")
     public String editVipHallPage(Model model){
         String l = "edit/vip_hall";

@@ -19,7 +19,7 @@ public class Cafe {
     @Column(columnDefinition = "VARCHAR(40) NOT NULL")
     private String name;
     @NotEmpty(message = "Поле не може бути порожнім")
-    @Column(columnDefinition = "TINYTEXT NOT NULL")
+    @Column(columnDefinition = "TEXT NOT NULL")
     private String description;
     @Column(columnDefinition = "BOOLEAN NOT NULL")
     private Boolean status;
