@@ -13,6 +13,7 @@ import project.entity.ChildrenRoom;
 import project.entity.Gallery;
 import project.entity.SeoBlock;
 import project.service.ChildrenRoomService;
+import project.service.MainPageService;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,12 +25,22 @@ import java.util.UUID;
 @Controller
 public class ChildrenRoomController {
     private final ChildrenRoomService childrenRoomService;
+    private final MainPageService mainPageService;
 
-    public ChildrenRoomController(ChildrenRoomService childrenRoomService) {
+    public ChildrenRoomController(ChildrenRoomService childrenRoomService, MainPageService mainPageService) {
         this.childrenRoomService = childrenRoomService;
+        this.mainPageService = mainPageService;
     }
+
     private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
     private Integer n = 7;
+    @GetMapping("/children_room")
+    public String showVipHall(Model model){
+        model.addAttribute("object", childrenRoomService.getChildrenRoom());
+        model.addAttribute("mainPage",mainPageService.getMainPage());
+        model.addAttribute("pageNum", n);
+        return "page/public_page";
+    }
     @GetMapping("/admin/pages/edit/children_room")
     public String editChildrenRoomPage(Model model){
         String l = "edit/children_room";
