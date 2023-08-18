@@ -4,13 +4,11 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.entity.*;
 import project.service.AboutCinemaService;
+import project.service.MainPageService;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,12 +20,22 @@ import java.util.UUID;
 @Controller
 public class AboutCinemaController {
     private final AboutCinemaService aboutCinemaService;
+    private final MainPageService mainPageService;
 
-    public AboutCinemaController(AboutCinemaService aboutCinemaService) {
+    public AboutCinemaController(AboutCinemaService aboutCinemaService, MainPageService mainPageService) {
         this.aboutCinemaService = aboutCinemaService;
+        this.mainPageService = mainPageService;
     }
+
     private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
     private Integer n = 7;
+    @GetMapping("/about_cinema")
+    public String showAboutCinema(Model model){
+        model.addAttribute("object", aboutCinemaService.getAboutCinema());
+        model.addAttribute("mainPage",mainPageService.getMainPage());
+        model.addAttribute("pageNum", n);
+        return "page/public_page";
+    }
     @GetMapping("/admin/pages/edit/about_cinema")
     public String editAboutCinemaPage(Model model){
         String l = "edit/about_cinema";
