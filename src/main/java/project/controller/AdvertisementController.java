@@ -13,6 +13,7 @@ import project.entity.Advertisement;
 import project.entity.Gallery;
 import project.entity.SeoBlock;
 import project.service.AdvertisementService;
+import project.service.MainPageService;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,12 +25,22 @@ import java.util.UUID;
 @Controller
 public class AdvertisementController {
     private final AdvertisementService advertisementService;
+    private final MainPageService mainPageService;
 
-    public AdvertisementController(AdvertisementService advertisementService) {
+    public AdvertisementController(AdvertisementService advertisementService, MainPageService mainPageService) {
         this.advertisementService = advertisementService;
+        this.mainPageService = mainPageService;
     }
+
     private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
     private Integer n = 7;
+    @GetMapping("/advertisement")
+    public String showAd(Model model){
+        model.addAttribute("object", advertisementService.getAd());
+        model.addAttribute("mainPage",mainPageService.getMainPage());
+        model.addAttribute("pageNum", n);
+        return "page/public_page";
+    }
     @GetMapping("/admin/pages/edit/advertisement")
     public String editAdPage(Model model){
         String l = "edit/advertisement";
