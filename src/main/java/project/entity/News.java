@@ -16,11 +16,11 @@ public class News {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty(message = "Поле не може бути порожнім")
-    @Size(max=30, message = "Розмір поля має бути не більше 30 символів")
-    @Column(columnDefinition="VARCHAR(30) NOT NULL")
+    @Size(max=100, message = "Розмір поля має бути не більше 100 символів")
+    @Column(columnDefinition="VARCHAR(100) NOT NULL")
     private String name;
     @NotEmpty(message = "Поле не може бути порожнім")
-    @Column(columnDefinition="TINYTEXT NOT NULL")
+    @Column(columnDefinition="TEXT NOT NULL")
     private String description;
     @Size(max=100, message = "Розмір поля має бути не більше 100 символів")
     @Column(name="video_link", columnDefinition="VARCHAR(100)")

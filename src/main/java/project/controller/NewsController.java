@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.entity.Gallery;
 import project.entity.News;
+import project.service.BannerService;
+import project.service.MainPageService;
 import project.service.NewsService;
 
 import java.io.File;
@@ -20,11 +22,36 @@ import java.util.UUID;
 public class NewsController {
     private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
     private final NewsService newsService;
-    public NewsController(NewsService newsService) {
+    private final MainPageService mainPageService;
+    private final BannerService bannerService;
+
+    public NewsController(NewsService newsService, MainPageService mainPageService, BannerService bannerService) {
         this.newsService = newsService;
+        this.mainPageService = mainPageService;
+        this.bannerService = bannerService;
     }
+
     private Integer n = 5;
-    //private String l = "news";
+    @GetMapping("/news/{id}")
+    public String getNews(@PathVariable Long id, Model model){
+        String link = "shares/share";
+        model.addAttribute("share", newsService.getNewById(id));
+        model.addAttribute("mainPage",mainPageService.getMainPage());
+        model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
+        model.addAttribute("pagenm", n);
+        return "share/public_share";
+    }
+    @GetMapping("/news")
+    public String showAllNews(Model model){
+        String link = "news";
+        model.addAttribute("shares", newsService.getAllNews());
+        model.addAttribute("mainPage",mainPageService.getMainPage());
+        model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
+        model.addAttribute("pagenm", n);
+        model.addAttribute("link",link);
+        return "share/public_shares";
+    }
+
     @GetMapping("/admin/news")
     public String getNewsList(Model model){
         model.addAttribute("newsList", newsService.getAllNews());
@@ -55,7 +82,7 @@ public class NewsController {
                            @RequestParam("image3")MultipartFile image3, @RequestParam("image3Name")String image3Name,
                            @RequestParam("image4")MultipartFile image4, @RequestParam("image4Name")String image4Name,
                            @RequestParam("image5")MultipartFile image5, @RequestParam("image5Name")String image5Name,
-                           Model model) throws IOException {
+                           Model model) {
         News newsInDB = newsService.getNewById(id);
         saveImage(mainImage,"mainImage", newsInDB, mainImageName);
         saveImage(image1,"image1", newsInDB, image1Name);
@@ -74,6 +101,7 @@ public class NewsController {
         newsInDB.setStatus(news.getStatus());
         newsInDB.setName(news.getName());
         newsInDB.setDescription(news.getDescription());
+        news.setVideoLink(news.getVideoLink().substring(news.getVideoLink().lastIndexOf("=") + 1));
         newsInDB.setVideoLink(news.getVideoLink());
         newsInDB.setPublicationDate(news.getPublicationDate());
         newsInDB.getSeoBlock().setUrl(news.getSeoBlock().getUrl());
@@ -118,6 +146,7 @@ public class NewsController {
             model.addAttribute("object", news);
             return "newsPage/add_news";
         }
+        news.setVideoLink(news.getVideoLink().substring(news.getVideoLink().lastIndexOf("=") + 1));
         newsService.saveNews(news);
         return "redirect:/admin/news";
     }

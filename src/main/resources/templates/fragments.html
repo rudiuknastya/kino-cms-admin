@@ -371,7 +371,7 @@
                         <li class="nav-item mx-3"><a th:class="'nav-link '+${linkNumber == 6 ? 'active' : ''}" th:href="@{/shares}" style="color:black"> Акції </a></li>
                         <li class="nav-item dropdown mx-3"> <a class="nav-link dropdown-toggle" th:href="@{/about_cinema}" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:black">Про кінотеатр </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Новини</a></li>
+                                <li><a class="dropdown-item" th:href="@{/news}">Новини</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#">Реклама</a></li>
                                 <li><hr class="dropdown-divider"></li>
@@ -421,7 +421,7 @@
             <div class="col-6 col-md-2 mb-3">
                 <a th:href="@{/about_cinema}" style="text-decoration:none; color:black"><h5>Про кінотеатр</h5></a>
                 <ul class="nav flex-column mt-2">
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0" style="color:black">Новини</a></li>
+                    <li class="nav-item mb-2"><a th:href="@{/news}" class="nav-link p-0" style="color:black">Новини</a></li>
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0" style="color:black">Реклама</a></li>
                     <li class="nav-item mb-2"><a th:href="@{/cafe}" class="nav-link p-0" style="color:black">Кафе-Бар</a></li>
                     <li class="nav-item mb-2"><a th:href="@{/vip_hall}" class="nav-link p-0" style="color:black">Vip-Зала</a></li>

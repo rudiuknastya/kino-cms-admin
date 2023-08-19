@@ -35,10 +35,12 @@ public class ShareController {
 
     @GetMapping("/shares")
     public String getShares(Model model){
+        String link = "shares/share";
         model.addAttribute("shares", shareService.getAllShares());
         model.addAttribute("mainPage",mainPageService.getMainPage());
         model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
         model.addAttribute("pagenm", n);
+        model.addAttribute("link",link);
         return "share/public_shares";
     }
     @GetMapping("/shares/share/{id}")
@@ -97,6 +99,7 @@ public class ShareController {
             model.addAttribute("lin", l);
             return "share/add_share";
         }
+        share.setVideoLink(share.getVideoLink().substring(share.getVideoLink().lastIndexOf("=") + 1));
         shareService.saveShare(share);
         return "redirect:/admin/shares";
     }
@@ -137,6 +140,7 @@ public class ShareController {
         shareInDB.setStatus(share.getStatus());
         shareInDB.setName(share.getName());
         shareInDB.setDescription(share.getDescription());
+        share.setVideoLink(share.getVideoLink().substring(share.getVideoLink().lastIndexOf("=") + 1));
         shareInDB.setVideoLink(share.getVideoLink());
         shareInDB.setPublicationDate(share.getPublicationDate());
         shareInDB.getSeoBlock().setUrl(share.getSeoBlock().getUrl());

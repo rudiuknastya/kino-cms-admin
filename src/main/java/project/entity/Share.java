@@ -16,8 +16,8 @@ public class Share {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty(message = "Поле не може бути порожнім")
-    @Size(max=30, message = "Розмір поля має бути не більше 30 символів")
-    @Column(columnDefinition="VARCHAR(30) NOT NULL")
+    @Size(max=100, message = "Розмір поля має бути не більше 100 символів")
+    @Column(columnDefinition="VARCHAR(100) NOT NULL")
     private String name;
     @NotEmpty(message = "Поле не може бути порожнім")
     @Column(columnDefinition="TEXT NOT NULL")

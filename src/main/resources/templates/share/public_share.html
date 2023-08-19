@@ -21,7 +21,29 @@
       <div class="col-5 ms-2">
         <img th:src="@{'/uploads/'+ ${share.imageGallery.mainImage}}" style="width: 310px;">
       </div>
-      <div class="col-6" th:text="${share.description}"></div>
+      <div class="col-6 mb-4"> <p th:text="${share.description}"></p></div>
+
+      <div th:if="${share.imageGallery.image1 != null or share.imageGallery.image2 != null or share.imageGallery.image3 != null or share.imageGallery.image4 != null or share.imageGallery.image5 != null}" id="carouselExample" class="carousel slide mb-4">
+        <div class="carousel-inner">
+          <div th:if="${share.imageGallery.image1 != null}" class="carousel-item active">
+            <img th:src="@{'/uploads/'+ ${share.imageGallery.image1}}" class="d-block w-100" alt="..." style="height: 300px">
+          </div>
+          <div th:if="${share.imageGallery.image2 != null}" class="carousel-item">
+            <img th:src="@{'/uploads/'+ ${share.imageGallery.image2}}" class="d-block w-100" alt="..." style="height: 300px">
+          </div>
+          <div th:if="${share.imageGallery.image3 != null}" class="carousel-item">
+            <img th:src="@{'/uploads/'+ ${share.imageGallery.image3}}" class="d-block w-100" alt="..." style="height: 300px">
+          </div>
+          <div th:if="${share.imageGallery.image4 != null}" class="carousel-item">
+            <img th:src="@{'/uploads/'+ ${share.imageGallery.image4}}" class="d-block w-100" alt="..." style="height: 300px">
+          </div>
+          <div th:if="${share.imageGallery.image5 != null}" class="carousel-item">
+            <img th:src="@{'/uploads/'+ ${share.imageGallery.image5}}" class="d-block w-100" alt="..." style="height: 300px">
+          </div>
+        </div>
+      </div>
+
+      <iframe th:if="${share.videoLink != null and share.videoLink!=''}" width="500" height="400" th:src="@{'https://www.youtube.com/embed/'+${share.videoLink}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
     </div>
     <div class="col-3 d-flex justify-content-center">

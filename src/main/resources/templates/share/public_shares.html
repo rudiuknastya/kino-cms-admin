@@ -14,7 +14,7 @@
         <div class="row">
         <div class="row gx-4 gy-4 col-10">
             <th:block th:each="share : ${shares}">
-                <a class="col-4" style="text-decoration:none; color:black" th:href="@{/shares/share/{id} (id=${share.id})}">
+                <a th:if="${share.status != false}" class="col-4" style="text-decoration:none; color:black" th:href="@{/{lin}/{id} (id=${share.id},lin=${link})}">
                     <div class="d-flex flex-column justify-content-center">
                         <img th:src="@{'/uploads/'+ ${share.imageGallery.mainImage}}" style="width:250px">
                         <h5 th:text="${share.name}" class="mt-2" style="text-align:center;"></h5>
