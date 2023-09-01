@@ -22,7 +22,7 @@
                     </a>
                 </th:block>
                 <h5 style="text-align:center" class="mt-3">Дивіться сьогодні</h5>
-                <a href="@{/admin/films/new}" type="button" class="btn btn-primary d-block col-9 mx-auto" >Розклад сеансів</a>
+                <a th:href="@{/film_sessions}" type="button" class="btn btn-primary d-block col-9 mx-auto" >Розклад сеансів</a>
             </div>
             <div class="col-9">
                 <h3 class="mt-2 ms-3" th:text="${'Зала '+hall.number}" style="text-align:center"></h3>

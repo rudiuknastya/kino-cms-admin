@@ -28,12 +28,13 @@
                         <div style="color:black; border:solid;" th:text="${film.getFilmName()}"></div>
                     </a>
                 </th:block>
-                <a href="@{/admin/films/new}" type="button" class="btn btn-primary d-block col-9 mx-auto mt-3" >Розклад сеансів</a>
+                <a th:href="@{/film_sessions}" type="button" class="btn btn-primary d-block col-9 mx-auto mt-3" >Розклад сеансів</a>
             </div>
             <div class="col-9">
             <div class="d-flex justify-content-around">
-                <div class="col-8 d-flex justify-content-start align-items-center"><img th:src="@{'/uploads/'+ ${cinema.logo}}" style="width:40px">
-                <h3 class="mt-2 ms-3" th:text="${cinema.name}"></h3>
+                <div class="col-8 d-flex justify-content-start align-items-center">
+                    <img th:src="@{'/uploads/'+ ${cinema.logo}}" style="width:40px">
+                    <h3 class="mt-2 ms-3" th:text="${cinema.name}"></h3>
                 </div>
                <div class="col-4"> <a href="@{/admin/films/new}" type="button" class="btn btn-primary col-9" >Розклад сеансів</a></div>
             </div>
