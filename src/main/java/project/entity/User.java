@@ -28,7 +28,7 @@ public class User {
     @Email(regexp = "[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\\.[a-z]{2,3}", message = "Невірний формат email")
     @Column(columnDefinition="VARCHAR(30) NOT NULL UNIQUE")
     private String email;
-    @NotEmpty(message = "Поле не може бути порожнім")
+    //@NotEmpty(message = "Поле не може бути порожнім")
     //@Size(min=5, max=15, message = "Розмір поля має бути від 5 до 15 символів")
     @Column(columnDefinition="NOT NULL UNIQUE")
     private String password;
@@ -42,14 +42,14 @@ public class User {
     @Pattern(regexp = "^\\+?[1-9][0-9]{4,15}$", message = "Невірний номер")
     @Column(name = "phone_number", columnDefinition="VARCHAR(20) NOT NULL UNIQUE")
     private String phoneNumber;
-    @NotNull(message = "Поле не може бути порожнім")
+    //@NotNull(message = "Поле не може бути порожнім")
     @Column(name = "birth_date", columnDefinition="DATE")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
     //@NotNull
     @Column(columnDefinition="VARCHAR(40) NOT NULL")
     private String city;
-    @NotEmpty(message = "Поле не може бути порожнім")
+    //@NotEmpty(message = "Поле не може бути порожнім")
     @Size(max=100, message = "Розмір поля має бути не більше 100 символів")
     @Column(columnDefinition="VARCHAR(100)")
     private String address;

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import project.entity.User;
+import project.service.MainPageService;
 import project.service.UserService;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class UserController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
     private Integer num = 8;
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -70,4 +72,5 @@ public class UserController {
         userService.deleteUserById(id);
         return "redirect:/admin/users";
     }
+
 }

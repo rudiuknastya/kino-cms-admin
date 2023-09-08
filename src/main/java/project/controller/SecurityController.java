@@ -11,10 +11,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class SecurityController {
-    @GetMapping("/login")
+    @GetMapping("/admin/login")
     public String showLogin(Model model){
         return "security/loginForm";
     }
+    @GetMapping("/login_user")
+    public String showLoginUser(Model model){
+        return "security/loginUser";
+    }
+
     @GetMapping("/login-error")
     public String login(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession(false);
@@ -29,8 +34,12 @@ public class SecurityController {
         model.addAttribute("errorMessage", errorMessage);
         return "security/error";
     }
-    @GetMapping("/logout")
+    @GetMapping("/admin/logout")
     public String logout() {
-        return "redirect:/login";
+        return "redirect:/admin/login";
+    }
+    @GetMapping("/logout_user")
+    public String logoutUser() {
+        return "redirect:/main_page";
     }
 }

@@ -1,5 +1,6 @@
 package project.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User saveUser(User user) {
+        logger.info("saveUser() - Saving user");
+        User userSaved = userRepository.save(user);
+        logger.info("saveUser() - User was saved");
+        return userSaved;
+    }
+
+    @Override
     public User updateUser(User user) {
         logger.info("updateUser() - Updating user");
         User userSaved = userRepository.save(user);
@@ -37,8 +46,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long id) {
         logger.info("getUserById() - Finding user by id "+id);
-        User foundUser = userRepository.findById(id).get();
+        User foundUser = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         logger.info("getUserById() - User was found");
+        return foundUser;
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        logger.info("getUserByEmail() - Finding user by email "+email);
+        User foundUser = userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
+        logger.info("getUserByEmail() - User was found");
         return foundUser;
     }
 
