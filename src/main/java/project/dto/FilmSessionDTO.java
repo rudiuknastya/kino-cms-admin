@@ -1,7 +1,7 @@
 package project.dto;
 
 public interface FilmSessionDTO {
-    String getFilmSessionId();
+    Long getFilmSessionId();
     String getFilmName();
 
 }

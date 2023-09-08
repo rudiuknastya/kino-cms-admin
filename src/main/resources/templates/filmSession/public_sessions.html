@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kino CMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</head>
+<header th:replace="~{fragments :: header(${mainPage.phone1},${mainPage.phone2},${pageNumb},${newPages},${aboutCinemaPage}, ${cafePage}, ${vipHallPage}, ${adPage}, ${childrenRoomPage},${contactPage})}"></header>
+<body style="margin-top:185px">
+<div class="mx-auto pb-5" style="width:1030px; background-color:white;" >
+    <div class="conatiner-fluid  py-0">
+        <form th:action = "@{/filter}" method="post" class="row g-3 mb-5" style="color:black;">
+            <div class="col-md-3 d-flex align-items-end">
+                <label class="form-label me-3">Тип</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="3D" name="check" th:checked="${check3D != null? true:false}">
+                    <label class="form-check-label" for="inlineCheckbox1">3D</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="2D" name="check" th:checked="${check2D != null? true:false}">
+                    <label class="form-check-label" for="inlineCheckbox2">2D</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="IMAX" name="check" th:checked="${checkIMAX != null? true:false}">
+                    <label class="form-check-label" for="inlineCheckbox3">IMAX</label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label for="selectFilm" class="form-label">Фільм</label>
+                <select class="form-select" aria-label=".form-select-lg example" id="selectFilm" name="selectFilm" th:attr="value = ${film}">
+                    <option value="all">Всі</option>
+                    <option th:each="f : ${films}" th:value="${f.name}" th:text="${f.name}"></option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="publDate" class="form-label">Дата</label>
+                <input id="publDate" class="form-control" type="date" th:value="${sessionDate}" name="sessionDate">
+            </div>
+            <div class="col-md-3 text-center d-flex align-items-end">
+                <button type="submit" class="btn btn-primary ms-3">OK</button>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-9">
+            <h5 th:text="${#temporals.format(T(java.time.LocalDate).of(#temporals.year(todayDate),
+                    #temporals.month(todayDate), #temporals.day(todayDate)),
+                    'dd MMMM', new java.util.Locale('uk', 'UA'))}">
+            </h5>
+            <div class="col-11 row my-2 py-2" style="border-bottom-style: solid; border-width: 1px; border-color: grey;">
+                <div class="col-2" style="text-align:center;"> Час</div>
+                <div class="col-4" style="text-align:center;">Фільм</div>
+                <div class="col-2" style="text-align:center;">Зала</div>
+                <div class="col-2" style="text-align:center;">Ціна</div>
+                <div class="col-2" style="text-align:center;">Бронювати</div>
+            </div>
+            <th:block th:each="todaySession : ${todaySessions}">
+                <div class="col-11 row my-2 py-2" style="border-bottom-style: solid; border-width: 1px; border-color: grey;">
+                        <div class="col-2" th:text="${todaySession.sessionTime}" style="text-align:center;"></div>
+                        <div class="col-4" th:text="${todaySession.film.name+ '  '+todaySession.type}" style="text-align:center;"></div>
+                        <div class="col-2" th:text="${todaySession.hall.number}" style="text-align:center;"></div>
+                        <div class="col-2" th:text="${todaySession.price}" style="text-align:center;"></div>
+                        <a th:href="@{/film_session/{id} (id=${todaySession.id})}" type="button" class="btn btn-success btn-sm d-block col-2" style="text-align:center; height: 35px" >Бронювати</a>
+                </div>
+            </th:block>
+                <div th:if="${tomorrowSessions != null}">
+            <h5 th:text="${#temporals.format(T(java.time.LocalDate).of(#temporals.year(#temporals.createToday().plusDays(1)),
+                    #temporals.month(#temporals.createToday().plusDays(1)), #temporals.day(#temporals.createToday().plusDays(1))),
+                    'dd MMMM', new java.util.Locale('uk', 'UA'))}" class="mt-5">
+            </h5>
+            <div class="col-11 row my-2 py-2" style="border-bottom-style: solid; border-width: 1px; border-color: grey;">
+                <div class="col-2" style="text-align:center;"> Час</div>
+                <div class="col-4" style="text-align:center;">Фільм</div>
+                <div class="col-2" style="text-align:center;">Зала</div>
+                <div class="col-2" style="text-align:center;">Ціна</div>
+                <div class="col-2" style="text-align:center;">Бронювати</div>
+            </div>
+            <th:block th:each="tomorrowSession : ${tomorrowSessions}">
+                <div class="col-11 row my-2 py-2" style="border-bottom-style: solid; border-width: 1px; border-color: grey;">
+                    <div class="col-2" th:text="${tomorrowSession.sessionTime}" style="text-align:center;"></div>
+                    <div class="col-4" th:text="${tomorrowSession.film.name + '  '+tomorrowSession.type}" style="text-align:center;"></div>
+                    <div class="col-2" th:text="${tomorrowSession.hall.number}" style="text-align:center;"></div>
+                    <div class="col-2" th:text="${tomorrowSession.price}" style="text-align:center;"></div>
+                    <a th:href="@{/film_session/{id} (id=${tomorrowSession.id})}" type="button" class="btn btn-success btn-sm d-block col-2" style="text-align:center; height: 35px" >Бронювати</a>
+                </div>
+            </th:block>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="col-12 mt-5" style="color:black; border:solid; height: 300px;">
+                    <h5 class="mt-2">Реклама</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<div th:replace="~{fragments :: footer}"></div>
+</html>

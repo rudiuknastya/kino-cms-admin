@@ -22,15 +22,25 @@ public class FilmSession {
     @Column(name="session_time", columnDefinition="TIME NOT NULl")
     @DateTimeFormat(pattern = "hh:mm:ss")
     private LocalTime sessionTime;
-    //@NotEmpty(message = "Поле не може бути порожнім")
+    @NotNull(message = "Поле не може бути порожнім")
     @Column(nullable = false)
     private Integer price;
+    @Column(columnDefinition="ENUM('3D','2D','IMAX')",nullable = false)
+    private String type;
     @ManyToOne
     @JoinColumn(name = "film_id", referencedColumnName = "id")
     private Film film;
     @ManyToOne
     @JoinColumn(name = "hall_id", referencedColumnName = "id")
     private Hall hall;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public Long getId() {
         return id;

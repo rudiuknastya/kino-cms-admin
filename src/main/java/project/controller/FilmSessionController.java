@@ -11,21 +11,23 @@ import project.service.FilmSessionService;
 import project.service.HallService;
 import project.service.MainPageService;
 
+import java.time.LocalDate;
+
 @Controller
 public class FilmSessionController {
     private final FilmSessionService filmSessionService;
     private final FilmService filmService;
     private final HallService hallService;
-    private final MainPageService mainPageService;
 
-    public FilmSessionController(FilmSessionService filmSessionService, FilmService filmService, HallService hallService, MainPageService mainPageService) {
+
+    public FilmSessionController(FilmSessionService filmSessionService, FilmService filmService, HallService hallService) {
         this.filmSessionService = filmSessionService;
         this.filmService = filmService;
         this.hallService = hallService;
-        this.mainPageService = mainPageService;
     }
 
     private Integer n = 10;
+
     @GetMapping("/admin/sessions")
     public String getFilmSessionList(Model model){
         model.addAttribute("sessions", filmSessionService.getAllFilmSessions());
@@ -99,13 +101,7 @@ public class FilmSessionController {
         filmSessionService.saveFilmSession(filmSessionInDb);
         return "redirect:/admin/sessions";
     }
-    @GetMapping("/film_session/{id}")
-    public String getFilmSession(@PathVariable("id") Long id,Model model){
-        model.addAttribute("filmSession", filmSessionService.getFilmSessionById(id));
-        model.addAttribute("pageNumb", n);
-        model.addAttribute("mainPage",mainPageService.getMainPage());
-        return "filmSession/public_film_session";
-    }
+
 
 
 
