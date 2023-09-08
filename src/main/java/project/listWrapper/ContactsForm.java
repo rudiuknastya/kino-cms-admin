@@ -1,19 +1,19 @@
 package project.listWrapper;
 
 import jakarta.validation.Valid;
-import project.entity.Contacts;
+import project.entity.Contact;
 
 import java.util.List;
 
 public class ContactsForm {
     @Valid
-    private List<Contacts> contactsList;
+    private List<Contact> contactsList;
 
-    public List<Contacts> getContactsList() {
+    public List<Contact> getContactsList() {
         return contactsList;
     }
 
-    public void setContactsList(List<Contacts> contactsList) {
+    public void setContactsList(List<Contact> contactsList) {
         this.contactsList = contactsList;
     }
 }

@@ -1,12 +1,12 @@
 package project.service;
 
-import project.entity.Contacts;
+import project.entity.Contact;
 
 import java.util.List;
 
 public interface ContactsService {
-    List<Contacts> getAllContacts();
-    Contacts saveContact(Contacts contacts);
-    Contacts getContact();
+    List<Contact> getAllContacts();
+    Contact saveContact(Contact contacts);
+    Contact getContact();
     void deleteContactById(Long id);
 }

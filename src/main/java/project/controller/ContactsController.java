@@ -6,9 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import project.entity.Contacts;
+import project.entity.Contact;
 import project.listWrapper.ContactsForm;
+import project.service.BannerService;
 import project.service.ContactsService;
+import project.service.MainPageService;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,13 +22,19 @@ import java.util.UUID;
 @Controller
 public class ContactsController {
     private final ContactsService contactsService;
+    private final MainPageService mainPageService;
+    private final BannerService bannerService;
 
-    public ContactsController(ContactsService contactsService) {
+    public ContactsController(ContactsService contactsService, MainPageService mainPageService, BannerService bannerService) {
         this.contactsService = contactsService;
+        this.mainPageService = mainPageService;
+        this.bannerService = bannerService;
     }
+
     private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
     private Integer n = 7;
-    private List<Contacts> contacts;
+    private List<Contact> contacts;
+
     @GetMapping("/admin/pages/edit/contacts/delete/{id}")
     public String deleteContact(@PathVariable Long id,  Model model) {
         if(id < contacts.size()){
@@ -41,7 +49,7 @@ public class ContactsController {
     @GetMapping("/admin/pages/edit/contacts/new")
     public String createContacts(Model model) {
         ContactsForm contactsForm = new ContactsForm();
-        contacts.add(new Contacts());
+        contacts.add(new Contact());
         contactsForm.setContactsList(contacts);
         model.addAttribute("contacts", contactsForm);
         model.addAttribute("pagenuM", n);
@@ -61,7 +69,7 @@ public class ContactsController {
     @PostMapping("/admin/pages/edit/contacts")
     public String updateContacts(@Valid @ModelAttribute("contacts") ContactsForm contactsForm, BindingResult bindingResult,
                                  @RequestParam("logoImage") MultipartFile[] logoImages, Model model) {
-        List<Contacts> contactsInDb = contactsService.getAllContacts();
+        List<Contact> contactsInDb = contactsService.getAllContacts();
         saveImages(contactsInDb, contactsForm.getContactsList(), logoImages);
         System.out.println(logoImages.length);
         System.out.println(logoImages[0].getOriginalFilename());
@@ -73,7 +81,7 @@ public class ContactsController {
             return "page/contacts_page";
         }
         int i = 0;
-        for(Contacts contact: contactsForm.getContactsList()){
+        for(Contact contact: contactsForm.getContactsList()){
             if(i<contactsInDb.size()) {
                 if (i == 0) {
                     contactsInDb.get(i).setStatus(contact.getStatus());
@@ -96,7 +104,7 @@ public class ContactsController {
         return "redirect:/admin/pages";
     }
 
-    private void saveImages(List<Contacts> contactsInDb, List<Contacts> contactsList, MultipartFile[] logoImages) {
+    private void saveImages(List<Contact> contactsInDb, List<Contact> contactsList, MultipartFile[] logoImages) {
         //int i=0;
         for (int i=0; i<logoImages.length; i++) {
             if(i<contactsInDb.size() && !logoImages[i].getOriginalFilename().equals("")) {

@@ -3,7 +3,7 @@ package project.service.impl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
-import project.entity.Contacts;
+import project.entity.Contact;
 import project.repository.ContactsRepository;
 import project.service.ContactsService;
 
@@ -18,25 +18,25 @@ public class ContactsServiceImpl implements ContactsService {
     private Logger logger = LogManager.getLogger("serviceLogger");
 
     @Override
-    public List<Contacts> getAllContacts() {
+    public List<Contact> getAllContacts() {
         logger.info("getAllContacts() - Finding all contacts");
-        List<Contacts> contacts = contactsRepository.findAll();
+        List<Contact> contacts = contactsRepository.findAll();
         logger.info("getAllContacts() - All contacts were found");
         return contacts;
     }
 
     @Override
-    public Contacts saveContact(Contacts contacts) {
+    public Contact saveContact(Contact contacts) {
         logger.info("saveContact() - Saving contact");
-        Contacts contact = contactsRepository.save(contacts);
+        Contact contact = contactsRepository.save(contacts);
         logger.info("saveContact() - Contact was saved");
         return contact;
     }
 
     @Override
-    public Contacts getContact() {
+    public Contact getContact() {
         logger.info("getContact() - getting contact");
-        Contacts contact = contactsRepository.findById(1L).get();
+        Contact contact = contactsRepository.findById(1L).get();
         logger.info("getContact() - Contact was got");
         return contact;
     }
