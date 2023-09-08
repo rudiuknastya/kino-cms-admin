@@ -8,7 +8,7 @@
 <div th:fragment="form(obj, link, redirect)">
     <form th:action = "@{/admin/{l} (l=${link})}" th:object = "${object}" method="post" enctype="multipart/form-data" class="row g-3" style="color:black;">
         <div class="col-md-6" >
-            <input type="text" class="form-control" name="redirect" th:value = "${redirect}">
+            <input type="text" class="form-control d-none" name="redirect" th:value = "${redirect}">
             <label for="inputName" class="form-label">Номер залу</label>
             <input type="text" class="form-control" id="inputName"  th:field = "*{number}">
             <div class="text-danger" th:if="${#fields.hasErrors('number')}" th:errors="*{number}"></div>
