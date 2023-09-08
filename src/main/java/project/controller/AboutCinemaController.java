@@ -20,22 +20,13 @@ import java.util.UUID;
 @Controller
 public class AboutCinemaController {
     private final AboutCinemaService aboutCinemaService;
-    private final MainPageService mainPageService;
 
     public AboutCinemaController(AboutCinemaService aboutCinemaService, MainPageService mainPageService) {
         this.aboutCinemaService = aboutCinemaService;
-        this.mainPageService = mainPageService;
     }
 
     private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
     private Integer n = 7;
-    @GetMapping("/about_cinema")
-    public String showAboutCinema(Model model){
-        model.addAttribute("object", aboutCinemaService.getAboutCinema());
-        model.addAttribute("mainPage",mainPageService.getMainPage());
-        model.addAttribute("pageNum", n);
-        return "page/public_page";
-    }
     @GetMapping("/admin/pages/edit/about_cinema")
     public String editAboutCinemaPage(Model model){
         String l = "edit/about_cinema";

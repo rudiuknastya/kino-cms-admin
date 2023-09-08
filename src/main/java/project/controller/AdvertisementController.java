@@ -31,16 +31,8 @@ public class AdvertisementController {
         this.advertisementService = advertisementService;
         this.mainPageService = mainPageService;
     }
-
-    private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
     private Integer n = 7;
-    @GetMapping("/advertisement")
-    public String showAd(Model model){
-        model.addAttribute("object", advertisementService.getAd());
-        model.addAttribute("mainPage",mainPageService.getMainPage());
-        model.addAttribute("pageNum", n);
-        return "page/public_page";
-    }
+    private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
     @GetMapping("/admin/pages/edit/advertisement")
     public String editAdPage(Model model){
         String l = "edit/advertisement";

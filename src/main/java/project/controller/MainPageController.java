@@ -18,15 +18,9 @@ import java.io.IOException;
 @Controller
 public class MainPageController {
     private final MainPageService mainPageService;
-    private final BannerService bannerService;
-    private final FilmService filmService;
-    private final FilmSessionService filmSessionService;
 
-    public MainPageController(MainPageService mainPageService, BannerService bannerService, FilmService filmService, FilmSessionService filmSessionService) {
+    public MainPageController(MainPageService mainPageService) {
         this.mainPageService = mainPageService;
-        this.bannerService = bannerService;
-        this.filmService = filmService;
-        this.filmSessionService = filmSessionService;
     }
 
     private Integer n = 7;
@@ -53,16 +47,6 @@ public class MainPageController {
         mainPageInDb.getSeoBlock().setDescription(mainPage.getSeoBlock().getDescription());
         mainPageService.saveMainPage(mainPageInDb);
         return "redirect:/admin/pages";
-    }
-    @GetMapping("/main_page")
-    public String getMainPage(Model model){
-        model.addAttribute("mainPage",mainPageService.getMainPage());
-        model.addAttribute("mainBanners", bannerService.getAllMainBanners());
-        model.addAttribute("newsBanners", bannerService.getAllNewsBanners());
-        model.addAttribute("todayFilms", filmSessionService.getFilmsToday());
-        model.addAttribute("soonFilms", filmService.getSoonFilms());
-        model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
-        return "mainPage/main_page";
     }
 
 
