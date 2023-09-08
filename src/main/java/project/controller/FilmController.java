@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 import project.entity.Gallery;
 import project.entity.Film;
 import project.service.FilmService;
+import project.service.FilmSessionService;
+import project.service.MainPageService;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,8 +26,10 @@ public class FilmController {
     public FilmController(FilmService filmService) {
         this.filmService = filmService;
     }
+
     private Integer n = 3;
     private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
+
     @GetMapping("/admin/films")
     public String getFilmsList(Model model){
         model.addAttribute("filmsList", filmService.getAllFilms());
@@ -33,7 +37,7 @@ public class FilmController {
         return "film/films";
     }
     @GetMapping("/admin/films/delete/{id}")
-    public String deleteNews(@PathVariable Long id){
+    public String deleteFilm(@PathVariable Long id){
         Film film = filmService.getFilmById(id);
         deleteImages(film);
         filmService.deleteFilmById(id);
@@ -100,6 +104,7 @@ public class FilmController {
             return "film/film_page";
         }
         film.setType(type);
+        film.setTrailer(film.getTrailer().substring(film.getTrailer().lastIndexOf("=") + 1));
         filmService.saveFilm(film);
         return "redirect:/admin/films";
     }
@@ -176,6 +181,7 @@ public class FilmController {
         }
         filmInDb.setName(film.getName());
         filmInDb.setDirector(film.getDescription());
+        film.setTrailer(film.getTrailer().substring(film.getTrailer().lastIndexOf("=") + 1));
         filmInDb.setTrailer(film.getTrailer());
         filmInDb.setType(type);
         filmInDb.setDate(film.getDate());
