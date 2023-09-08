@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "mail_files")
-public class MailFiles {
+public class MailFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

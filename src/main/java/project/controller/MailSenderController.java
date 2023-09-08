@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import project.entity.MailFiles;
+import project.entity.MailFile;
 import project.entity.User;
 import project.listWrapper.EmailForm;
 import project.service.MailFilesService;
@@ -61,7 +61,7 @@ public class MailSenderController {
             fileName = inputLetter.getOriginalFilename();
             int size = mailFilesService.getAllMailFiles().size();
             if (size < 5) {
-                MailFiles mailFiles = new MailFiles();
+                MailFile mailFiles = new MailFile();
                 mailFiles.setFile(inputLetter.getOriginalFilename());
                 //emailForm.getMailFilesList().add(mailFiles);
                 mailFilesService.saveMailFiles(mailFiles);
@@ -73,7 +73,7 @@ public class MailSenderController {
             }
 
         } else if(radioFile != null){
-            MailFiles mailFiles = mailFilesService.getMailFileById(radioFile);
+            MailFile mailFiles = mailFilesService.getMailFileById(radioFile);
             fileName = mailFiles.getFile();
         }
         int i = 0;
@@ -131,7 +131,7 @@ public class MailSenderController {
     }
 
     private void deleteFile(Long id){
-        MailFiles mailFiles = mailFilesService.getMailFileById(id);
+        MailFile mailFiles = mailFilesService.getMailFileById(id);
         File file = new File(uploadPath+"/"+mailFiles.getFile());
         file.delete();
     }

@@ -1,12 +1,12 @@
 package project.service;
 
-import project.entity.MailFiles;
+import project.entity.MailFile;
 
 import java.util.List;
 
 public interface MailFilesService {
-    List<MailFiles> getAllMailFiles();
-    MailFiles getMailFileById(Long id);
-    MailFiles saveMailFiles(MailFiles mailFiles);
+    List<MailFile> getAllMailFiles();
+    MailFile getMailFileById(Long id);
+    MailFile saveMailFiles(MailFile mailFiles);
     void deleteMailFileById(Long id);
 }

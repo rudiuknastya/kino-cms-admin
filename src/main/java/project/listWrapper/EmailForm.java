@@ -1,17 +1,17 @@
 package project.listWrapper;
 
-import project.entity.MailFiles;
+import project.entity.MailFile;
 
 import java.util.List;
 
 public class EmailForm {
-    private List<MailFiles> mailFilesList;
+    private List<MailFile> mailFilesList;
 
-    public List<MailFiles> getMailFilesList() {
+    public List<MailFile> getMailFilesList() {
         return mailFilesList;
     }
 
-    public void setMailFilesList(List<MailFiles> mailFilesList) {
+    public void setMailFilesList(List<MailFile> mailFilesList) {
         this.mailFilesList = mailFilesList;
     }
 }
