@@ -22,35 +22,12 @@ import java.util.UUID;
 public class ShareController {
     private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
     private final ShareService shareService;
-    private final BannerService bannerService;
-    private final MainPageService mainPageService;
 
-    public ShareController(ShareService shareService, BannerService bannerService, MainPageService mainPageService) {
+    public ShareController(ShareService shareService) {
         this.shareService = shareService;
-        this.bannerService = bannerService;
-        this.mainPageService = mainPageService;
     }
 
     private Integer n = 6;
-
-    @GetMapping("/shares")
-    public String getShares(Model model){
-        String link = "shares/share";
-        model.addAttribute("shares", shareService.getAllShares());
-        model.addAttribute("mainPage",mainPageService.getMainPage());
-        model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
-        model.addAttribute("pagenm", n);
-        model.addAttribute("link",link);
-        return "share/public_shares";
-    }
-    @GetMapping("/shares/share/{id}")
-    public String showShare(@PathVariable Long id, Model model){
-        model.addAttribute("share", shareService.getShareById(id));
-        model.addAttribute("mainPage",mainPageService.getMainPage());
-        model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
-        model.addAttribute("pagenm", n);
-        return "share/public_share";
-    }
 
     @GetMapping("/admin/shares")
     public String getSharesList(Model model){

@@ -1,7 +1,11 @@
 package project.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import project.entity.News;
 import project.entity.Share;
@@ -26,6 +30,15 @@ public class ShareServiceImpl implements ShareService {
     }
 
     @Override
+    public Page<Share> getSharesWithPagination(int pageNumber, int pageSize) {
+        logger.info("getSharesWithPagination() - Finding all shares with pagination");
+        Pageable pageable = PageRequest.of(pageNumber-1,pageSize);
+        Page<Share> shares = shareRepository.findByStatusNot(false,pageable);
+        logger.info("getSharesWithPagination() - All shares with pagination were found");
+        return shares;
+    }
+
+    @Override
     public Share saveShare(Share share) {
         logger.info("saveShare() - Saving share");
         Share savedShare = shareRepository.save(share);
@@ -36,7 +49,7 @@ public class ShareServiceImpl implements ShareService {
     @Override
     public Share getShareById(Long id) {
         logger.info("getShareById() - Finding share by id "+id);
-        Share foundShare = shareRepository.findById(id).get();
+        Share foundShare = shareRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         logger.info("getShareById() - Share was found");
         return foundShare;
     }

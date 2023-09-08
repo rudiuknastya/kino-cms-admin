@@ -22,35 +22,11 @@ import java.util.UUID;
 public class NewsController {
     private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
     private final NewsService newsService;
-    private final MainPageService mainPageService;
-    private final BannerService bannerService;
-
-    public NewsController(NewsService newsService, MainPageService mainPageService, BannerService bannerService) {
+    public NewsController(NewsService newsService) {
         this.newsService = newsService;
-        this.mainPageService = mainPageService;
-        this.bannerService = bannerService;
     }
 
     private Integer n = 5;
-    @GetMapping("/news/{id}")
-    public String getNews(@PathVariable Long id, Model model){
-        String link = "shares/share";
-        model.addAttribute("share", newsService.getNewById(id));
-        model.addAttribute("mainPage",mainPageService.getMainPage());
-        model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
-        model.addAttribute("pagenm", n);
-        return "share/public_share";
-    }
-    @GetMapping("/news")
-    public String showAllNews(Model model){
-        String link = "news";
-        model.addAttribute("shares", newsService.getAllNews());
-        model.addAttribute("mainPage",mainPageService.getMainPage());
-        model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
-        model.addAttribute("pagenm", n);
-        model.addAttribute("link",link);
-        return "share/public_shares";
-    }
 
     @GetMapping("/admin/news")
     public String getNewsList(Model model){
