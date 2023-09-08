@@ -1,9 +1,10 @@
 package project.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
-import project.entity.MailFiles;
+import project.entity.MailFile;
 import project.repository.MailFilesRepository;
 import project.service.MailFilesService;
 
@@ -18,25 +19,25 @@ public class MailFilesServiceImpl implements MailFilesService {
     }
     private Logger logger = LogManager.getLogger("serviceLogger");
     @Override
-    public List<MailFiles> getAllMailFiles() {
+    public List<MailFile> getAllMailFiles() {
         logger.info("getMailFiles() - Finding all mail files");
-        List<MailFiles> mailFiles = mailFilesRepository.findAll();
+        List<MailFile> mailFiles = mailFilesRepository.findAll();
         logger.info("getMailFiles() - All mail files were found");
         return mailFiles;
     }
 
     @Override
-    public MailFiles getMailFileById(Long id) {
+    public MailFile getMailFileById(Long id) {
         logger.info("getMailFileById() - Finding mail file by id "+id);
-        MailFiles mailFiles = mailFilesRepository.findById(id).get();
+        MailFile mailFiles = mailFilesRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         logger.info("getMailFileById() - Mail files was found");
         return mailFiles;
     }
 
     @Override
-    public MailFiles saveMailFiles(MailFiles mailFiles) {
+    public MailFile saveMailFiles(MailFile mailFiles) {
         logger.info("saveMailFiles() - Saving mail file");
-        MailFiles mailFiles1 = mailFilesRepository.save(mailFiles);
+        MailFile mailFiles1 = mailFilesRepository.save(mailFiles);
         logger.info("saveMailFiles() - Mail file was saved");
         return mailFiles1;
     }

@@ -1,5 +1,6 @@
 package project.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class HallServiceImpl implements HallService {
     @Override
     public Hall getHallById(Long id) {
         logger.info("getHallById() - Finding hall by id "+id);
-        Hall hall = hallRepository.findById(id).get();
+        Hall hall = hallRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         logger.info("getHallById() - Hall was found");
         return hall;
     }

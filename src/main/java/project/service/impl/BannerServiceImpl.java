@@ -1,5 +1,6 @@
 package project.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,7 @@ public class BannerServiceImpl implements BannerService {
     @Override
     public BackgroundImage getBackgroundImage() {
         logger.info("getBackgroundImage() - Finding background image");
-        BackgroundImage backgroundImage = backgroundImageRepository.findById(1L).get();
+        BackgroundImage backgroundImage = backgroundImageRepository.findById(1L).orElseThrow(EntityNotFoundException::new);
         logger.info("getBackgroundImage() - background image was found");
         return backgroundImage;
     }

@@ -1,5 +1,6 @@
 package project.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class CinemaServiceImpl implements CinemaService {
     @Override
     public Cinema getCinemaById(Long id) {
         logger.info("getCinemaById() - Finding cinema by id "+id);
-        Cinema cinema = cinemaRepository.findById(id).get();
+        Cinema cinema = cinemaRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         logger.info("getCinemaById() - Cinema was found");
         return cinema;
     }
