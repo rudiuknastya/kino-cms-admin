@@ -286,7 +286,7 @@
 <!--                        </a>-->
                     </li>
                     <li class="mx-3">
-                        <a th:href="@{/logout}">
+                        <a th:href="@{/admin/logout}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
                                 <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
@@ -303,12 +303,12 @@
 </div>
 
 
-<header th:fragment="header(phoneNumber1, phoneNumber2, linkNumber)" class="pt-3" style="width:1030px; position:fixed; z-index:1; top:0px; left:116.5px; background-color:white;">
+<header th:fragment="header(phoneNumber1, phoneNumber2, linkNumber, newPages, aboutCinemaPage, cafePage, vipHallPage, adPage, childrenRoomPage, contactPage)" class="pt-3" style="width:1030px; position:fixed; z-index:1; top:0px; left:116.5px; background-color:white;">
     <div class="row align-items-center mb-4">
         <!--          Logo start-->
 
 <!--        <div class="col-5 d-flex flex-row ms-4">-->
-            <a class="col-5 d-flex flex-row ms-4" th:href="@{/main_page}" style="text-decoration:none; color:black">
+            <a class="col-4 d-flex flex-row ms-4" th:href="@{/main_page}" style="text-decoration:none; color:black">
             <svg fill="blue" height="22" width="22" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                  viewBox="0 0 297 297" xml:space="preserve">
 <g>
@@ -356,34 +356,56 @@
             <div style="color:black;" th:text="${phoneNumber1}"></div>
             <div style="color:black;" th:text="${phoneNumber2}"></div>
         </div>
-        <a href="@{/login}" class="col-2" style="color:black; text-decoration:none;"><h5>Увійти   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-person-circle" viewBox="0 0 16 16">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-        </svg> </h5></a>
+        <div class="col-4 row">
+            <div sec:authorize="!isAuthenticated()" class="col-9 row">
+                <div class="col-4"><a th:href="@{/user/profile}" style="color:black; text-decoration:none;"><h7>Увійти </h7></a></div>
+                <div class="col-4"><a th:href="@{/register}" style="color:black; text-decoration:none;"><h7>Зареєструватися </h7></a></div>
+            </div>
+        <h7 class ="col-2" >
+            <a th:href="@{/user/profile}" style="text-decoration:none; color:black">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                </svg>
+            </a>
+        </h7>
+            <a sec:authorize="isAuthenticated()" th:href="@{/logout_user}" class="d-block col-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                </svg>
+            </a>
+            <div sec:authorize="isAuthenticated()">
+                Authenticated as <span sec:authentication="name"></span></div>
+        </div>
     </div>
     <nav class="bg-body-tertiary py-2">
         <div class="container-fluid">
                     <ul class="nav nav-underline justify-content-center">
-                        <li class="nav-item mx-3"><a class="nav-link " href="../dashboard/index-horizontal.html" style="color:black"> Афіша </a></li>
-                        <li class="nav-item mx-3"><a th:class="'nav-link '+${linkNumber == 10 ? 'active' : ''}" href="../dashboard/index-dual-horizontal.html" style="color:black"> Розклад </a></li>
-                        <li class="nav-item mx-3"><a class="nav-link " th:href="@{/soon}" style="color:black"> Скоро </a></li>
+                        <li class="nav-item mx-3"><a th:class="'nav-link '+${linkNumber == 5 ? 'active' : ''}" th:href="@{/poster}" style="color:black"> Афіша </a></li>
+                        <li class="nav-item mx-3"><a th:class="'nav-link '+${linkNumber == 10 ? 'active' : ''}" th:href="@{/film_sessions}" style="color:black"> Розклад </a></li>
+                        <li class="nav-item mx-3"><a th:class="'nav-link '+${linkNumber == 3 ? 'active' : ''}" th:href="@{/soon}" style="color:black"> Скоро </a></li>
                         <li class="nav-item mx-3"><a th:class="'nav-link '+${linkNumber == 4 ? 'active' : ''}" th:href="@{/cinemas}" style="color:black"> Кінотеатри </a></li>
-                        <li class="nav-item mx-3"><a th:class="'nav-link '+${linkNumber == 6 ? 'active' : ''}" th:href="@{/shares}" style="color:black"> Акції </a></li>
+                        <li class="nav-item mx-3"><a th:class="'nav-link '+${linkNumber == 6 ? 'active' : ''}" th:href="@{/shares/1}" style="color:black"> Акції </a></li>
                         <li class="nav-item dropdown mx-3"> <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:black">Про нас </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" th:href="@{/about_cinema}">Про кінотеатр</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" th:href="@{/news}">Новини</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" th:href="@{/advertisement}">Реклама</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" th:href="@{/cafe}">Кафе-Бар</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" th:href="@{/vip_hall}">Vip-Зала</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" th:href="@{/children_room}">Дитяча кімната</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Контакти</a></li>
+                                <li th:if="${aboutCinemaPage.status == true}"><a class="dropdown-item" th:href="@{/about_cinema}" th:text="${aboutCinemaPage.name}">Про кінотеатр</a></li>
+                                <li th:if="${aboutCinemaPage.status == true}"><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" th:href="@{/news/1}">Новини</a></li>
+                                <li th:if="${adPage.status == true}"><hr class="dropdown-divider"></li>
+                                <li th:if="${adPage.status == true}"><a class="dropdown-item" th:href="@{/advertisement}" th:text="${adPage.name}">Реклама</a></li>
+                                <li th:if="${cafePage.status == true}"><hr class="dropdown-divider"></li>
+                                <li th:if="${cafePage.status == true}"><a class="dropdown-item" th:href="@{/cafe}" th:text="${cafePage.name}">Кафе-Бар</a></li>
+                                <li th:if="${vipHallPage.status == true}"><hr class="dropdown-divider"></li>
+                                <li th:if="${vipHallPage.status == true}"><a class="dropdown-item" th:href="@{/vip_hall}" th:text="${vipHallPage.name}">Vip-Зала</a></li>
+                                <li th:if="${childrenRoomPage.status == true}"><hr class="dropdown-divider"></li>
+                                <li th:if="${childrenRoomPage.status == true}"><a class="dropdown-item" th:href="@{/children_room}" th:text="${childrenRoomPage.name}">Дитяча кімната</a></li>
+                                <li th:if="${contactPage.status == true}"><hr class="dropdown-divider"></li>
+                                <li th:if="${contactPage.status == true}"><a class="dropdown-item" th:href="@{/contacts}">Контакти</a></li>
+                                <th:block th:each="newPage : ${newPages}">
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" th:href="@{/newPage/{id} (id=${newPage.id})}" th:text="${newPage.name}"></a></li>
+                                </th:block>
                             </ul>
                         </li>
 
@@ -411,9 +433,9 @@
             </div>
 
             <div class="col-6 col-md-2 mb-3 ms-3">
-                <h5>Афіша</h5>
+                <a th:href="@{/poster}" style="text-decoration:none; color:black"><h5>Афіша</h5></a>
                 <ul class="nav flex-column mt-2">
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0" style="color:black">Розклад</a></li>
+                    <li class="nav-item mb-2"><a th:href="@{/film_sessions}" class="nav-link p-0" style="color:black">Розклад</a></li>
                     <li class="nav-item mb-2"><a th:href="@{/soon}" class="nav-link p-0" style="color:black">Скоро в прокаті</a></li>
                     <li class="nav-item mb-2"><a th:href="@{/cinemas}" class="nav-link p-0"style="color:black">Кінотеатри</a></li>
                     <li class="nav-item mb-2"><a th:href="@{/shares}" class="nav-link p-0"style="color:black">Акції</a></li>
@@ -428,7 +450,7 @@
                     <li class="nav-item mb-2"><a th:href="@{/cafe}" class="nav-link p-0" style="color:black">Кафе-Бар</a></li>
                     <li class="nav-item mb-2"><a th:href="@{/vip_hall}" class="nav-link p-0" style="color:black">Vip-Зала</a></li>
                     <li class="nav-item mb-2"><a th:href="@{/children_room}" class="nav-link p-0" style="color:black">Дитяча кімната</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0" style="color:black">Контакти</a></li>
+                    <li class="nav-item mb-2"><a th:href="@{/contacts}" class="nav-link p-0" style="color:black">Контакти</a></li>
                 </ul>
             </div>
 

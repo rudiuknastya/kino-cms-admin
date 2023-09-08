@@ -77,11 +77,26 @@
                                 <input id="sessionTime" class="form-control" type="time"  th:field = "*{sessionTime}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('sessionTime')}" th:errors="*{sessionTime}"> </div>
                             </div>
-                            <div>
+                            <div class="col-md-6">
                                 <label for="selectFilm" class="form-label">Фільм</label>
                                 <select class="form-select" aria-label=".form-select-lg example" id="selectFilm" name="selectFilm" th:field="*{film.id}">
                                     <option th:each="f : ${films}" th:value="${f.id}" th:text="${f.name}"></option>
                                 </select>
+                            </div>
+                            <div class="col-md-6">
+                                Тип
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="3D" th:field="*{type}">
+                                    <label class="form-check-label" for="inlineRadio1">3D</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2D" th:field="*{type}">
+                                    <label class="form-check-label" for="inlineRadio2">2D</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="IMAX" th:field="*{type}">
+                                    <label class="form-check-label" for="inlineRadio3">IMAX</label>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label for="selectHall" class="form-label">Кінотеатр і зала</label>
