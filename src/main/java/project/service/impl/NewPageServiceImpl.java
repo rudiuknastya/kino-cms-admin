@@ -1,5 +1,6 @@
 package project.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,14 @@ public class NewPageServiceImpl implements NewPageService {
     }
 
     @Override
+    public List<NewPage> getEnabledNewPages() {
+        logger.info("getEnabledNewPages() - Finding enabled new pages");
+        List<NewPage> newPages = newPageRepository.enabledNewPages();
+        logger.info("getEnabledNewPages() - Enabled new pages were found");
+        return newPages;
+    }
+
+    @Override
     public NewPage saveNewPage(NewPage newPage) {
         logger.info("saveNewPage() - Saving new page");
         NewPage newPage1 = newPageRepository.save(newPage);
@@ -35,7 +44,7 @@ public class NewPageServiceImpl implements NewPageService {
     @Override
     public NewPage getNewPageById(Long id) {
         logger.info("getNewPageById() - Finding new page by id "+id);
-        NewPage newPage = newPageRepository.findById(id).get();
+        NewPage newPage = newPageRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         logger.info("getNewPageById() - New page was found");
         return newPage;
     }
