@@ -1,5 +1,5 @@
 upload:
-  path: ${uploads_path}
+  path: ${{ secrets.PATH }}
 spring:
   mail:
     host: smtp.gmail.com
@@ -14,9 +14,9 @@ spring:
             enable: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${urlDB}
-    username: ${usernameDB}
-    password: ${passwordDB}
+    url: ${{ secrets.DB_URL }}
+    username: ${{ secrets.DB_USERNAME }}
+    password: ${{ secrets.DB_PASSWORD }}
   jpa:
     show-sql: true
     generate-ddl: true
