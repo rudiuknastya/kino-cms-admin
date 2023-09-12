@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head}"></head>
+<body class="  ">
+<aside th:replace="~{fragments :: sidebar(number=${pageNUm})}"></aside>
+<main class="main-content">
+    <div th:replace="~{fragments :: navbar}"></div>
+    <div class="conatiner-fluid content-inner mt-n5 py-0">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="px-3 py-3 mb-5" style="color:black; border:solid;border-radius: 20px;">
+                            <h3 style="text-align: center;">SMS</h3>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label class="col-form-label" style="color:black;">Виберіть отримувача</label>
+                                </div>
+                                <div class="col-auto ms-5">
+                                    <input class="form-check-input" type="radio" name="inputUser" id="allUser">
+                                    <label class="form-check-label" for="allUser">Всі користувачі</label>
+                                </div>
+                                <div class="col-auto ms-5">
+                                    <input class="form-check-input" type="radio" name="inputUser" id="radioDefault">
+                                    <label class="form-check-label" for="radioDefault">Вибірково</label>
+                                </div>
+                                <div class="col-auto">
+                                    <a th:href="@{/admin/messages/users}" type="button" class="btn btn-soft-primary col-12" style="font-size: 14px;"> Обрати користувача</a>
+                                </div>
+                            </div>
+                            <div class="row my-5">
+                            <div class="col-md-6">
+                                <label for="exampleFormControlTextarea1" class="form-label">Текст SMS</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <p>Кількість SMS: </p>
+                                <p>Розсилання виконане на: </p>
+                            </div>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <button class="btn btn-primary">Почати розсилання</button>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="pb-3" style="color:black; border:solid;border-radius: 20px;">
+                        <form th:action = "@{/admin/messages}" th:object = "${emailForm}" method="post" enctype="multipart/form-data" class="row g-3 px-3 pt-3 pb-5" style="color:black" id="mailForm">
+                            <h3 style="text-align: center;">E-mail</h3>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label class="col-form-label" style="color:black;">Виберіть отримувача</label>
+                                </div>
+                                <div class="col-auto ms-5">
+                                    <input class="form-check-input" type="radio" name="inputUser" id="inputAllUser" onchange="showUsers()" th:checked="${userCheck == 'all' and userCheck != null? true:false}" value="all">
+                                    <label class="form-check-label" for="inputAllUser">Всі користувачі</label>
+                                </div>
+                                <div class="col-auto ms-5">
+                                    <input class="form-check-input" type="radio" name="inputUser" id="flexRadioDefault" onclick="clearUsers()" th:checked="${userCheck == 'choose' and userCheck != null? true:false}" value="choose">
+                                    <label class="form-check-label" for="flexRadioDefault">Вибірково</label>
+                                </div>
+                                <div class="col-auto">
+                                    <a th:href="@{/admin/messages/users}" class="btn btn-soft-primary col-12" style="font-size: 14px;"> Обрати користувача</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-auto">
+                                        <label class="col-form-label" style="color:black;">Завантажте HTML-лист</label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input type="file" class="form-control d-none"  id="inputLetter" onchange="show()" name="inputLetter">
+                                        <label class="input-group-text col-form-label" for="inputLetter" style="color:black;">Завантажити</label>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <p>Завантажений файл:  <span id="fileName" style="color: blue"> </span></p>
+                                </div>
+                                <div>
+                                    <p>Вибраний шаблон: <span id="uploadName" style="color: blue"> </span></p>
+                                </div>
+                                <div>
+                                    <p>Кількість листів: <span id="usersCount" style="color: blue" th:text="${usersNumber}"> </span></p>
+                                </div>
+                                <div>Виконання: </div>
+                                <div class="progress" style="height:10px; width:90%">
+                                    <div class="progress-bar bg-primary progress-bar-striped" role="progressbar"
+                                         style="width: 0%; height:10px" aria-valuenow="25" aria-valuemin="0"
+                                         aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-form-label" style="color:black;">Останні завантажені шаблони</label>
+                                <div th:each="mailFile, stat : *{mailFilesList}">
+                                    <input class="form-check-input" type="radio" name="radioFile" th:id="file+${stat.index}" th:onchange="|showUpload('fileLabel${stat.index}')|" th:value="*{mailFilesList[__${stat.index}__].id}">
+                                    <label class="form-check-label" th:for="file+${stat.index}"  th:id="fileLabel+${stat.index}" th:text="*{mailFilesList[__${stat.index}__].file}"> Default radio</label>
+                                    <button type="button" th:id="delButton+${stat.index}" th:onclick="|deleteFile('${stat.index}')|" class="btn btn-outline-danger" style="height:25px; font-size:12px;">Видалити</button>
+                                </div>
+                                <input type="text" id="deleteInput" name="deleteInput">
+                            </div>
+                        </form>
+                        <div class="col-md-12 text-center">
+                            <button onclick="btnClick()" class="btn btn-primary">Почати розсилання</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript" th:inline="javascript">
+    let inputFile = document.getElementById('inputLetter');
+    let message = document.getElementById('fileName');
+    let uploadMessage = document.getElementById('uploadName');
+    let usersCount = document.getElementById('usersCount');
+    var usersNumber = [[${users}]];
+    let deleteInput = document.getElementById('deleteInput');
+    var deleteFiles = "";
+    function show(){
+        message.innerHTML = `${inputFile.files[0].name}`;
+        uploadMessage.innerHTML = "";
+    }
+    function showUpload(upload){
+        console.log(upload);
+        let fileLabel = document.getElementById(upload);
+        uploadMessage.innerHTML = `${fileLabel.textContent}`;
+    }
+    function showUsers(){
+        usersCount.innerHTML = `${usersNumber}`;
+    }
+    function clearUsers(){
+        usersCount.innerHTML = "";
+    }
+
+    function progressAndSubmit() {
+        document.getElementById("mailForm").submit();
+    }
+    function btnClick(){
+        if (document.getElementById("mailForm")) {
+        $(".progress-bar").animate({
+                width: "100%",
+        }, 2500);
+            setTimeout("progressAndSubmit()", 3000);
+       }
+    }
+    function deleteFile(id){
+        let deleteLabel = document.getElementById('file'+id);
+<!--        let deleteInput = document.getElementById('file'+id);-->
+        deleteFiles += deleteLabel.value+",";
+        deleteInput.value = deleteFiles;
+        $('#file'+id).remove();
+        $('#fileLabel'+id).remove();
+        $('#delButton'+id).remove();
+    }
+</script>
+</body>
+</html>

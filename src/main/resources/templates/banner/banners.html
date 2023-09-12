@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head}"></head>
+<body class="  ">
+<aside th:replace="~{fragments :: sidebar(number=${pageNUMB})}"></aside>
+<main class="main-content">
+  <div th:replace="~{fragments :: navbar}"></div>
+  <div class="conatiner-fluid content-inner mt-n5 py-0">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="text-center mb-3">На головній зверху</h4>
+            <form th:action = "@{/admin/{l} (l=${mainBannerLink})}" th:object = "${mainBanner}" method="post" enctype="multipart/form-data" class="row g-3 pb-5 ps-2" style="color:black; border:solid;border-radius: 20px;">
+              <label class="col-form-label"  style="color:black;">Розмір: 1000х190</label>
+              <div class="row g-3 align-items-center">
+                <th:block th:each="mainbanner, stat : *{mainBannerList}">
+                <div class="col-2">
+                  <div style="position:relative;">
+                    <button type="button" class="btn " style="position: absolute; z-index: 1; left: 88px; bottom:100px" th:onclick = "|img${stat.index}.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; Image${stat.index}.value = ''; imageName${stat.index}.value='';|"><h4><i class="bi bi-x-circle"></i></h4></button>
+                    <img th:src="*{mainBannerList[__${stat.index}__].image} != null? @{'/uploads/'+ *{mainBannerList[__${stat.index}__].image}}: @{'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'}" style="width:120px; height:120px;" th:id="'img'+${stat.index}">
+                  </div>
+                  <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  th:id="'Image'+${stat.index}" th:onchange="|img${stat.index}.src=window.URL.createObjectURL(this.files[0]); imageName${stat.index}.value= this.files[0].name;|" th:name="'image'+${stat.index}">
+                  <label class="input-group-text col-form-label px-3 my-2" th:for="Image+${stat.index}" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+                  <div class="col-11">
+                    <label for="inputUrl" class="form-label">URL</label>
+                  <input type="text" class="form-control"  th:field="*{mainBannerList[__${stat.index}__].url}" id="inputUrl">
+                    <label for="inputText" class="form-label mt-2">Текст</label>
+                  <input type="text" class="form-control "  th:field="*{mainBannerList[__${stat.index}__].text}" id="inputText">
+                  <input type="text" class="form-control d-none" th:value= "*{mainBannerList[__${stat.index}__].image}" th:id="imageName+${stat.index}" th:name="imageName+${stat.index}">
+                </div>
+                </div>
+                </th:block>
+                <div class="col-2">
+                <input type="file" multiple="multiple" accept="image/jpeg, image/jpg, image/png" class="form-control d-none" onchange="preview()"  id="images" name="images">
+                <label class="input-group-text col-form-label px-3 my-2" for="images" style="color:white; width:120px; height:40px; font-size:14px; background-color: blue;">Додати фото</label>
+                </div>
+                </div>
+              <div class="col-2">
+              <label for="selectSpeed" class="form-label">Швидкість</label>
+              <select class="form-select" aria-label=".form-select-lg example" id="selectSpeed" th:field = "*{mainBannerList[0].speed}">
+                <option th:each="s : ${speed}" th:value="${s}" th:text="${s}"></option>
+              </select>
+              </div>
+              <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-primary">Зберегти</button>
+              </div>
+            </form>
+            <h4 class="text-center mt-5">Фон на головній</h4>
+            <form th:action = "@{/admin/{l} (l=${backgroundImageLink})}" th:object = "${backgroundImage}" method="post" enctype="multipart/form-data" class="row g-3 mb-5 mt-2 pb-5" style="color:black; border:solid;border-radius: 20px;">
+              <label class="col-form-label" for="inputMainImage" style="color:black;">Розмір: 2000х3000</label>
+              <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioImage" th:field = "*{image}" onchange="inputMainImage.disabled=false;" th:value="*{image}">
+                    <label class="form-check-label" for="inlineRadioImage">Фото на фон</label>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <img th:src="*{image != null and image != 'noImage'}? @{'/uploads/'+ *{image}}: @{'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'}" style="width:150px; height:150px;" id="main_image">
+                  <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="inputMainImage" onchange="main_image.src=window.URL.createObjectURL(this.files[0]); inlineRadioImage.value=this.files[0].name;" name="mainImage">
+                </div>
+                <div class="col-auto">
+                  <label class="input-group-text col-form-label" for="inputMainImage" style="color:black;">Завантажити</label>
+                  <input type="text"  th:value = "*{image}" id="mainImageName" name="mainImageName">
+                </div>
+                <div class="col-auto">
+                  <button type="button" class="btn btn-outline-danger" onclick="main_image.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; inputMainImage.value = ''; mainImageName.value = ''">Видалити</button>
+                </div>
+              </div>
+              <div class="form-check ms-2">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadiofemale" th:field = "*{image}" onchange="main_image.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; inputMainImage.value = ''; mainImageName.value = ''; inputMainImage.disabled = true;" value="noImage">
+                <label class="form-check-label" for="inlineRadioFemale">Просто фон</label>
+              </div>
+              <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-primary">Зберегти</button>
+              </div>
+            </form>
+
+            <h4 class="text-center mb-4">На головній Новини Акції</h4>
+            <form th:action = "@{/admin/{l} (l=${newsBannerLink})}" th:object = "${newsBanner}" method="post" enctype="multipart/form-data" class="row g-3 pb-5 ps-2" style="color:black;border:solid;border-radius: 20px;">
+              <label class="col-form-label"  style="color:black;">Розмір: 1000х190</label>
+              <div class="row g-3 align-items-center">
+                <th:block th:each="newsbanner, stat : *{newsBannerList}">
+                  <div class="col-2">
+                    <div style="position:relative;">
+                      <button type="button" class="btn " style="position: absolute; z-index: 1; left: 88px; bottom:100px" th:onclick = "|newsImg${stat.index}.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; newsImage${stat.index}.value = ''; newsImageName${stat.index}.value='';|"><h4><i class="bi bi-x-circle"></i></h4></button>
+                      <img th:src="*{newsBannerList[__${stat.index}__].image} != null? @{'/uploads/'+ *{newsBannerList[__${stat.index}__].image}}: @{'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'}" style="width:120px; height:120px;" th:id="'newsImg'+${stat.index}">
+                    </div>
+                    <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  th:id="'newsImage'+${stat.index}" th:onchange="|newsImg${stat.index}.src=window.URL.createObjectURL(this.files[0]); newsImageName${stat.index}.value= this.files[0].name;|" th:name="'newsImage'+${stat.index}">
+                    <label class="input-group-text col-form-label px-3 my-2" th:for="newsImage+${stat.index}" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+                    <div class="col-11">
+                      <label for="inputNewsUrl" class="form-label">URL</label>
+                      <input type="text" class="form-control"  th:field="*{newsBannerList[__${stat.index}__].url}" id="inputNewsUrl">
+                      <input type="text" class="form-control d-none" th:value= "*{newsBannerList[__${stat.index}__].image}" th:id="newsImageName+${stat.index}" th:name="newsImageName+${stat.index}">
+                    </div>
+                  </div>
+                </th:block>
+                <div class="col-2">
+                  <input type="file" multiple="multiple" accept="image/jpeg, image/jpg, image/png" class="form-control d-none" onchange="newsPreview()"  id="newsImages" name="newsImages">
+                  <label class="input-group-text col-form-label px-3 my-2" for="newsImages" style="color:white; width:120px; height:40px; font-size:14px; background-color: blue;">Додати фото</label>
+                </div>
+              </div>
+              <div class="col-2">
+                <label for="selectNewsSpeed" class="form-label">Швидкість</label>
+                <select class="form-select" aria-label=".form-select-lg example" id="selectNewsSpeed" th:field = "*{newsBannerList[0].speed}">
+                  <option th:each="s : ${speed}" th:value="${s}" th:text="${s}"></option>
+                </select>
+              </div>
+              <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-primary">Зберегти</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script type="text/javascript">
+  let images = document.getElementById('images');
+  let newsImages = document.getElementById('newsImages');
+  function preview(){
+  var i = 0;
+  if (i < images.files.length){
+    img0.src = window.URL.createObjectURL(images.files[i]);
+    document.getElementById('imageName0').value = images.files[i].name;
+    i++;
+  }
+  if (i < images.files.length){
+    img1.src = window.URL.createObjectURL(images.files[i]);
+    document.getElementById('imageName1').value = images.files[i].name;
+    i++;
+  }
+  if (i < images.files.length){
+    img2.src = window.URL.createObjectURL(images.files[i]);
+    document.getElementById('imageName2').value = images.files[i].name;
+    i++;
+  }
+  if (i < images.files.length){
+    img3.src = window.URL.createObjectURL(images.files[i]);
+    document.getElementById('imageName3').value = images.files[i].name;
+    i++;
+  }
+  if (i < images.files.length){
+    img4.src = window.URL.createObjectURL(images.files[i]);
+    document.getElementById('imageName4').value = images.files[i].name;
+    i++;
+  }
+
+  }
+  function newsPreview(){
+  var i = 0;
+  if (i < newsImages.files.length){
+    newsImg0.src = window.URL.createObjectURL(newsImages.files[i]);
+    document.getElementById('newsImageName0').value = newsImages.files[i].name;
+    i++;
+  }
+  if (i < newsImages.files.length){
+    newsImg1.src = window.URL.createObjectURL(newsImages.files[i]);
+    document.getElementById('newsImageName1').value = newsImages.files[i].name;
+    i++;
+  }
+  if (i < newsImages.files.length){
+    newsImg2.src = window.URL.createObjectURL(newsImages.files[i]);
+    document.getElementById('newsImageName2').value = newsImages.files[i].name;
+    i++;
+  }
+  if (i < newsImages.files.length){
+    newsImg3.src = window.URL.createObjectURL(newsImages.files[i]);
+    document.getElementById('newsImageName3').value = newsImages.files[i].name;
+    i++;
+  }
+  if (i < newsImages.files.length){
+    newsImg4.src = window.URL.createObjectURL(newsImages.files[i]);
+    document.getElementById('newsImageName').value = newsImages.files[i].name;
+    i++;
+  }
+  }
+
+</script>
+</body>
+</html>

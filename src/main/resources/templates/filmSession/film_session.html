@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/v/bs5/dt-1.13.5/datatables.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="shortcut icon" href="../static/assets/images/favicon.ico" />
+    <!--     Library / Plugin Css Build-->
+    <link rel="stylesheet" th:href="@{/assets/css/core/libs.min.css}" />
+
+    <!-- Aos Animation Css -->
+    <link rel="stylesheet" th:href="@{/assets/vendor/aos/dist/aos.css}"  />
+
+    <!-- Hope Ui Design System Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/hope-ui.min.css?v=2.0.0}"  />
+
+    <!-- Custom Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/custom.min.css?v=2.0.0}"  />
+
+    <!-- Dark Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/dark.min.css}" />
+
+    <!-- Customizer Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/customizer.min.css}" />
+
+    <!-- RTL Css -->
+    <link rel="stylesheet" th:href="@{/assets/css/rtl.min.css}" />
+    <!-- Library Bundle Script -->
+    <script th:src="@{/assets/js/core/libs.min.js}"></script>
+
+    <!-- External Library Bundle Script -->
+    <script th:src="@{/assets/js/core/external.min.js}"></script>
+
+    <!-- Widgetchart Script -->
+    <script th:src="@{/assets/js/charts/widgetcharts.js}" ></script>
+
+    <!-- mapchart Script -->
+    <script th:src="@{/assets/js/charts/vectore-chart.js}" ></script>
+    <script th:src="@{/assets/js/charts/dashboard.js}" ></script>
+
+    <!-- fslightbox Script -->
+    <script th:src="@{/assets/js/plugins/fslightbox.js}"></script>
+
+    <!-- Settings Script -->
+    <script th:src="@{/assets/js/plugins/setting.js}" ></script>
+
+    <!-- Slider-tab Script -->
+    <script th:src="@{/assets/js/plugins/slider-tabs.js}" ></script>
+
+    <!-- Form Wizard Script -->
+    <script th:src="@{/assets/js/plugins/form-wizard.js}" ></script>
+
+    <!-- AOS Animation Plugin-->
+    <script th:src="@{/assets/vendor/aos/dist/aos.js}"></script>
+
+    <!-- App Script -->
+    <script th:src="@{/assets/js/hope-ui.js}" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+</head>
+<body class="  ">
+<aside th:replace="~{fragments :: sidebar(number=${pageNumb})}"></aside>
+<main class="main-content">
+    <div th:replace="~{fragments :: navbar}"></div>
+    <div class="conatiner-fluid content-inner mt-n5 py-0">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form th:action = "@{/admin/{l} (l=${link})}" th:object = "${object}" method="post" class="row g-3" style="color:black;">
+                            <div class="col-md-6">
+                                <label for="sessionDate" class="form-label">Дата</label>
+                                <input id="sessionDate" class="form-control" type="date"  th:field = "*{sessionDate}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('sessionDate')}" th:errors="*{sessionDate}"> </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="sessionTime" class="form-label">Час</label>
+                                <input id="sessionTime" class="form-control" type="time"  th:field = "*{sessionTime}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('sessionTime')}" th:errors="*{sessionTime}"> </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="selectFilm" class="form-label">Фільм</label>
+                                <select class="form-select" aria-label=".form-select-lg example" id="selectFilm" name="selectFilm" th:field="*{film.id}">
+                                    <option th:each="f : ${films}" th:value="${f.id}" th:text="${f.name}"></option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                Тип
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="3D" th:field="*{type}">
+                                    <label class="form-check-label" for="inlineRadio1">3D</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2D" th:field="*{type}">
+                                    <label class="form-check-label" for="inlineRadio2">2D</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="IMAX" th:field="*{type}">
+                                    <label class="form-check-label" for="inlineRadio3">IMAX</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="selectHall" class="form-label">Кінотеатр і зала</label>
+                                <select class="form-select" aria-label=".form-select-lg example" id="selectHall" name="selectHall" th:field="*{hall.id}">
+                                    <option th:each="h : ${halls}" th:value="${h.id}" th:text="${h.cinema.name+' Зала '+ h.number}"></option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputPrice" class="form-label">Ціна</label>
+                                <input type="text" class="form-control" id="inputPrice" th:field = "*{price}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"> </div>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <button type="submit" class="btn btn-primary">Зберегти</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#selectFilm").select2 ();
+    $("#selectHall").select2 ();
+});
+</script>
+</body>
+</html>

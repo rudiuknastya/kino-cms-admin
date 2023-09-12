@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Kino CMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+</head>
+<header th:replace="~{fragments :: header(${mainPage.phone1},${mainPage.phone2},${pagenm},${newPages},${aboutCinemaPage}, ${cafePage}, ${vipHallPage}, ${adPage}, ${childrenRoomPage},${contactPage})}"></header>
+<body style="margin-top:145px">
+<div class="mx-auto pb-5" style="width:1030px; background-color:white;" >
+  <div class="conatiner-fluid  py-0">
+    <img th:src="@{'/uploads/'+ ${backgroundImage.image}}" class="d-block w-100 mb-5" alt="mainBanner0" style="height:400px">
+    <div class="row">
+      <div class="col-9">
+          <th:block th:each="contact, stat : ${contacts}">
+              <div class="row d-flex justify-content-start align-items-center mt-3">
+                  <div class="col-1"><img th:src="@{'/uploads/'+ ${contact.logo}}" style="width:40px"></div>
+                  <div class="col-3"><h5 th:text="${contact.cinemaName}" class="mt-2"></h5></div>
+              </div>
+              <div class="row mt-2 ms-2">
+                  <div th:id="'map'+${stat.index}" class="col-6" style="height:300px; position: static; z-index:0;"></div>
+                  <div class="col-6" th:text="${contact.address}"></div>
+              </div>
+          </th:block>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+ window.onload = function() {
+    var contactsArray = [[${contacts}]]
+    for(let i = 0; i < contactsArray.length; i++){
+        const words = contactsArray[i].coordinates.split(',');
+        latt = words[0];
+        long = words[1];
+        console.log(latt);
+        console.log(long);
+        map = new L.Map('map'+i);
+    var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
+    var osm = new L.TileLayer(osmUrl, {minZoom: 2, maxZoom: 19, attribution: osmAttrib});
+    map.setView(new L.LatLng(latt, long),15);
+    map.addLayer(osm);
+
+    var marker = L.marker([latt, long]).addTo(map);
+    }
+ }
+</script>
+</body>
+</html>

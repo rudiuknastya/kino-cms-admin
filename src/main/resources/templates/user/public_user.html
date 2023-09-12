@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Kino CMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</head>
+<header th:replace="~{fragments :: header(${mainPage.phone1},${mainPage.phone2},0,${newPages},${aboutCinemaPage}, ${cafePage}, ${vipHallPage}, ${adPage}, ${childrenRoomPage},${contactPage})}"></header>
+<body style="margin-top:165px">
+<div class="mx-auto pb-5" style="width:1030px; background-color:white;" >
+  <div class="conatiner-fluid  py-0">
+            <form th:action = "@{/user/profile}" th:object = "${user}" method="post" class="row g-3" style="color:black;">
+              <input type="text" class="d-none" th:field="*{id}" >
+              <div class="col-md-6" >
+                <label for="inputName" class="form-label">Імя</label>
+                <input type="text" class="form-control" id="inputName"  th:field = "*{firstName}">
+                <div class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+              </div>
+              <div class="col-md-6">
+                <p>Мова</p>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioUkr" th:field = "*{language}" value="ukr">
+                  <label class="form-check-label" for="inlineRadioUkr">Українська</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioEng" th:field = "*{language}" value="eng">
+                  <label class="form-check-label" for="inlineRadioEng">Англійська</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="inputSurname" class="form-label">Прізвище</label>
+                <input type="text" class="form-control" id="inputSurname" th:field = "*{lastName}">
+                <div class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" > </div>
+              </div>
+              <div class="col-md-6">
+                <p>Стать</p>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadiofemale" th:field = "*{sex}" value="female">
+                  <label class="form-check-label" for="inlineRadioFemale">Жіноча</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadiomale" th:field = "*{sex}" value="male">
+                  <label class="form-check-label" for="inlineRadioMale">Чоловіча</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="inputPseudonym" class="form-label">Псевдонім</label>
+                <input type="text" class="form-control" id="inputPseudonym" th:field = "*{pseudonym}">
+                <div class="text-danger" th:if="${#fields.hasErrors('pseudonym')}" th:errors="*{pseudonym}"> </div>
+              </div>
+              <div class="col-md-6">
+                <label for="inputPhone" class="form-label">Телефон</label>
+                <input type="text" class="form-control" id="inputPhone" th:field = "*{phoneNumber}" placeholder="+380">
+                <div class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"> </div>
+              </div>
+              <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">E-mail</label>
+                <input type="email" class="form-control" id="inputEmail4" th:field = "*{email}">
+                <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"> </div>
+              </div>
+              <div class="col-md-6">
+                <label for="birthdate" class="form-label">Дата народження</label>
+                <input id="birthdate" class="form-control" type="date" min="1923-01-01" max="2017-01-01" th:field = "*{birthDate}" th:value="${birthDate}">
+                <div class="text-danger" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"> </div>
+              </div>
+              <div class="col-md-6">
+                <label for="inputAddress" class="form-label">Адреса</label>
+                <input type="text" class="form-control" id="inputAddress" th:field = "*{address}" placeholder="м.Київ, вул.Васильківська 5">
+                <div class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"> </div>
+              </div>
+              <div class="col-md-6">
+                <label for="selectCity" class="form-label">Місто</label>
+                <select class="form-select" aria-label=".form-select-lg example" id="selectCity" th:field = "*{city}">
+                  <option th:each="c : ${cities}" th:value="${c}" th:text="${c}"></option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="inputPassword" class="form-label" >Пароль</label>
+                <input type="password" class="form-control" id="inputPassword" name ="inputPassword"   th:field = "*{password}" th:value= "*{password}">
+                <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"> </div>
+              </div>
+              <div class="col-md-6">
+                <label for="confirmPassword" class="form-label">Повторіть пароль</label>
+                <input type="password" class="form-control" id="confirmPassword" name = "confirmPassword" onchange="check()">
+                <div class="text-danger" id="message"></div>
+              </div>
+              <div class="col-md-6">
+                <label for="inputCard" class="form-label">Номер картки</label>
+                <input type="text" class="form-control" id="inputCard" th:field = "*{cardNumber}">
+              </div>
+              <div class="col-md-12 text-center mt-5">
+                <button type="submit" class="btn btn-primary">Зберегти</button>
+              </div>
+            </form>
+          </div>
+        </div>
+<script type="text/javascript">
+function check() {
+if(document.getElementById('inputPassword').value ===
+            document.getElementById('confirmPassword').value) {
+        document.getElementById('message').innerHTML = "";
+    } else {
+        document.getElementById('message').innerHTML = "Невірний пароль";
+    }
+ }
+</script>
+
+</body>
+<div th:replace="~{fragments :: footer}"></div>
+</html>

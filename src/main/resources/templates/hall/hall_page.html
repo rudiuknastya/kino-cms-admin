@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kino CMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</head>
+<header th:replace="~{fragments :: header(${mainPage.phone1},${mainPage.phone2},${pageM},${newPages},${aboutCinemaPage}, ${cafePage}, ${vipHallPage}, ${adPage}, ${childrenRoomPage},${contactPage})}"></header>
+<body style="margin-top:145px">
+<div class="mx-auto pb-5" style="width:1030px; background-color:white;" >
+    <div class="conatiner-fluid  py-0">
+        <img th:src="@{'/uploads/'+ ${hall.imageGallery.mainImage}}" class="d-block w-100 mb-5" alt="mainBanner0" style="height:400px">
+        <div class="row">
+            <div class="col-3">
+                <div class="col-12 my-5" style="color:black; border:solid; height: 300px;">
+                    <h5 class="mt-2">Реклама</h5>
+                </div>
+                <th:block th:each="film : ${films}">
+                    <a th:href="@{/film_session/{id} (id=${film.getFilmSessionId()})}" style="text-decoration:none">
+                        <div style="color:black; border:solid;" th:text="${film.getFilmName()}"></div>
+                    </a>
+                </th:block>
+                <h5 style="text-align:center" class="mt-3">Дивіться сьогодні</h5>
+                <a th:href="@{/film_sessions}" type="button" class="btn btn-primary d-block col-9 mx-auto" >Розклад сеансів</a>
+            </div>
+            <div class="col-9">
+                <h3 class="mt-2 ms-3" th:text="${'Зала '+hall.number}" style="text-align:center"></h3>
+                <p class="my-3" th:text="${hall.description}"></p>
+                <h4 style="text-align:center" class="my-4">Схема залу</h4>
+                <img th:src="@{'/uploads/'+ ${hall.schemaImage}}">
+                <h4 style="text-align:center" class="mt-4">Фотогалерея</h4>
+                <div id="carouselExample" class="carousel slide">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img th:src="@{'/uploads/'+ ${hall.imageGallery.image1}}" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img th:src="@{'/uploads/'+ ${hall.imageGallery.image2}}" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img th:src="@{'/uploads/'+ ${hall.imageGallery.image3}}" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img th:src="@{'/uploads/'+ ${hall.imageGallery.image4}}" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img th:src="@{'/uploads/'+ ${hall.imageGallery.image5}}" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+
+    </div>
+</div>
+</body>
+<div th:replace="~{fragments :: footer}"></div>
+</html>
