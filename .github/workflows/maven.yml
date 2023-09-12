@@ -29,3 +29,6 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name : Tomcat deploy
+      run: curl -v -u ${{ secrets.Username }}:${{ secrets.Password }} -T /home/runner/work/kino-cms-admin/kino-cms-admin/target/Kino_CMS_A_Rudiuk.war.original 'https://slj.avada-media-dev1.od.ua/manager/text/deploy?path=/Kino_CMS_A_Rudiuk'
+    
