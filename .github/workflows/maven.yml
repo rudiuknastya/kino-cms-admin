@@ -16,7 +16,11 @@ on:
 
 jobs:
   build:
-
+    env:
+      uploads_path: ${{ secrets.PATH }}
+      urlDB: ${{ secrets.DB_URL }}
+      usernameDB: ${{ secrets.DB_USERNAME }}
+      passwordDB: ${{ secrets.DB_PASSWORD }}
     runs-on: ubuntu-latest
 
     steps:
