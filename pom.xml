@@ -9,6 +9,7 @@
         <version>3.1.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    <packaging>war</packaging>
     <groupId>org.example</groupId>
     <artifactId>Kino-CMS_admin</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -75,6 +76,12 @@
             <artifactId>spring-boot-starter-mail</artifactId>
             <version>3.1.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -91,10 +98,18 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.icegreen/greenmail-junit5 -->
+        <dependency>
+            <groupId>com.icegreen</groupId>
+            <artifactId>greenmail-junit5</artifactId>
+            <version>2.0.0</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
     <build>
+        <finalName>Kino_CMS_A_Rudiuk</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

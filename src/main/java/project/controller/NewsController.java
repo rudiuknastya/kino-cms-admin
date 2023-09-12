@@ -1,6 +1,7 @@
 package project.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,7 +21,8 @@ import java.util.UUID;
 
 @Controller
 public class NewsController {
-    private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
+    @Value("${upload.path}")
+    private String uploadPath;
     private final NewsService newsService;
     public NewsController(NewsService newsService) {
         this.newsService = newsService;

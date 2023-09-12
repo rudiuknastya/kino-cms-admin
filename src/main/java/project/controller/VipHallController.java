@@ -1,6 +1,7 @@
 package project.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,8 +30,8 @@ public class VipHallController {
     public VipHallController(VipHallService vipHallService) {
         this.vipHallService = vipHallService;
     }
-
-    private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
+    @Value("${upload.path}")
+    private String uploadPath;
     private Integer n = 7;
 
     @GetMapping("/admin/pages/edit/vip_hall")

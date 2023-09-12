@@ -14,6 +14,7 @@ import project.service.MailSenderService;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 
 @Service
 public class MailSenderServiceImpl implements MailSenderService {
@@ -25,9 +26,10 @@ public class MailSenderServiceImpl implements MailSenderService {
     @Override
     public void sendEmail(String to, String file) {
         logger.info("sendEmail() - sending email to user "+to+" with file "+file);
-        MimeMessage message = mailSender.createMimeMessage();
+        //MimeMessage message = mailSender.createMimeMessage();
 
         try {
+            MimeMessage message = mailSender.createMimeMessage();
             message.setFrom(new InternetAddress("ruduknasta13@gmail.com"));
             message.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject("Test email from Spring");
@@ -38,7 +40,7 @@ public class MailSenderServiceImpl implements MailSenderService {
             logger.info("sendEmail() - email was sent");
         } catch (MessagingException e) {
             logger.warn(e.getMessage());
-            throw new RuntimeException(e);
+            //throw new RuntimeException(e);
         }
 
     }
@@ -64,7 +66,7 @@ public class MailSenderServiceImpl implements MailSenderService {
             System.out.println(result);
             br.close();
         }
-        catch (Exception ex) {
+        catch (IOException ex) {
             logger.warn(ex.getMessage());
             System.out.println(ex.getMessage());
         }

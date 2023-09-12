@@ -1,5 +1,6 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,8 @@ public class MailSenderController {
         this.userService = userService;
         this.mailSenderService = mailSenderService;
     }
-    private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
+    @Value("${upload.path}")
+    private String uploadPath;
     private Integer n = 9;
     private String userCheck = "";
     String emails = "";

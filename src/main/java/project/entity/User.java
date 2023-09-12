@@ -30,7 +30,7 @@ public class User {
     private String email;
     //@NotEmpty(message = "Поле не може бути порожнім")
     //@Size(min=5, max=15, message = "Розмір поля має бути від 5 до 15 символів")
-    @Column(columnDefinition="NOT NULL UNIQUE")
+    @Column(columnDefinition="VARCHAR(255) NOT NULL UNIQUE")
     private String password;
     @Column(name = "card_number", columnDefinition="VARCHAR(20) UNIQUE")
     @Size(min=13, max=19, message = "Розмір поля має бути від 13 до 19 символів")

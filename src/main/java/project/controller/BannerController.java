@@ -1,6 +1,7 @@
 package project.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,7 +33,8 @@ public class BannerController {
     }
 
     private Integer n = 2;
-    private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
+    @Value("${upload.path}")
+    private String uploadPath;
     private List<MainBanner> mainBanners;
     private List<NewsBanner> newsBanners;
     private List<Integer> speed = List.of(2,3,4,5);
