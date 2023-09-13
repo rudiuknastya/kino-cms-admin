@@ -62,7 +62,7 @@
                 </div>
                 <div class="col-auto">
                   <label class="input-group-text col-form-label" for="inputMainImage" style="color:black;">Завантажити</label>
-                  <input type="text"  th:value = "*{image}" id="mainImageName" name="mainImageName">
+                  <input type="text" class="d-none"  th:value = "*{image}" id="mainImageName" name="mainImageName">
                 </div>
                 <div class="col-auto">
                   <button type="button" class="btn btn-outline-danger" onclick="main_image.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; inputMainImage.value = ''; mainImageName.value = ''">Видалити</button>

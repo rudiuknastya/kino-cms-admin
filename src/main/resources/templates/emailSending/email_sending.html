@@ -99,7 +99,7 @@
                                     <label class="form-check-label" th:for="file+${stat.index}"  th:id="fileLabel+${stat.index}" th:text="*{mailFilesList[__${stat.index}__].file}"> Default radio</label>
                                     <button type="button" th:id="delButton+${stat.index}" th:onclick="|deleteFile('${stat.index}')|" class="btn btn-outline-danger" style="height:25px; font-size:12px;">Видалити</button>
                                 </div>
-                                <input type="text" id="deleteInput" name="deleteInput">
+                                <input type="text" class="d-none" id="deleteInput" name="deleteInput">
                             </div>
                         </form>
                         <div class="col-md-12 text-center">
