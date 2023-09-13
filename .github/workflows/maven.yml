@@ -33,7 +33,7 @@ jobs:
         usernameDB: ${{ secrets.DB_USERNAME }}
         passwordDB: ${{ secrets.DB_PASSWORD }}
       run: |
-        envsubst < src/main/resources/application.yml > src/main/resources/application.yml
+        envsubst < src/main/resources/application.template.yml > src/main/resources/application.yml
         cat src/main/resources/application.yml
     - name: Build with Maven
       run: mvn -B package --file pom.xml
