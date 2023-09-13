@@ -32,7 +32,7 @@ jobs:
         urlDB: ${{ secrets.DB_URL }}
         usernameDB: ${{ secrets.DB_USERNAME }}
         passwordDB: ${{ secrets.DB_PASSWORD }}
-        uploads_path: ${{ secrets.PATH }}
+        uploadsPath: ${{ secrets.UPLOAD_FILES_PATH }}
       run: |
         envsubst < src/main/resources/application.template.yml > src/main/resources/application.yml
         cat src/main/resources/application.yml

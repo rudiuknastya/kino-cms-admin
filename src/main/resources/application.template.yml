@@ -1,5 +1,5 @@
 upload:
-  path: ${uploads_path}
+  path: ${uploadsPath}
 spring:
   mail:
     host: smtp.gmail.com
