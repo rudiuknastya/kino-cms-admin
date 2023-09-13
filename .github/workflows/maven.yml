@@ -28,11 +28,13 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Adding secret
+      env:
+        urlDB: ${{ secrets.DB_URL }}
+        usernameDB: ${{ secrets.DB_USERNAME }}
+        passwordDB: ${{ secrets.DB_PASSWORD }}
       run: |
-        export urlDB=${{ secrets.DB_URL }} export usernameDB=${{ secrets.DB_USERNAME }} export passwordDB=${{ secrets.DB_PASSWORD }}
         envsubst < src/main/resources/application.yml > src/main/resources/application.yml
         cat src/main/resources/application.yml
-      shell: bash
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name : Tomcat deploy
