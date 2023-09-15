@@ -63,10 +63,9 @@
 <body>
 <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all " th:fragment="sidebar(number)">
     <div class="sidebar-header d-flex align-items-center justify-content-start">
-        <a href="../dashboard/index.html" class="navbar-brand">
             <!--Logo start-->
             <!--logo End-->
-
+        <div class="navbar-brand">
             <!--Logo start-->
             <div class="logo-main">
                 <div class="logo-normal">
@@ -109,7 +108,7 @@
 
 
             <h4 class="logo-title">Movie Club</h4>
-        </a>
+        </div>
         <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
             <i class="icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -281,7 +280,7 @@
                             <div sec:authorize="isAuthenticated()">
                                 Authenticated as <span sec:authentication="name"></span></div>
                         </div>
-                        <img th:src="@{/assets/images/avatars/01.png}" alt="User-Profile" class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded">
+                        <a th:href="@{/user/profile}"><img th:src="@{/assets/images/avatars/01.png}" alt="User-Profile" class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded"></a>
 
 <!--                        </a>-->
                     </li>
@@ -303,12 +302,12 @@
 </div>
 
 
-<header th:fragment="header(phoneNumber1, phoneNumber2, linkNumber, newPages, aboutCinemaPage, cafePage, vipHallPage, adPage, childrenRoomPage, contactPage)" class="pt-3" style="width:1030px; position:fixed; z-index:1; top:0px; left:116.5px; background-color:white;">
+<header th:fragment="header(mainPage, linkNumber, newPages, aboutCinemaPage, cafePage, vipHallPage, adPage, childrenRoomPage, contactPage)" class="pt-3" style="width:1030px; position:fixed; z-index:1; top:0px; left:9.25%; background-color:white;">
     <div class="row align-items-center mb-4">
         <!--          Logo start-->
 
 <!--        <div class="col-5 d-flex flex-row ms-4">-->
-            <a class="col-4 d-flex flex-row ms-4" th:href="@{/main_page}" style="text-decoration:none; color:black">
+            <a class="col-4 d-flex flex-row ms-4" th:href="@{/}" style="text-decoration:none; color:black">
             <svg fill="blue" height="22" width="22" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                  viewBox="0 0 297 297" xml:space="preserve">
 <g>
@@ -353,8 +352,10 @@
             </svg>
         </div>
         <div class="col-2">
-            <div style="color:black;" th:text="${phoneNumber1}"></div>
-            <div style="color:black;" th:text="${phoneNumber2}"></div>
+            <th:block th:if="${mainPage.status == true}">
+            <div style="color:black;" th:text="${mainPage.phone1}"></div>
+            <div style="color:black;" th:text="${mainPage.phone2}"></div>
+            </th:block>
         </div>
         <div class="col-4 row">
             <div sec:authorize="!isAuthenticated()" class="col-9 row">
@@ -375,13 +376,13 @@
                     <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
                 </svg>
             </a>
-            <div sec:authorize="isAuthenticated()">
-                Authenticated as <span sec:authentication="name"></span></div>
+            <div class="col-2" sec:authorize="isAuthenticated()" sec:authentication="name"></div>
         </div>
     </div>
     <nav class="bg-body-tertiary py-2">
         <div class="container-fluid">
                     <ul class="nav nav-underline justify-content-center">
+                        <li class="nav-item mx-3"><a th:class="'nav-link '+${linkNumber == 2 ? 'active' : ''}" th:href="@{/}" style="color:black"> Головна </a></li>
                         <li class="nav-item mx-3"><a th:class="'nav-link '+${linkNumber == 5 ? 'active' : ''}" th:href="@{/poster}" style="color:black"> Афіша </a></li>
                         <li class="nav-item mx-3"><a th:class="'nav-link '+${linkNumber == 10 ? 'active' : ''}" th:href="@{/film_sessions}" style="color:black"> Розклад </a></li>
                         <li class="nav-item mx-3"><a th:class="'nav-link '+${linkNumber == 3 ? 'active' : ''}" th:href="@{/soon}" style="color:black"> Скоро </a></li>
@@ -400,8 +401,8 @@
                                 <li th:if="${vipHallPage.status == true}"><a class="dropdown-item" th:href="@{/vip_hall}" th:text="${vipHallPage.name}">Vip-Зала</a></li>
                                 <li th:if="${childrenRoomPage.status == true}"><hr class="dropdown-divider"></li>
                                 <li th:if="${childrenRoomPage.status == true}"><a class="dropdown-item" th:href="@{/children_room}" th:text="${childrenRoomPage.name}">Дитяча кімната</a></li>
-                                <li th:if="${contactPage.status == true}"><hr class="dropdown-divider"></li>
-                                <li th:if="${contactPage.status == true}"><a class="dropdown-item" th:href="@{/contacts}">Контакти</a></li>
+                                <li th:if="${contactPage.pageStatus == true}"><hr class="dropdown-divider"></li>
+                                <li th:if="${contactPage.pageStatus == true}"><a class="dropdown-item" th:href="@{/contacts}">Контакти</a></li>
                                 <th:block th:each="newPage : ${newPages}">
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" th:href="@{/newPage/{id} (id=${newPage.id})}" th:text="${newPage.name}"></a></li>
@@ -421,7 +422,7 @@
 
 
 
-<div th:fragment="footer" class="container" style="width:1030px; background-color:white">
+<div th:fragment="footer(newPages, aboutCinemaPage, cafePage, vipHallPage, adPage, childrenRoomPage, contactPage)" class="container" style="width:1030px; background-color:white">
     <footer class="py-5 border-top" style="color:black">
         <div class="row">
 
@@ -443,14 +444,17 @@
             </div>
 
             <div class="col-6 col-md-2 mb-3">
-                <a th:href="@{/about_cinema}" style="text-decoration:none; color:black"><h5>Про кінотеатр</h5></a>
+                <a th:href="@{/about_cinema}" th:if="${aboutCinemaPage.status == true}" style="text-decoration:none; color:black"><h5 th:text="${aboutCinemaPage.name}">Про кінотеатр</h5></a>
                 <ul class="nav flex-column mt-2">
                     <li class="nav-item mb-2"><a th:href="@{/news}" class="nav-link p-0" style="color:black">Новини</a></li>
-                    <li class="nav-item mb-2"><a th:href="@{/advertisement}" class="nav-link p-0" style="color:black">Реклама</a></li>
-                    <li class="nav-item mb-2"><a th:href="@{/cafe}" class="nav-link p-0" style="color:black">Кафе-Бар</a></li>
-                    <li class="nav-item mb-2"><a th:href="@{/vip_hall}" class="nav-link p-0" style="color:black">Vip-Зала</a></li>
-                    <li class="nav-item mb-2"><a th:href="@{/children_room}" class="nav-link p-0" style="color:black">Дитяча кімната</a></li>
-                    <li class="nav-item mb-2"><a th:href="@{/contacts}" class="nav-link p-0" style="color:black">Контакти</a></li>
+                    <li th:if="${adPage.status == true}" class="nav-item mb-2"><a th:href="@{/advertisement}" th:text="${adPage.name}" class="nav-link p-0" style="color:black">Реклама</a></li>
+                    <li th:if="${cafePage.status == true}" class="nav-item mb-2"><a th:href="@{/cafe}" th:text="${cafePage.name}" class="nav-link p-0" style="color:black">Кафе-Бар</a></li>
+                    <li th:if="${vipHallPage.status == true}" class="nav-item mb-2"><a th:href="@{/vip_hall}" th:text="${vipHallPage.name}" class="nav-link p-0" style="color:black">Vip-Зала</a></li>
+                    <li th:if="${childrenRoomPage.status == true}" class="nav-item mb-2"><a th:href="@{/children_room}" th:text="${childrenRoomPage.name}" class="nav-link p-0" style="color:black">Дитяча кімната</a></li>
+                    <li th:if="${contactPage.pageStatus == true}" class="nav-item mb-2"><a th:href="@{/contacts}" class="nav-link p-0" style="color:black">Контакти</a></li>
+                    <th:block th:each="newPage : ${newPages}">
+                        <li class="nav-item mb-2"><a th:href="@{/newPage/{id} (id=${newPage.id})}" th:text="${newPage.name}" class="nav-link p-0" style="color:black"></a></li>
+                    </th:block>
                 </ul>
             </div>
 

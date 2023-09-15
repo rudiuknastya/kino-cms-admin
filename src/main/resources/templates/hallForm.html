@@ -10,7 +10,7 @@
         <div class="col-md-6" >
             <input type="text" class="form-control d-none" name="redirect" th:value = "${redirect}">
             <label for="inputName" class="form-label">Номер залу</label>
-            <input type="text" class="form-control" id="inputName"  th:field = "*{number}">
+            <input type="number" class="form-control" id="inputName"  th:field = "*{number}">
             <div class="text-danger" th:if="${#fields.hasErrors('number')}" th:errors="*{number}"></div>
         </div>
         <div>

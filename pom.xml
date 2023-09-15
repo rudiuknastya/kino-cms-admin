@@ -9,7 +9,7 @@
         <version>3.1.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <packaging>war</packaging>
+<!--    <packaging>war</packaging>-->
     <groupId>org.example</groupId>
     <artifactId>Kino-CMS_admin</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -77,11 +77,11 @@
             <version>3.1.2</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-tomcat</artifactId>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -109,7 +109,7 @@
     </dependencies>
 
     <build>
-        <finalName>Kino_CMS_A_Rudiuk</finalName>
+<!--        <finalName>Kino_CMS_A_Rudiuk</finalName>-->
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

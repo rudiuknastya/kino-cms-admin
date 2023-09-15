@@ -11,7 +11,6 @@ import project.service.*;
 @Controller
 public class PublicShareController {
     private final ShareService shareService;
-    private final BannerService bannerService;
     private final MainPageService mainPageService;
     private final AboutCinemaService aboutCinemaService;
     private final CafeService cafeService;
@@ -21,9 +20,8 @@ public class PublicShareController {
     private final NewPageService newPageService;
     private final ContactsService contactsService;
 
-    public PublicShareController(ShareService shareService, BannerService bannerService, MainPageService mainPageService, AboutCinemaService aboutCinemaService, CafeService cafeService, VipHallService vipHallService, AdvertisementService advertisementService, ChildrenRoomService childrenRoomService, NewPageService newPageService, ContactsService contactsService) {
+    public PublicShareController(ShareService shareService, MainPageService mainPageService, AboutCinemaService aboutCinemaService, CafeService cafeService, VipHallService vipHallService, AdvertisementService advertisementService, ChildrenRoomService childrenRoomService, NewPageService newPageService, ContactsService contactsService) {
         this.shareService = shareService;
-        this.bannerService = bannerService;
         this.mainPageService = mainPageService;
         this.aboutCinemaService = aboutCinemaService;
         this.cafeService = cafeService;
@@ -38,7 +36,7 @@ public class PublicShareController {
 
     @GetMapping("/shares/{pageNumber}")
     public String getShares(@PathVariable int pageNumber,Model model){
-        int pageSize = 1;
+        int pageSize = 2;
         String link = "shares/share";
         String pageLink = "shares";
         Page<Share> page = shareService.getSharesWithPagination(pageNumber,pageSize);
@@ -47,7 +45,6 @@ public class PublicShareController {
         model.addAttribute("totalPages",page.getTotalPages());
         model.addAttribute("currentPage",pageNumber);
         model.addAttribute("mainPage",mainPageService.getMainPage());
-        model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
         model.addAttribute("pagenm", n);
         model.addAttribute("link",link);
         model.addAttribute("pageLink",pageLink);
@@ -64,7 +61,6 @@ public class PublicShareController {
     public String showShare(@PathVariable Long id, Model model){
         model.addAttribute("share", shareService.getShareById(id));
         model.addAttribute("mainPage",mainPageService.getMainPage());
-        model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
         model.addAttribute("pagenm", n);
         model.addAttribute("newPages",newPageService.getEnabledNewPages());
         model.addAttribute("aboutCinemaPage",aboutCinemaService.getAboutCinema());

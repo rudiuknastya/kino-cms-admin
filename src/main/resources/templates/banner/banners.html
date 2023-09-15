@@ -12,6 +12,9 @@
           <div class="card-body">
             <h4 class="text-center mb-3">На головній зверху</h4>
             <form th:action = "@{/admin/{l} (l=${mainBannerLink})}" th:object = "${mainBanner}" method="post" enctype="multipart/form-data" class="row g-3 pb-5 ps-2" style="color:black; border:solid;border-radius: 20px;">
+              <div class="form-check form-switch d-flex justify-content-end">
+                <input class="form-check-input mx-1" type="checkbox" role="switch" id="flexSwitchCheckDefault" th:field = "*{mainBannerList[0].status}">
+              </div>
               <label class="col-form-label"  style="color:black;">Розмір: 1000х190</label>
               <div class="row g-3 align-items-center">
                 <th:block th:each="mainbanner, stat : *{mainBannerList}">
@@ -52,24 +55,24 @@
               <div class="row g-3 align-items-center">
                 <div class="col-auto">
                   <div class="form-check ">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioImage" th:field = "*{image}" onchange="inputMainImage.disabled=false;" th:value="*{image}">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioImage" th:field = "*{backgroundImageList[1].image}" onchange="inputMainImage.disabled=false;" value="image">
                     <label class="form-check-label" for="inlineRadioImage">Фото на фон</label>
                   </div>
                 </div>
                 <div class="col-auto">
-                  <img th:src="*{image != null and image != 'noImage'}? @{'/uploads/'+ *{image}}: @{'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'}" style="width:150px; height:150px;" id="main_image">
-                  <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="inputMainImage" onchange="main_image.src=window.URL.createObjectURL(this.files[0]); inlineRadioImage.value=this.files[0].name;" name="mainImage">
+                  <img th:src="*{backgroundImageList[0].image != null and backgroundImageList[0].image != 'noImage'}? @{'/uploads/'+ *{backgroundImageList[0].image}}: @{'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'}" style="width:150px; height:150px;" id="main_image">
+                  <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="inputMainImage" onchange="main_image.src=window.URL.createObjectURL(this.files[0]);" name="mainImage">
                 </div>
                 <div class="col-auto">
                   <label class="input-group-text col-form-label" for="inputMainImage" style="color:black;">Завантажити</label>
-                  <input type="text" class="d-none"  th:value = "*{image}" id="mainImageName" name="mainImageName">
+                  <input type="text" class="d-none"  th:value = "*{backgroundImageList[0].image}" id="mainImageName" name="mainImageName">
                 </div>
                 <div class="col-auto">
                   <button type="button" class="btn btn-outline-danger" onclick="main_image.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; inputMainImage.value = ''; mainImageName.value = ''">Видалити</button>
                 </div>
               </div>
               <div class="form-check ms-2">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadiofemale" th:field = "*{image}" onchange="main_image.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; inputMainImage.value = ''; mainImageName.value = ''; inputMainImage.disabled = true;" value="noImage">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadiofemale" th:field = "*{backgroundImageList[1].image}" onchange="inputMainImage.disabled = true;" value="noImage">
                 <label class="form-check-label" for="inlineRadioFemale">Просто фон</label>
               </div>
               <div class="col-md-12 text-center">
@@ -79,6 +82,9 @@
 
             <h4 class="text-center mb-4">На головній Новини Акції</h4>
             <form th:action = "@{/admin/{l} (l=${newsBannerLink})}" th:object = "${newsBanner}" method="post" enctype="multipart/form-data" class="row g-3 pb-5 ps-2" style="color:black;border:solid;border-radius: 20px;">
+              <div class="form-check form-switch d-flex justify-content-end">
+                <input class="form-check-input mx-1" type="checkbox" role="switch" id="flexSwitchCheck" th:field = "*{newsBannerList[0].status}">
+              </div>
               <label class="col-form-label"  style="color:black;">Розмір: 1000х190</label>
               <div class="row g-3 align-items-center">
                 <th:block th:each="newsbanner, stat : *{newsBannerList}">

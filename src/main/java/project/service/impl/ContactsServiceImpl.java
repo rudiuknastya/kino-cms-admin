@@ -47,4 +47,20 @@ public class ContactsServiceImpl implements ContactsService {
         contactsRepository.deleteById(id);
         logger.info("deleteContactById() - Contact was deleted");
     }
+
+    @Override
+    public Long getContactsCount() {
+        logger.info("getContactsCount() - Finding contacts count");
+        Long c = contactsRepository.count();
+        logger.info("getContactsCount() - Contacts count was found");
+        return c;
+    }
+
+    @Override
+    public List<Contact> getEnabledContacts() {
+        logger.info("getEnabledContacts() - Finding enabled contacts");
+        List<Contact> contacts = contactsRepository.findByStatusNot(false);
+        logger.info("getEnabledContacts() - Enabled contacts were found");
+        return contacts;
+    }
 }

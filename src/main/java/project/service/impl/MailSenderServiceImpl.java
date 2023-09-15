@@ -26,10 +26,9 @@ public class MailSenderServiceImpl implements MailSenderService {
     @Override
     public void sendEmail(String to, String file) {
         logger.info("sendEmail() - sending email to user "+to+" with file "+file);
-        //MimeMessage message = mailSender.createMimeMessage();
+        MimeMessage message = mailSender.createMimeMessage();
 
         try {
-            MimeMessage message = mailSender.createMimeMessage();
             message.setFrom(new InternetAddress("ruduknasta13@gmail.com"));
             message.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject("Test email from Spring");

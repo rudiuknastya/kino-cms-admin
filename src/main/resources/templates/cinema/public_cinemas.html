@@ -6,11 +6,11 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </head>
-<header th:replace="~{fragments :: header(${mainPage.phone1},${mainPage.phone2},${pageM},${newPages},${aboutCinemaPage}, ${cafePage}, ${vipHallPage}, ${adPage}, ${childrenRoomPage},${contactPage})}"></header>
+<header th:replace="~{fragments :: header(${mainPage},${pageM},${newPages},${aboutCinemaPage}, ${cafePage}, ${vipHallPage}, ${adPage}, ${childrenRoomPage},${contactPage})}"></header>
 <body style="margin-top:145px">
 <div class="mx-auto pb-5" style="width:1030px; background-color:white;" >
   <div class="conatiner-fluid  py-0">
-    <img th:src="@{'/uploads/'+ ${backgroundImage.image}}" class="d-block w-100 mb-5" alt="mainBanner0" style="height:400px">
+    <img th:src="@{/assets/images/161764433_hi-res.jpg}" class="d-block w-100 mb-5" alt="mainBanner0" style="height:450px">
     <div class="row">
       <h4 style="text-align:center">Наші кінотеатри</h4>
     <div class="row gx-5 gy-4 col-9">
@@ -32,5 +32,5 @@
     </div>
 </div>
 </body>
-<div th:replace="~{fragments :: footer}"></div>
+<div th:replace="~{fragments :: footer(${newPages},${aboutCinemaPage}, ${cafePage}, ${vipHallPage}, ${adPage}, ${childrenRoomPage}, ${contactPage})}"></div>
 </html>

@@ -3,6 +3,7 @@ package project.publicController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import project.entity.AboutCinema;
 import project.service.*;
 
 @Controller
@@ -30,16 +31,21 @@ public class PublicAboutCinemaController {
     private Integer n = 7;
     @GetMapping("/about_cinema")
     public String showAboutCinema(Model model){
-        model.addAttribute("object", aboutCinemaService.getAboutCinema());
-        model.addAttribute("mainPage",mainPageService.getMainPage());
-        model.addAttribute("pageNum", n);
-        model.addAttribute("newPages",newPageService.getEnabledNewPages());
-        model.addAttribute("aboutCinemaPage",aboutCinemaService.getAboutCinema());
-        model.addAttribute("cafePage",cafeService.getCafe());
-        model.addAttribute("vipHallPage",vipHallService.getVipHall());
-        model.addAttribute("adPage",advertisementService.getAd());
-        model.addAttribute("childrenRoomPage",childrenRoomService.getChildrenRoom());
-        model.addAttribute("contactPage", contactsService.getContact());
-        return "page/public_page";
+        AboutCinema aboutCinema = aboutCinemaService.getAboutCinema();
+        if(aboutCinema.getStatus() == true) {
+            model.addAttribute("object", aboutCinema);
+            model.addAttribute("mainPage", mainPageService.getMainPage());
+            model.addAttribute("pageNum", n);
+            model.addAttribute("newPages", newPageService.getEnabledNewPages());
+            model.addAttribute("aboutCinemaPage", aboutCinemaService.getAboutCinema());
+            model.addAttribute("cafePage", cafeService.getCafe());
+            model.addAttribute("vipHallPage", vipHallService.getVipHall());
+            model.addAttribute("adPage", advertisementService.getAd());
+            model.addAttribute("childrenRoomPage", childrenRoomService.getChildrenRoom());
+            model.addAttribute("contactPage", contactsService.getContact());
+            return "page/public_page";
+        } else {
+            return "redirect:/";
+        }
     }
 }

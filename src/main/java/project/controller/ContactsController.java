@@ -25,6 +25,7 @@ public class ContactsController {
     private final ContactsService contactsService;
     private final MainPageService mainPageService;
     private final BannerService bannerService;
+    private boolean update = true;
 
     public ContactsController(ContactsService contactsService, MainPageService mainPageService, BannerService bannerService) {
         this.contactsService = contactsService;
@@ -38,29 +39,33 @@ public class ContactsController {
 
     @GetMapping("/admin/pages/edit/contacts/delete/{id}")
     public String deleteContact(@PathVariable Long id,  Model model) {
-        if(id < contacts.size()){
-            contactsService.deleteContactById(contacts.get(Math.toIntExact(id)).getId());
-            return "redirect:/admin/pages/edit/contacts";
-        } else{
+        Long c = contactsService.getContactsCount();
+        if(c < contacts.size()){
             contacts.remove(Math.toIntExact(id));
-            return "redirect:/admin/pages/edit/contacts/new";
+        } else{
+            contactsService.deleteContactById(contacts.get(Math.toIntExact(id)).getId());
         }
+            return "redirect:/admin/pages/edit/contacts";
     }
 
     @GetMapping("/admin/pages/edit/contacts/new")
     public String createContacts(Model model) {
-        ContactsForm contactsForm = new ContactsForm();
+        //ContactsForm contactsForm = new ContactsForm();
         contacts.add(new Contact());
-        contactsForm.setContactsList(contacts);
-        model.addAttribute("contacts", contactsForm);
-        model.addAttribute("pagenuM", n);
-        return "page/contacts_page";
+//        contactsForm.setContactsList(contacts);
+//        model.addAttribute("contacts", contactsForm);
+//        model.addAttribute("pagenuM", n);
+        update = false;
+        return "redirect:/admin/pages/edit/contacts";
     }
 
     @GetMapping("/admin/pages/edit/contacts")
     public String editContacts(Model model) {
         ContactsForm contactsForm = new ContactsForm();
-        contacts = contactsService.getAllContacts();
+        if(update == true) {
+            contacts = contactsService.getAllContacts();
+        }
+        update = true;
         contactsForm.setContactsList(contacts);
         model.addAttribute("contacts", contactsForm);
         model.addAttribute("pagenuM", n);
@@ -85,12 +90,13 @@ public class ContactsController {
         for(Contact contact: contactsForm.getContactsList()){
             if(i<contactsInDb.size()) {
                 if (i == 0) {
-                    contactsInDb.get(i).setStatus(contact.getStatus());
+                    contactsInDb.get(i).setPageStatus(contact.getPageStatus());
                     contactsInDb.get(i).getSeoBlock().setUrl(contact.getSeoBlock().getUrl());
                     contactsInDb.get(i).getSeoBlock().setTitle(contact.getSeoBlock().getTitle());
                     contactsInDb.get(i).getSeoBlock().setKeywords(contact.getSeoBlock().getKeywords());
                     contactsInDb.get(i).getSeoBlock().setDescription(contact.getSeoBlock().getDescription());
                 }
+                contactsInDb.get(i).setStatus(contact.getStatus());
                 contactsInDb.get(i).setLogo(contact.getLogo());
                 contactsInDb.get(i).setCinemaName(contact.getCinemaName());
                 contactsInDb.get(i).setAddress(contact.getAddress());

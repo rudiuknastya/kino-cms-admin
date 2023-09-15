@@ -3,6 +3,7 @@ package project.publicController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import project.entity.Cafe;
 import project.service.*;
 
 @Controller
@@ -31,16 +32,21 @@ public class PublicCafeController {
 
     @GetMapping("/cafe")
     public String showCafe(Model model){
-        model.addAttribute("object", cafeService.getCafe());
-        model.addAttribute("mainPage",mainPageService.getMainPage());
-        model.addAttribute("pageNum", n);
-        model.addAttribute("newPages",newPageService.getEnabledNewPages());
-        model.addAttribute("aboutCinemaPage",aboutCinemaService.getAboutCinema());
-        model.addAttribute("cafePage",cafeService.getCafe());
-        model.addAttribute("vipHallPage",vipHallService.getVipHall());
-        model.addAttribute("adPage",advertisementService.getAd());
-        model.addAttribute("childrenRoomPage",childrenRoomService.getChildrenRoom());
-        model.addAttribute("contactPage", contactsService.getContact());
-        return "page/cafe_page";
+        Cafe cafe = cafeService.getCafe();
+        if(cafe.getStatus() == true) {
+            model.addAttribute("object", cafe);
+            model.addAttribute("mainPage", mainPageService.getMainPage());
+            model.addAttribute("pageNum", n);
+            model.addAttribute("newPages", newPageService.getEnabledNewPages());
+            model.addAttribute("aboutCinemaPage", aboutCinemaService.getAboutCinema());
+            model.addAttribute("cafePage", cafeService.getCafe());
+            model.addAttribute("vipHallPage", vipHallService.getVipHall());
+            model.addAttribute("adPage", advertisementService.getAd());
+            model.addAttribute("childrenRoomPage", childrenRoomService.getChildrenRoom());
+            model.addAttribute("contactPage", contactsService.getContact());
+            return "page/cafe_page";
+        } else {
+            return "redirect:/";
+        }
     }
 }

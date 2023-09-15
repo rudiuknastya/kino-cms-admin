@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "film")
@@ -23,7 +24,6 @@ public class Film {
     @Column(columnDefinition="TEXT NOT NULL")
     private String description;
     private String trailer;
-    //@NotEmpty(message = "Поле не може бути порожнім")
     @Column(nullable = false)
     private String type;
     @NotNull(message = "Поле не може бути порожнім")
@@ -61,6 +61,16 @@ public class Film {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="image_gallery_id", referencedColumnName = "id")
     private Gallery imageGallery;
+    @OneToMany(mappedBy ="film", cascade = CascadeType.ALL)
+    private List<FilmSession> filmSessions;
+
+    public List<FilmSession> getFilmSessions() {
+        return filmSessions;
+    }
+
+    public void setFilmSessions(List<FilmSession> filmSessions) {
+        this.filmSessions = filmSessions;
+    }
 
     public Gallery getImageGallery() {
         return imageGallery;

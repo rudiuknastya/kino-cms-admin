@@ -17,7 +17,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
 
-            <table class="table table-striped table-bordered" style="font-size: 14px;" data-toggle="data-table" id="datatable">
+            <table class="table table-striped table-bordered" style="font-size: 14px;" id="userstable">
                 <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -56,19 +56,26 @@
     </div>
 </main>
 
-<!--<script>-->
-<!--    new DataTable('#userstable', {-->
-<!--    columnDefs: [-->
-<!--        {-->
-<!--            target: -1,-->
-<!--            sortable: false-->
-<!--        }-->
-<!--    ],-->
-<!--    info: false,-->
-<!--    lengthChange: false,-->
-<!--    "pageLength": 5,-->
-<!--    "autoWidth": true-->
-<!--});-->
-<!--</script>-->
+<script>
+    new DataTable('#userstable', {
+    columnDefs: [
+        {
+            target: -1,
+            sortable: false
+        }
+    ],
+    info: false,
+    lengthChange: false,
+    "pageLength": 5,
+    "autoWidth": true,
+    preDrawCallback: function (settings) {
+        var api = new $.fn.dataTable.Api(settings);
+        var pagination = $(this)
+            .closest('.dataTables_wrapper')
+            .find('.dataTables_paginate');
+        pagination.toggle(api.page.info().pages > 1);
+    }
+});
+</script>
 </body>
 </html>

@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "hall")
@@ -33,6 +34,16 @@ public class Hall {
     @ManyToOne
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
+    @OneToMany(mappedBy ="hall", cascade = CascadeType.ALL)
+    private List<FilmSession> filmSessions;
+
+    public List<FilmSession> getFilmSessions() {
+        return filmSessions;
+    }
+
+    public void setFilmSessions(List<FilmSession> filmSessions) {
+        this.filmSessions = filmSessions;
+    }
 
     public LocalDate getCreationDate() {
         return creationDate;

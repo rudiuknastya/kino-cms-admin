@@ -30,7 +30,7 @@ public class StatisticServiceImpl implements StatisticService {
     @Override
     public Long usersCount() {
         logger.info("usersCount() - Finding users count");
-        Long count = userRepository.count();
+        Long count = userRepository.getUsersCount();
         logger.info("usersCount() - Users count was found");
         return count;
     }

@@ -12,7 +12,6 @@ import project.service.*;
 public class PublicNewsController {
     private final NewsService newsService;
     private final MainPageService mainPageService;
-    private final BannerService bannerService;
     private final AboutCinemaService aboutCinemaService;
     private final CafeService cafeService;
     private final VipHallService vipHallService;
@@ -21,10 +20,9 @@ public class PublicNewsController {
     private final NewPageService newPageService;
     private final ContactsService contactsService;
 
-    public PublicNewsController(NewsService newsService, MainPageService mainPageService, BannerService bannerService, AboutCinemaService aboutCinemaService, CafeService cafeService, VipHallService vipHallService, AdvertisementService advertisementService, ChildrenRoomService childrenRoomService, NewPageService newPageService, ContactsService contactsService) {
+    public PublicNewsController(NewsService newsService, MainPageService mainPageService, AboutCinemaService aboutCinemaService, CafeService cafeService, VipHallService vipHallService, AdvertisementService advertisementService, ChildrenRoomService childrenRoomService, NewPageService newPageService, ContactsService contactsService) {
         this.newsService = newsService;
         this.mainPageService = mainPageService;
-        this.bannerService = bannerService;
         this.aboutCinemaService = aboutCinemaService;
         this.cafeService = cafeService;
         this.vipHallService = vipHallService;
@@ -39,13 +37,12 @@ public class PublicNewsController {
     public String showAllNews(@PathVariable int pageNumber,Model model){
         String link = "news/new";
         String pageLink = "news";
-        int pageSize = 1;
+        int pageSize = 2;
         Page<News> page = newsService.getNewsWithPagination(pageNumber,pageSize);
         model.addAttribute("shares", page.getContent());
         model.addAttribute("totalPages",page.getTotalPages());
         model.addAttribute("currentPage",pageNumber);
         model.addAttribute("mainPage",mainPageService.getMainPage());
-        model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
         model.addAttribute("pagenm", 0);
         model.addAttribute("link",link);
         model.addAttribute("pageLink",pageLink);
@@ -62,7 +59,6 @@ public class PublicNewsController {
     public String getNews(@PathVariable Long id, Model model){
         model.addAttribute("share", newsService.getNewById(id));
         model.addAttribute("mainPage",mainPageService.getMainPage());
-        model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
         model.addAttribute("pagenm", 0);
         model.addAttribute("newPages",newPageService.getEnabledNewPages());
         model.addAttribute("aboutCinemaPage",aboutCinemaService.getAboutCinema());

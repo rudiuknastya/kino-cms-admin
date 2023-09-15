@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import project.entity.BackgroundImage;
 import project.entity.MainBanner;
 import project.entity.NewsBanner;
+import project.listWrapper.BackgroundImageForm;
 import project.listWrapper.MainBannerForm;
 import project.listWrapper.NewsBannerForm;
 import project.service.BannerService;
@@ -37,7 +38,7 @@ public class BannerController {
     private String uploadPath;
     private List<MainBanner> mainBanners;
     private List<NewsBanner> newsBanners;
-    private List<Integer> speed = List.of(2,3,4,5);
+    private List<Integer> speed = List.of(0,1,2,3,4,5);
     @GetMapping("/admin/banners")
     public String getBanners(Model model) {
         String l = "banners/main";
@@ -49,9 +50,11 @@ public class BannerController {
         MainBannerForm mainBannerForm = new MainBannerForm();
         mainBanners = bannerService.getAllMainBanners();
         mainBannerForm.setMainBannerList(mainBanners);
+        BackgroundImageForm backgroundImageForm = new BackgroundImageForm();
+        backgroundImageForm.setBackgroundImageList(bannerService.getBackgroundImages());
         model.addAttribute("mainBanner", mainBannerForm);
         model.addAttribute("newsBanner", newsBannerForm);
-        model.addAttribute("backgroundImage", bannerService.getBackgroundImage());
+        model.addAttribute("backgroundImage", backgroundImageForm);
         model.addAttribute("pageNUMB", n);
         model.addAttribute("mainBannerLink", l);
         model.addAttribute("newsBannerLink", ln);
@@ -85,6 +88,7 @@ public class BannerController {
             return "banner/banners";
         }
         int i = 0;
+        mainBanners.get(0).setStatus(mainBannerForm.getMainBannerList().get(0).getStatus());
         for(MainBanner mainBanner: mainBannerForm.getMainBannerList()){
             mainBanners.get(i).setText(mainBanner.getText());
             mainBanners.get(i).setUrl(mainBanner.getUrl());
@@ -92,6 +96,7 @@ public class BannerController {
             bannerService.saveMainBanner(mainBanners.get(i));
             i++;
         }
+
         return "redirect:/admin/banners";
     }
     @PostMapping("/admin/banners/news")
@@ -119,6 +124,7 @@ public class BannerController {
             return "banner/banners";
         }
         int i = 0;
+        newsBanners.get(0).setStatus(newsBannerForm.getNewsBannerList().get(0).getStatus());
         for(NewsBanner newsBanner: newsBannerForm.getNewsBannerList()){
             newsBanners.get(i).setUrl(newsBanner.getUrl());
             newsBanners.get(i).setSpeed(newsBannerForm.getNewsBannerList().get(0).getSpeed());
@@ -129,38 +135,25 @@ public class BannerController {
     }
 
     @PostMapping("/admin/banners/background")
-    public String saveBackgroundImage(@Valid @ModelAttribute("backgroundImage") BackgroundImage backgroundImage, BindingResult bindingResult,
+    public String saveBackgroundImage(@Valid @ModelAttribute("backgroundImage") BackgroundImageForm backgroundImage, BindingResult bindingResult,
                                       @RequestParam(name="mainImage", required = false)MultipartFile mainImage, @RequestParam("mainImageName")String mainImageName,
                                       Model model){
-//        System.out.println(backgroundImage.getImage());
-//        System.out.println(mainImage.getOriginalFilename());
-//        System.out.println(mainImageName);
-        BackgroundImage backgroundImageInDb = bannerService.getBackgroundImage();
-        if(mainImage != null) {
-            if (!mainImage.getOriginalFilename().equals("") && (mainImageName.equals("") || mainImageName.equals("noImage")) && !backgroundImage.getImage().equals("noImage")) {
-                String uuidFile = UUID.randomUUID().toString();
-                String uniqueName = uuidFile + "." + mainImage.getOriginalFilename();
-                backgroundImage.setImage(uniqueName);
-                Path path = Paths.get(uploadPath + "/" + uniqueName);
-                try {
-                    mainImage.transferTo(new File(path.toUri()));
-                } catch (IOException e) {
-                }
-            } else if (mainImage.getOriginalFilename().equals("") && mainImageName.equals("") && backgroundImage.getImage().equals("noImage")) {
+//
+
+        if(backgroundImage.getBackgroundImageList().get(1).getImage().equals("image")) {
+            if (!mainImage.getOriginalFilename().equals("")) {
+                BackgroundImage backgroundImageInDb = bannerService.getBackgroundImageById(1L);
                 File file = new File(uploadPath + "/" + backgroundImageInDb.getImage());
                 file.delete();
-                backgroundImageInDb.setImage(null);
-            } else if (!mainImageName.equals("") && !mainImage.getOriginalFilename().equals(mainImageName)) {
                 String uuidFile = UUID.randomUUID().toString();
                 String uniqueName = uuidFile + "." + mainImage.getOriginalFilename();
-                backgroundImage.setImage(uniqueName);
+                backgroundImageInDb.setImage(uniqueName);
+                bannerService.saveBackgroundImage(backgroundImageInDb);
                 Path path = Paths.get(uploadPath + "/" + uniqueName);
                 try {
                     mainImage.transferTo(new File(path.toUri()));
                 } catch (IOException e) {
                 }
-                File file = new File(uploadPath + "/" + mainImageName);
-                file.delete();
             }
         }
         if (bindingResult.hasErrors()) {
@@ -174,8 +167,9 @@ public class BannerController {
             model.addAttribute("speed",speed);
             return "banner/banners";
         }
-        backgroundImageInDb.setImage(backgroundImage.getImage());
-        bannerService.saveBackgroundImage(backgroundImageInDb);
+        BackgroundImage img =  bannerService.getBackgroundImageById(2L);
+        img.setImage(backgroundImage.getBackgroundImageList().get(1).getImage());
+        bannerService.saveBackgroundImage(img);
         return "redirect:/admin/banners";
     }
 

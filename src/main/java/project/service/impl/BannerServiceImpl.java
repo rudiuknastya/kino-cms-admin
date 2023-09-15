@@ -45,11 +45,19 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
-    public BackgroundImage getBackgroundImage() {
-        logger.info("getBackgroundImage() - Finding background image");
-        BackgroundImage backgroundImage = backgroundImageRepository.findById(1L).orElseThrow(EntityNotFoundException::new);
-        logger.info("getBackgroundImage() - background image was found");
+    public BackgroundImage getBackgroundImageById(Long id) {
+        logger.info("getBackgroundImageById() - Finding background image by id "+ id);
+        BackgroundImage backgroundImage = backgroundImageRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        logger.info("getBackgroundImageById() - Background image was found");
         return backgroundImage;
+    }
+
+    @Override
+    public List<BackgroundImage> getBackgroundImages() {
+        logger.info("getBackgroundImage() - Finding background images");
+        List<BackgroundImage> backgroundImages = backgroundImageRepository.findAll();
+        logger.info("getBackgroundImage() - background images were found");
+        return backgroundImages;
     }
 
     @Override

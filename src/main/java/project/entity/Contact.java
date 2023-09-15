@@ -16,6 +16,8 @@ public class Contact {
     private Long id;
     @Column(columnDefinition="BOOLEAN")
     private Boolean status;
+    @Column(name="page_status", columnDefinition="BOOLEAN DEFAULT true")
+    private Boolean pageStatus;
     @Column(name="creation_date", columnDefinition="DATE")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate creationDate;
@@ -33,6 +35,14 @@ public class Contact {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="seo_block_id", referencedColumnName = "id")
     private SeoBlock seoBlock;
+
+    public Boolean getPageStatus() {
+        return pageStatus;
+    }
+
+    public void setPageStatus(Boolean pageStatus) {
+        this.pageStatus = pageStatus;
+    }
 
     public Long getId() {
         return id;

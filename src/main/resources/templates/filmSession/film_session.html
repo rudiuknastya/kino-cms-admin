@@ -106,7 +106,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="inputPrice" class="form-label">Ціна</label>
-                                <input type="text" class="form-control" id="inputPrice" th:field = "*{price}">
+                                <input type="number" class="form-control" id="inputPrice" th:field = "*{price}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"> </div>
                             </div>
                             <div class="col-md-12 text-center">

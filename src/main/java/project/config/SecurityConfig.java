@@ -54,21 +54,21 @@ public class SecurityConfig {
         http
                 .csrf((c)-> c.disable())
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/user/**").hasRole("USER")
+                        .requestMatchers("/user/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login_user")
                         .loginProcessingUrl("/login_user")
                         .usernameParameter("email")
-                        .defaultSuccessUrl("/main_page")
+                        .defaultSuccessUrl("/")
                         .failureUrl("/login-error")
                         .permitAll()
                 )
                 .authenticationProvider(authenticationProvider())
                 .logout((logout) -> logout
                         .logoutUrl("/logout_user")
-                        .logoutSuccessUrl("/main_page")
+                        .logoutSuccessUrl("/")
                         .permitAll());
 
         //.sessionManagement((sm)->sm.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));

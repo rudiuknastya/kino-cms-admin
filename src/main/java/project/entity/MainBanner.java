@@ -17,6 +17,16 @@ public class MainBanner {
     @Column(columnDefinition="VARCHAR(100)")
     private String text;
     private Integer speed;
+    @Column(columnDefinition = "BOOLEAN DEFAULT true")
+    private Boolean status;
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 
     public Long getId() {
         return id;

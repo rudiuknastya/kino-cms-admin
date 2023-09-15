@@ -39,13 +39,14 @@ public class CinemaController {
     private List<Integer> hallsToDelete = new ArrayList<>();
     private Long cinemaId;
     private int count = 0;
+    private boolean update = true;
 
 
     @GetMapping("/admin/cinemas")
     public String getCinemasList(Model model) {
         model.addAttribute("cinemas", cinemaService.getAllCinemas());
         model.addAttribute("pageM", n);
-        count=0;
+        update = true;
         return "cinema/cinemas";
     }
 
@@ -54,6 +55,7 @@ public class CinemaController {
         Hall hall = hallList.get(id);
         deleteHallImages(hall);
         hallList.remove(hall);
+        update = false;
         return "redirect:/admin/cinemas/new";
     }
     @GetMapping("/admin/cinemas/edit/hall/delete/{id}")
@@ -63,6 +65,7 @@ public class CinemaController {
         hallsToDelete.add(id);
         //hall.setSchemaImage("-1");
         editHallList.remove(hall);
+        update = false;
         return "redirect:/admin/cinemas/edit/" + cinemaId;
     }
     @GetMapping("/admin/cinemas/new/hall/new")
@@ -124,6 +127,7 @@ public class CinemaController {
         } else if(redirect.contains("edit")){
             editHallList.add(hall);
         }
+        update = false;
         return "redirect:/admin/"+redirect;
     }
 
@@ -188,6 +192,7 @@ public class CinemaController {
         hallInDB.getSeoBlock().setTitle(hall.getSeoBlock().getTitle());
         hallInDB.getSeoBlock().setKeywords(hall.getSeoBlock().getKeywords());
         hallInDB.getSeoBlock().setDescription(hall.getSeoBlock().getDescription());
+        update = false;
         return "redirect:/admin/"+redirect;
     }
 
@@ -202,6 +207,10 @@ public class CinemaController {
     @GetMapping("/admin/cinemas/new")
     public String createCinema(Model model) {
         Cinema cinema = new Cinema();
+        if(update == true){
+            hallList.clear();
+        }
+        update = true;
         String l = "cinemas/new";
         String editLink = "cinemas/new/hall/edit";
         String deleteLink = "cinemas/new/hall/delete";
@@ -261,11 +270,11 @@ public class CinemaController {
     public String editCinema(@PathVariable Long id, Model model) {
         Cinema cinema = cinemaService.getCinemaById(id);
         cinemaId = id;
-        if (count == 0) {
+        if (update == true) {
             editHallList = cinema.getHalls();
             count++;
         }
-
+        update = true;
         String l = "cinemas/edit/"+id;
         String editLink = "cinemas/edit/hall/edit";
         String deleteLink = "cinemas/edit/hall/delete";
@@ -393,6 +402,8 @@ public class CinemaController {
                     }
                     File file = new File(uploadPath+"/"+name);
                     file.delete();
+                } else if (!name.equals("")){
+                    cinema.getImageGallery().setMainImage(name);
                 }
                 break;
             case "image1":
@@ -420,6 +431,8 @@ public class CinemaController {
                     }
                     File file = new File(uploadPath+"/"+name);
                     file.delete();
+                }else if (!name.equals("")){
+                    cinema.getImageGallery().setImage1(name);
                 }
                 break;
             case "image2":
@@ -447,6 +460,8 @@ public class CinemaController {
                     }
                     File file = new File(uploadPath+"/"+name);
                     file.delete();
+                }else if (!name.equals("")){
+                    cinema.getImageGallery().setImage2(name);
                 }
                 break;
             case "image3":
@@ -474,6 +489,8 @@ public class CinemaController {
                     }
                     File file = new File(uploadPath+"/"+name);
                     file.delete();
+                }else if (!name.equals("")){
+                    cinema.getImageGallery().setImage3(name);
                 }
                 break;
             case "image4":
@@ -501,6 +518,8 @@ public class CinemaController {
                     }
                     File file = new File(uploadPath+"/"+name);
                     file.delete();
+                }else if (!name.equals("")){
+                    cinema.getImageGallery().setImage4(name);
                 }
                 break;
             case "image5":
@@ -528,6 +547,8 @@ public class CinemaController {
                     }
                     File file = new File(uploadPath+"/"+name);
                     file.delete();
+                }else if (!name.equals("")){
+                    cinema.getImageGallery().setImage5(name);
                 }
                 break;
             case "logoImage":
@@ -555,6 +576,8 @@ public class CinemaController {
                     }
                     File file = new File(uploadPath+"/"+name);
                     file.delete();
+                }else if (!name.equals("")){
+                    cinema.setLogo(name);
                 }
                 break;
         }
@@ -619,6 +642,8 @@ public class CinemaController {
                     }
                     File file = new File(uploadPath+"/"+name);
                     file.delete();
+                }else if (!name.equals("")){
+                    hall.getImageGallery().setMainImage(name);
                 }
                 break;
             case "image1":
@@ -646,6 +671,8 @@ public class CinemaController {
                     }
                     File file = new File(uploadPath+"/"+name);
                     file.delete();
+                }else if (!name.equals("")){
+                    hall.getImageGallery().setImage1(name);
                 }
                 break;
             case "image2":
@@ -673,6 +700,8 @@ public class CinemaController {
                     }
                     File file = new File(uploadPath+"/"+name);
                     file.delete();
+                }else if (!name.equals("")){
+                    hall.getImageGallery().setImage2(name);
                 }
                 break;
             case "image3":
@@ -700,6 +729,8 @@ public class CinemaController {
                     }
                     File file = new File(uploadPath+"/"+name);
                     file.delete();
+                }else if (!name.equals("")){
+                    hall.getImageGallery().setImage3(name);
                 }
                 break;
             case "image4":
@@ -727,6 +758,8 @@ public class CinemaController {
                     }
                     File file = new File(uploadPath+"/"+name);
                     file.delete();
+                }else if (!name.equals("")){
+                    hall.getImageGallery().setImage4(name);
                 }
                 break;
             case "image5":
@@ -754,6 +787,8 @@ public class CinemaController {
                     }
                     File file = new File(uploadPath+"/"+name);
                     file.delete();
+                }else if (!name.equals("")){
+                    hall.getImageGallery().setImage5(name);
                 }
                 break;
             case "schemaImg":
@@ -781,6 +816,8 @@ public class CinemaController {
                     }
                     File file = new File(uploadPath+"/"+name);
                     file.delete();
+                }else if (!name.equals("")){
+                    hall.setSchemaImage(name);
                 }
                 break;
         }

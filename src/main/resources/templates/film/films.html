@@ -22,7 +22,7 @@
                                             <div style="position:relative;">
                                             <img th:src="@{'/uploads/'+ ${film.imageGallery?.mainImage}}" class="card-img-top" style="height:150px">
                                             </div>
-                                                <a th:href="@{/admin/films/delete/{id}(id=${film.id})}" style="position: absolute; z-index: 1; left: 180px; bottom:220px"><h4><i class="bi bi-x-circle"></i></h4></a>
+                                                <a th:href="@{/admin/films/delete/{id}(id=${film.id})}" style="position: absolute; float:right; z-index: 1; top: -8%; right: -8%; "><h4><i class="bi bi-x-circle"></i></h4></a>
 
                                             <div class="card-body text-center">
                                                 <h5 class="card-title" th:text="${film.name}" style="color:black;"></h5>

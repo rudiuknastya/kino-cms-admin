@@ -10,10 +10,40 @@ import project.entity.FilmSession;
 import java.util.List;
 
 public interface FilmSessionRepository extends JpaRepository<FilmSession, Long> {
-    @Query(value = "SELECT COUNT(session_date) FROM film_session where year(session_date) = year(now()) group by month(session_date) order by month(session_date)", nativeQuery = true)
+    @Query(value = "SELECT ifnull(count(id),0) AS total_num\n" +
+            "from (select STR_TO_DATE('01/01/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/02/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/03/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/04/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/05/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/06/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/07/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/08/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/09/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/10/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/11/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/12/2016', '%d/%m/%Y') as month_date) m\n" +
+            "left join film_session f\n" +
+            "on month(m.month_date) = month(f.session_date)\n" +
+            "GROUP BY month_date;", nativeQuery = true)
     List<Long> filmSessionsInMonth();
 
-    @Query(value = "select sum(price) session_date from film_session where year(session_date) = year(now()) group by month(session_date) order by month(session_date)", nativeQuery = true)
+    @Query(value = "SELECT ifnull(avg(price),0) AS total_num\n" +
+            "from (select STR_TO_DATE('01/01/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/02/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/03/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/04/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/05/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/06/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/07/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/08/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/09/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/10/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/11/2016', '%d/%m/%Y') as month_date union \n" +
+            " select STR_TO_DATE('01/12/2016', '%d/%m/%Y') as month_date) m\n" +
+            "left join film_session f\n" +
+            "on month(m.month_date) = month(f.session_date)\n" +
+            "GROUP BY month_date", nativeQuery = true)
     List<Long> filmSessionsPriceInMonth();
     @Query(value = "SELECT * FROM film_session where session_date = date(now())", nativeQuery = true)
     List<FilmSession> filmsToday();

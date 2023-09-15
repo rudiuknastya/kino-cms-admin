@@ -6,30 +6,38 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </head>
-<header th:replace="~{fragments :: header(${mainPage.phone1},${mainPage.phone2},0,${newPages},${aboutCinemaPage}, ${cafePage}, ${vipHallPage}, ${adPage}, ${childrenRoomPage}, ${contactPage})}"></header>
-<body th:style="'background-image:url(' + @{'/uploads/' + ${backgroundImage.image}}+'); margin-top:140px;'">
+<header th:replace="~{fragments :: header(${mainPage},2,${newPages},${aboutCinemaPage}, ${cafePage}, ${vipHallPage}, ${adPage}, ${childrenRoomPage}, ${contactPage})}"></header>
+<body th:style="${#strings.equals(backgroundImages[1].image, 'image')} ? 'background-image:url(' + @{'/uploads/' + ${backgroundImages[0].image}}+'); margin-top:130px;' : 'margin-top:130px;'">
 <div class="mx-auto pb-5" style="width:1030px; background-color:white;" >
     <div class="conatiner-fluid  py-0">
-        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+        <div th:if="${mainBanners[0].status == true}" id="carouselExampleSlidesOnly" class="carousel slide" th:attr="data-bs-ride=${mainBanners[0].speed == 0 ? '': 'carousel'}">
           <div class="carousel-inner">
-            <div class="carousel-item active" th:attr="data-bs-interval=${mainBanners[0].speed * 1000}">
+            <div th:if="${mainBanners[0]?.image != null}" class="carousel-item active" th:attr="data-bs-interval=${mainBanners[0].speed * 1000}">
               <img th:src="@{'/uploads/'+ ${mainBanners[0]?.image}}" class="d-block w-100" alt="mainBanner0" style="height:500px">
             </div>
-            <div class="carousel-item">
+            <div th:if="${mainBanners[1]?.image != null}" th:class="'carousel-item '+${mainBanners[0]?.image == null ? 'active' : ''}" th:attr="data-bs-interval=${mainBanners[0].speed * 1000}">
               <img th:src="@{'/uploads/'+ ${mainBanners[1]?.image}}" class="d-block w-100" alt="mainBanner1" style="height:500px">
             </div>
-            <div class="carousel-item">
+            <div th:if="${mainBanners[2]?.image != null}" th:class="'carousel-item '+${mainBanners[1]?.image == null ? 'active' : ''}" th:attr="data-bs-interval=${mainBanners[0].speed * 1000}">
               <img th:src="@{'/uploads/'+ ${mainBanners[2]?.image}}" class="d-block w-100" alt="mainBanner2" style="height:500px">
             </div>
-            <div class="carousel-item">
+            <div th:if="${mainBanners[3]?.image != null}" th:class="'carousel-item '+${mainBanners[2]?.image == null ? 'active' : ''}" th:attr="data-bs-interval=${mainBanners[0].speed * 1000}">
               <img th:src="@{'/uploads/'+ ${mainBanners[3]?.image}}" class="d-block w-100" alt="mainBanner3" style="height:500px">
             </div>
-            <div class="carousel-item">
+            <div th:if="${mainBanners[4]?.image != null}" th:class="'carousel-item '+${mainBanners[3]?.image == null ? 'active' : ''}" th:attr="data-bs-interval=${mainBanners[0].speed * 1000}">
               <img th:src="@{'/uploads/'+ ${mainBanners[4]?.image}}" class="d-block w-100" alt="mainBanner4" style="height:500px">
             </div>
           </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
-      <h4 class="my-4" style="text-align:center">Дивіться сьогодні</h4>
+      <h4 class="mb-4 mt-5" style="text-align:center">Дивіться сьогодні</h4>
       <div class="row  gx-5 mx-5">
       <th:block th:each="todayFilm : ${todayFilms}">
       <div class="col-3 d-flex flex-column justify-content-center">
@@ -54,30 +62,42 @@
           </a>
         </th:block>
       </div>
+      <th:block th:if="${newsBanners[0].status == true}">
       <h4 class="my-4" style="text-align:center">Новини та акції</h4>
-      <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+      <div id="carouselExample" class="carousel slide" th:attr="data-bs-ride=${newsBanners[0].speed == 0 ? '': 'carousel'}">
         <div class="carousel-inner">
-          <div class="carousel-item active" th:attr="data-bs-interval=${newsBanners[0].speed * 1000}">
+          <div th:if="${newsBanners[0]?.image != null}" class="carousel-item active" th:attr="data-bs-interval=${newsBanners[0].speed * 1000}">
             <img th:src="@{'/uploads/'+ ${newsBanners[0]?.image}}" class="d-block w-100" alt="newsBanner0" style="height:500px">
           </div>
-          <div class="carousel-item">
+          <div th:if="${newsBanners[1]?.image != null}" th:class="'carousel-item '+${newsBanners[0]?.image == null ? 'active' : ''}" th:attr="data-bs-interval=${newsBanners[0].speed * 1000}">
             <img th:src="@{'/uploads/'+ ${newsBanners[1]?.image}}" class="d-block w-100" alt="newsBanner1" style="height:500px">
           </div>
-          <div class="carousel-item">
+          <div th:if="${newsBanners[2]?.image != null}" th:class="'carousel-item '+${newsBanners[1]?.image == null ? 'active' : ''}" th:attr="data-bs-interval=${newsBanners[0].speed * 1000}">
             <img th:src="@{'/uploads/'+ ${newsBanners[2]?.image}}" class="d-block w-100" alt="newsBanner2" style="height:500px">
           </div>
-          <div class="carousel-item">
+          <div th:if="${newsBanners[3]?.image != null}" th:class="'carousel-item '+${newsBanners[2]?.image == null ? 'active' : ''}" th:attr="data-bs-interval=${newsBanners[0].speed * 1000}">
             <img th:src="@{'/uploads/'+ ${newsBanners[3]?.image}}" class="d-block w-100" alt="newsBanner3" style="height:500px">
           </div>
-          <div class="carousel-item">
+          <div th:if="${newsBanners[4]?.image != null}" th:class="'carousel-item '+${newsBanners[3]?.image == null ? 'active' : ''}" th:attr="data-bs-interval=${newsBanners[0].speed * 1000}">
             <img th:src="@{'/uploads/'+ ${newsBanners[4]?.image}}" class="d-block w-100" alt="newsBanner4" style="height:500px">
           </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
+      </th:block>
+      <th:block th:if="${mainPage.status == true}">
       <h4 class="my-4" style="text-align:center">Про нас</h4>
       <div th:text="${mainPage.seoText}" class="mx-5"></div>
+      </th:block>
     </div>
 </div>
 </body>
-<div th:replace="~{fragments :: footer}"></div>
+<div th:replace="~{fragments :: footer(${newPages},${aboutCinemaPage}, ${cafePage}, ${vipHallPage}, ${adPage}, ${childrenRoomPage}, ${contactPage})}"></div>
 </html>

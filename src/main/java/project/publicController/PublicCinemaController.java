@@ -9,7 +9,6 @@ import project.service.*;
 @Controller
 public class PublicCinemaController {
     private final MainPageService mainPageService;
-    private final BannerService bannerService;
     private final FilmSessionService filmSessionService;
     private final HallService hallService;
     private final CinemaService cinemaService;
@@ -21,9 +20,8 @@ public class PublicCinemaController {
     private final NewPageService newPageService;
     private final ContactsService contactsService;
 
-    public PublicCinemaController(MainPageService mainPageService, BannerService bannerService, FilmSessionService filmSessionService, HallService hallService, CinemaService cinemaService, AboutCinemaService aboutCinemaService, CafeService cafeService, VipHallService vipHallService, AdvertisementService advertisementService, ChildrenRoomService childrenRoomService, NewPageService newPageService, ContactsService contactsService) {
+    public PublicCinemaController(MainPageService mainPageService, FilmSessionService filmSessionService, HallService hallService, CinemaService cinemaService, AboutCinemaService aboutCinemaService, CafeService cafeService, VipHallService vipHallService, AdvertisementService advertisementService, ChildrenRoomService childrenRoomService, NewPageService newPageService, ContactsService contactsService) {
         this.mainPageService = mainPageService;
-        this.bannerService = bannerService;
         this.filmSessionService = filmSessionService;
         this.hallService = hallService;
         this.cinemaService = cinemaService;
@@ -41,7 +39,6 @@ public class PublicCinemaController {
     public String getCinemas(Model model) {
         model.addAttribute("cinemas", cinemaService.getAllCinemas());
         model.addAttribute("mainPage",mainPageService.getMainPage());
-        model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
         model.addAttribute("pageM", n);
         model.addAttribute("newPages",newPageService.getEnabledNewPages());
         model.addAttribute("aboutCinemaPage",aboutCinemaService.getAboutCinema());

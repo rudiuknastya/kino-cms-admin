@@ -36,14 +36,14 @@ public class PublicMainPageController {
         this.contactsService = contactsService;
     }
 
-    @GetMapping("/main_page")
+    @GetMapping("/")
     public String getMainPage(Model model){
         model.addAttribute("mainPage",mainPageService.getMainPage());
         model.addAttribute("mainBanners", bannerService.getAllMainBanners());
         model.addAttribute("newsBanners", bannerService.getAllNewsBanners());
         model.addAttribute("todayFilms", filmSessionService.getFilmSessionsForToday());
         model.addAttribute("soonFilms", filmService.getSoonFilms());
-        model.addAttribute("backgroundImage",bannerService.getBackgroundImage());
+        model.addAttribute("backgroundImages",bannerService.getBackgroundImages());
         model.addAttribute("newPages",newPageService.getEnabledNewPages());
         model.addAttribute("aboutCinemaPage",aboutCinemaService.getAboutCinema());
         model.addAttribute("cafePage",cafeService.getCafe());

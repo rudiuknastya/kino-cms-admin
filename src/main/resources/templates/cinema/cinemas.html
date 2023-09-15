@@ -10,13 +10,16 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
+            <div class="d-flex justify-content-end mb-5">
+              <a th:href="@{/admin/cinemas/new}" type="button" class="btn btn-soft-primary col-3" ><i class="bi bi-plus-lg"></i> Додати кінотеатр</a>
+            </div>
             <div class="row  g-5">
               <th:block th:each="cinema : ${cinemas}">
                 <div class="col-3">
                   <a th:href="@{/admin/cinemas/edit/{id}(id=${cinema.id})}">
                   <div class="card" style="position:relative;">
                     <img th:src="@{'/uploads/'+ ${cinema.imageGallery.mainImage}}" class="card-img-top" style="height:150px">
-                    <a th:href="@{/admin/cinemas/delete/{id}(id=${cinema.id})}" style="position: absolute; z-index: 1; left: 180px; bottom:220px"><h4><i class="bi bi-x-circle"></i></h4></a>
+                    <a th:href="@{/admin/cinemas/delete/{id}(id=${cinema.id})}" style="position: absolute; float:right; z-index: 1; top: -8%; right: -8%;"><h4><i class="bi bi-x-circle"></i></h4></a>
                     <div class="card-body text-center">
                       <h5 class="card-title" th:text="${cinema.name}" style="color:black;"></h5>
                     </div>
@@ -24,16 +27,6 @@
                   </a>
                 </div>
               </th:block>
-              <div class="col-3">
-                <a th:href="@{/admin/cinemas/new}">
-                <div class="card">
-                  <img th:src="@{'https://media.istockphoto.com/id/1147277650/vector/plus-add-button-vector-icon-concept-isolated-on-white-background.jpg?s=170667a&w=0&k=20&c=qzcCvnVGThrHnbH2onjjRup83B_TMcEWD5_7vjYW27I='}" class="card-img-top" style="height:150px">
-                  <div class="card-body text-center">
-                    <h5 class="card-title" style="color:black;">Додати</h5>
-                  </div>
-                </div>
-                </a>
-              </div>
             </div>
 
           </div>

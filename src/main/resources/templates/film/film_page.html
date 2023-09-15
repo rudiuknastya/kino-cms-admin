@@ -18,7 +18,7 @@
               </div>
               <div class="col-md-6">
                 <label for="publDate" class="form-label">Дата виходу</label>
-                <input id="publDate" class="form-control" type="date"  th:field = "*{date}" th:attr="min=*{date}">
+                <input id="publDate" class="form-control" type="date"  th:field = "*{date}" th:attr="min=${#temporals.createToday()}">
                 <div class="text-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"> </div>
               </div>
               <div>

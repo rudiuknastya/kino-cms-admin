@@ -12,11 +12,15 @@
                     <div class="card-body">
                         <form th:action = "@{/admin/pages/edit/contacts}" th:object = "${contacts}" method="post" enctype="multipart/form-data" class="row g-3" style="color:black;">
                             <div class="form-check form-switch d-flex justify-content-end">
-                                <input class="form-check-input mx-1" type="checkbox" role="switch" id="flexSwitchCheckDefault" th:field = "*{contactsList[0].status}">
+                                <input class="form-check-input mx-1" type="checkbox" role="switch" id="flexSwitchCheckDefault" th:field = "*{contactsList[0].pageStatus}">
                                 <label class="form-check-label" for="flexSwitchCheckDefault">Статус</label>
                             </div>
                             <th:block th:each="contact, stat : *{contactsList}">
                                 <div class="py-5 px-5" style="color:black; border:solid;border-radius: 20px;">
+                                    <div class="form-check form-switch d-flex justify-content-end">
+                                        <input class="form-check-input mx-1" type="checkbox" role="switch" id="flexSwitchCheck" th:field="*{contactsList[__${stat.index}__].status}">
+                                        <label class="form-check-label" for="flexSwitchCheck">Статус</label>
+                                    </div>
                                     <div class="mb-3 row">
                                         <label  class="col-3 col-form-label">Назва кінотеатру</label>
                                         <div class="col-md-6" >
@@ -54,7 +58,7 @@
                                             <button type="button" class="btn btn-outline-danger" th:onclick="|logo${stat.index}.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'; logoImage${stat.index}.value = ''; logoImageName${stat.index}.value='';|">Видалити</button>
                                         </div>
                                     </div>
-                                    <div th:if="${stat.index} != 0" class="col-md-12 text-center my-3">
+                                    <div th:if="${stat.index} > 1" class="col-md-12 text-center my-3">
                                         <a th:href="@{/admin/pages/edit/contacts/delete/{id} (id=${stat.index})}" type="button" class="btn btn-soft-danger col-4" >Видалити кінотеатр</a>
                                     </div>
                                 </div>
@@ -108,25 +112,7 @@
         </div>
     </div>
 </main>
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>-->
-<!--<script type="text/javascript">-->
-<!--    $(document).ready(function(){-->
-<!--        $("input[name='logoImage']").each(function(index){-->
-<!--            $(this).change(function(){-->
-<!--            showImage(this, index);-->
-<!--            });-->
-<!--        });-->
 
-<!--    });-->
-<!--    function showImage(fileInput, index){-->
-<!--        file = fileInput.files[0];-->
-<!--        reader = new FileReader();-->
-<!--        reader.onload = function(e){-->
-<!--            $('#logo'+index).attr('src', e.target.result);-->
-<!--        };-->
-<!--        reader.readAsDataURL(file);-->
-<!--    }-->
-<!--</script>-->
 </body>
 </html>
 
