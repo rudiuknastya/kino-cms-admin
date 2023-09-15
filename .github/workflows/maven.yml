@@ -33,6 +33,8 @@ jobs:
         usernameDB: ${{ secrets.DB_USERNAME }}
         passwordDB: ${{ secrets.DB_PASSWORD }}
         uploadsPath: ${{ secrets.UPLOAD_FILES_PATH }}
+        email: ${{ secrets.E_MAIL }}
+        emailPassword: ${{ secrets.EMAIL_PASSWORD }}
       run: |
         envsubst < src/main/resources/application.template.yml > src/main/resources/application.yml
         cat src/main/resources/application.yml
