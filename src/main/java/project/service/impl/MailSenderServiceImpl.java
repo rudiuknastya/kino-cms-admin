@@ -7,6 +7,7 @@ import jakarta.mail.internet.MimeMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import project.service.MailSenderService;
@@ -21,8 +22,8 @@ public class MailSenderServiceImpl implements MailSenderService {
     @Autowired
     private JavaMailSender mailSender;
     private Logger logger = LogManager.getLogger("serviceLogger");
-
-    private String uploadPath = "/Users/Anastassia/IdeaProjects/Kino-CMS_admin/uploads";
+    @Value("${upload.path}")
+    private String uploadPath;
     @Override
     public void sendEmail(String to, String file) {
         logger.info("sendEmail() - sending email to user "+to+" with file "+file);
