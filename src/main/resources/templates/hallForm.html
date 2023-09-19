@@ -29,6 +29,7 @@
             </div>
             <div class="col-auto">
                 <label class="input-group-text col-form-label" for="schemaImg" style="color:black;">Завантажити</label>
+                <div th:text="${schemaWarning}" style="color: red"></div>
                 <input type="text" class="d-none"  th:value = "*{schemaImage}" id="schemaImageName" name="schemaImageName">
             </div>
             <div class="col-auto">
@@ -46,6 +47,7 @@
             </div>
             <div class="col-auto">
                 <label class="input-group-text col-form-label" for="inputMainImage" style="color:black;">Завантажити</label>
+                <div th:text="${mainWarning}" style="color: red"></div>
                 <input type="text" class="d-none"  th:value = "*{imageGallery?.mainImage}" id="mainImageName" name="mainImageName">
             </div>
             <div class="col-auto">
@@ -64,6 +66,7 @@
                 </div>
                 <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="Image1" onchange="img1.src=window.URL.createObjectURL(this.files[0])" name="image1">
                 <label class="input-group-text col-form-label px-3 my-2" for="Image1" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+                <div th:text="${image1Warning}" style="color: red; font-size: 11px"></div>
                 <input type="text" class="d-none"  th:value = "*{imageGallery?.image1}" id="image1Name" name="image1Name">
             </div>
             <div class="col-auto mx-1">
@@ -73,6 +76,7 @@
                 </div>
                 <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="Image2" onchange="img_2.src=window.URL.createObjectURL(this.files[0])" name="image2">
                 <label class="input-group-text col-form-label px-3 my-2" for="Image2" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+                <div th:text="${image2Warning}" style="color: red; font-size: 11px"></div>
                 <input type="text" class="d-none"  th:value = "*{imageGallery?.image2}" id="image2Name" name="image2Name">
             </div>
             <div class="col-auto mx-1">
@@ -82,6 +86,7 @@
                     <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="Image3" onchange="img_3.src=window.URL.createObjectURL(this.files[0])" name="image3">
                 </div>
                 <label class="input-group-text col-form-label px-3 my-2" for="Image3" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+                <div th:text="${image3Warning}" style="color: red; font-size: 11px"></div>
                 <input type="text" class="d-none"  th:value = "*{imageGallery?.image3}" id="image3Name" name="image3Name">
             </div>
             <div class="col-auto mx-1">
@@ -91,6 +96,7 @@
                     <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="Image4" onchange="img_4.src=window.URL.createObjectURL(this.files[0])" name="image4">
                 </div>
                 <label class="input-group-text col-form-label px-3 my-2" for="Image4" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+                <div th:text="${image4Warning}" style="color: red; font-size: 11px"></div>
                 <input type="text" class="d-none"  th:value = "*{imageGallery?.image4}" id="image4Name" name="image4Name">
             </div>
             <div class="col-auto mx-1">
@@ -100,6 +106,7 @@
                     <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="Image5" onchange="img_5.src=window.URL.createObjectURL(this.files[0])" name="image5">
                 </div>
                 <label class="input-group-text col-form-label px-3 my-2" for="Image5" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+                <div th:text="${image5Warning}" style="color: red; font-size: 11px"></div>
                 <input type="text" class="d-none"  th:value = "*{imageGallery?.image5}" id="image5Name" name="image5Name">
             </div>
         </div>

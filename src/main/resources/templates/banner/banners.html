@@ -25,6 +25,7 @@
                   </div>
                   <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  th:id="'Image'+${stat.index}" th:onchange="|img${stat.index}.src=window.URL.createObjectURL(this.files[0]); imageName${stat.index}.value= this.files[0].name;|" th:name="'image'+${stat.index}">
                   <label class="input-group-text col-form-label px-3 my-2" th:for="Image+${stat.index}" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+                  <div th:if="${mainWarnings != null}" th:text="${mainWarnings[__${stat.index}__]}" style="color: red; font-size: 11px"></div>
                   <div class="col-11">
                     <label for="inputUrl" class="form-label">URL</label>
                   <input type="text" class="form-control"  th:field="*{mainBannerList[__${stat.index}__].url}" id="inputUrl">
@@ -65,6 +66,7 @@
                 </div>
                 <div class="col-auto">
                   <label class="input-group-text col-form-label" for="inputMainImage" style="color:black;">Завантажити</label>
+                  <div th:text="${backgroundWarning}" style="color: red"></div>
                   <input type="text" class="d-none"  th:value = "*{backgroundImageList[0].image}" id="mainImageName" name="mainImageName">
                 </div>
                 <div class="col-auto">
@@ -95,6 +97,7 @@
                     </div>
                     <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  th:id="'newsImage'+${stat.index}" th:onchange="|newsImg${stat.index}.src=window.URL.createObjectURL(this.files[0]); newsImageName${stat.index}.value= this.files[0].name;|" th:name="'newsImage'+${stat.index}">
                     <label class="input-group-text col-form-label px-3 my-2" th:for="newsImage+${stat.index}" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+                    <div th:if="${newsWarnings != null}" th:text="${newsWarnings[__${stat.index}__]}" style="color: red; font-size: 11px"></div>
                     <div class="col-11">
                       <label for="inputNewsUrl" class="form-label">URL</label>
                       <input type="text" class="form-control"  th:field="*{newsBannerList[__${stat.index}__].url}" id="inputNewsUrl">

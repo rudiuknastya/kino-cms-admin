@@ -1,6 +1,7 @@
 package project.controller;
 
 import jakarta.validation.Valid;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,14 +55,57 @@ public class AdvertisementController {
                                         @RequestParam("image5")MultipartFile image5, @RequestParam("image5Name")String image5Name,
                                         Model model) {
         Advertisement adInDb = advertisementService.getAd();
-        saveImage(mainImage,"mainImage", adInDb, mainImageName);
-        saveImage(image1,"image1", adInDb, image1Name);
-        saveImage(image2,"image2", adInDb, image2Name);
-        saveImage(image3,"image3", adInDb, image3Name);
-        saveImage(image4,"image4", adInDb, image4Name);
-        saveImage(image5,"image5", adInDb, image5Name);
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                mainImage.getOriginalFilename()))) {
+            saveImage(mainImage, "mainImage", adInDb, mainImageName);
+        } else if(!mainImage.getOriginalFilename().equals("")){
+            model.addAttribute("mainWarning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image1.getOriginalFilename()))) {
+            saveImage(image1, "image1", adInDb, image1Name);
+        } else if(!image1.getOriginalFilename().equals("")){
+            model.addAttribute("image1Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image2.getOriginalFilename()))) {
+            saveImage(image2, "image2", adInDb, image2Name);
+        } else if(!image2.getOriginalFilename().equals("")){
+            model.addAttribute("image2Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image3.getOriginalFilename()))) {
+            saveImage(image3, "image3", adInDb, image3Name);
+        } else if(!image3.getOriginalFilename().equals("")){
+            model.addAttribute("image3Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image4.getOriginalFilename()))) {
+            saveImage(image4, "image4", adInDb, image4Name);
+        } else if(!image4.getOriginalFilename().equals("")){
+            model.addAttribute("image4Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image5.getOriginalFilename()))) {
+            saveImage(image5, "image5", adInDb, image5Name);
+        } else if(!image5.getOriginalFilename().equals("")){
+            model.addAttribute("image5Warning", "Некоректний тип файлу");
+        }
         advertisement.setImageGallery(adInDb.getImageGallery());
         if (bindingResult.hasErrors()) {
+            String l = "edit/advertisement";
+            model.addAttribute("object", advertisement);
+            model.addAttribute("pageNum", n);
+            model.addAttribute("link",l);
+            return "page/common_page";
+        }
+        if((!mainImage.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(mainImage.getOriginalFilename()))) ||
+                (!image1.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename()))) ||
+                (!image2.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image2.getOriginalFilename()))) ||
+                (!image3.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image3.getOriginalFilename()))) ||
+                (!image4.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image4.getOriginalFilename()))) ||
+                (!image5.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image5.getOriginalFilename())))
+        ){
             String l = "edit/advertisement";
             model.addAttribute("object", advertisement);
             model.addAttribute("pageNum", n);
@@ -77,6 +121,13 @@ public class AdvertisementController {
         adInDb.getSeoBlock().setDescription(advertisement.getSeoBlock().getDescription());
         advertisementService.saveAd(adInDb);
         return "redirect:/admin/pages";
+    }
+
+    private boolean isSupportedExtension(String extension) {
+        return extension != null && (
+                extension.equals("png")
+                        || extension.equals("jpg")
+                        || extension.equals("jpeg"));
     }
     private void saveImage(MultipartFile image, String fileName, Advertisement advertisement, String name){
 

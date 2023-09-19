@@ -1,6 +1,7 @@
 package project.controller;
 
 import jakarta.validation.Valid;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,19 +65,71 @@ public class BannerController {
     }
 
     @PostMapping("/admin/banners/main")
-    public String saveMainBanner(@Valid @ModelAttribute("mainBanner") MainBannerForm mainBannerForm, BindingResult bindingResult,
+    public String saveMainBanner(@ModelAttribute("mainBanner") MainBannerForm mainBannerForm,
                                  @RequestParam("image0") MultipartFile image0, @RequestParam("imageName0")String imageName0,
                                  @RequestParam("image1") MultipartFile image1, @RequestParam("imageName1")String imageName1,
                                  @RequestParam("image2") MultipartFile image2, @RequestParam("imageName2")String imageName2,
                                  @RequestParam("image3") MultipartFile image3, @RequestParam("imageName3")String imageName3,
                                  @RequestParam("image4") MultipartFile image4, @RequestParam("imageName4")String imageName4,
                                  @RequestParam("images") MultipartFile[] images, Model model) throws IOException {
-        saveMainBannerImage(image0,images,0, imageName0);
-        saveMainBannerImage(image1,images,1, imageName1);
-        saveMainBannerImage(image2,images,2, imageName2);
-        saveMainBannerImage(image3,images,3, imageName3);
-        saveMainBannerImage(image4,images,4, imageName4);
-        if (bindingResult.hasErrors()) {
+        String [] mainWarnings = new String[5];
+        if((isSupportedExtension(FilenameUtils.getExtension(
+                image0.getOriginalFilename())) && !image0.getOriginalFilename().equals("")) ||
+                (0 < images.length && isSupportedExtension(FilenameUtils.getExtension(
+                        images[0].getOriginalFilename())) && !images[0].getOriginalFilename().equals(""))) {
+            saveMainBannerImage(image0, images, 0, imageName0);
+        }else if(!image0.getOriginalFilename().equals("") || (0 < images.length && !images[0].getOriginalFilename().equals(""))){
+            mainWarnings[0] =  "Некоректний тип файлу";
+        }
+        if((isSupportedExtension(FilenameUtils.getExtension(
+                image1.getOriginalFilename())) && !image1.getOriginalFilename().equals("")) ||
+                (1 < images.length && isSupportedExtension(FilenameUtils.getExtension(
+                        images[1].getOriginalFilename())) && !images[1].getOriginalFilename().equals(""))) {
+            saveMainBannerImage(image1, images, 1, imageName1);
+        }else if(!image1.getOriginalFilename().equals("") || (1 < images.length && !images[1].getOriginalFilename().equals(""))){
+            mainWarnings[1] =  "Некоректний тип файлу";
+        }
+        if((isSupportedExtension(FilenameUtils.getExtension(
+                image2.getOriginalFilename())) && !image2.getOriginalFilename().equals("")) ||
+                (2 < images.length && isSupportedExtension(FilenameUtils.getExtension(
+                        images[2].getOriginalFilename())) && !images[2].getOriginalFilename().equals(""))) {
+            saveMainBannerImage(image2, images, 2, imageName2);
+        } else if(!image2.getOriginalFilename().equals("") || (2 < images.length && !images[2].getOriginalFilename().equals(""))){
+            mainWarnings[2] =  "Некоректний тип файлу";
+        }
+        if((isSupportedExtension(FilenameUtils.getExtension(
+                image3.getOriginalFilename())) && !image3.getOriginalFilename().equals("")) ||
+                (3 < images.length && isSupportedExtension(FilenameUtils.getExtension(
+                        images[3].getOriginalFilename())) && !images[3].getOriginalFilename().equals(""))) {
+            saveMainBannerImage(image3, images, 3, imageName3);
+        } else if(!image3.getOriginalFilename().equals("") || (3 < images.length && !images[3].getOriginalFilename().equals(""))){
+            mainWarnings[3] =  "Некоректний тип файлу";
+        }
+        if((isSupportedExtension(FilenameUtils.getExtension(
+                image4.getOriginalFilename())) && !image4.getOriginalFilename().equals("")) ||
+                (4 < images.length && isSupportedExtension(FilenameUtils.getExtension(
+                        images[4].getOriginalFilename())) && !images[4].getOriginalFilename().equals(""))) {
+            saveMainBannerImage(image4, images, 4, imageName4);
+        } else if(!image4.getOriginalFilename().equals("") || (4 < images.length && !images[4].getOriginalFilename().equals(""))){
+            mainWarnings[4] =  "Некоректний тип файлу";
+        }
+        if (((!isSupportedExtension(FilenameUtils.getExtension(image0.getOriginalFilename())) && !image0.getOriginalFilename().equals("")) ||
+                (0 < images.length && !isSupportedExtension(FilenameUtils.getExtension(images[0].getOriginalFilename())) && !images[0].getOriginalFilename().equals(""))) ||
+                ((!isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename())) && !image1.getOriginalFilename().equals("")) ||
+                        (1 < images.length && !isSupportedExtension(FilenameUtils.getExtension(images[1].getOriginalFilename())) && !images[1].getOriginalFilename().equals(""))) ||
+                ((!isSupportedExtension(FilenameUtils.getExtension(image2.getOriginalFilename())) && !image2.getOriginalFilename().equals("")) ||
+                        (2 < images.length && !isSupportedExtension(FilenameUtils.getExtension(images[2].getOriginalFilename())) && !images[2].getOriginalFilename().equals(""))) ||
+                ((!isSupportedExtension(FilenameUtils.getExtension(image3.getOriginalFilename())) && !image3.getOriginalFilename().equals("")) ||
+                        (3 < images.length && !isSupportedExtension(FilenameUtils.getExtension(images[3].getOriginalFilename())) && !images[3].getOriginalFilename().equals(""))) ||
+                ((!isSupportedExtension(FilenameUtils.getExtension(image4.getOriginalFilename())) && !image4.getOriginalFilename().equals("")) ||
+                        (4 < images.length && !isSupportedExtension(FilenameUtils.getExtension(images[4].getOriginalFilename())) && !images[4].getOriginalFilename().equals("")))
+        ) {
+            MainBannerForm mainBannerForm1 = new MainBannerForm();
+            mainBannerForm1.setMainBannerList(mainBanners);
+            BackgroundImageForm backgroundImageForm = new BackgroundImageForm();
+            backgroundImageForm.setBackgroundImageList(bannerService.getBackgroundImages());
+            NewsBannerForm newsBannerForm = new NewsBannerForm();
+            newsBannerForm.setNewsBannerList(bannerService.getAllNewsBanners());
             String l = "banners/main";
             String ln = "banners/news";
             String lnk = "banners/background";
@@ -85,8 +138,13 @@ public class BannerController {
             model.addAttribute("newsBannerLink", ln);
             model.addAttribute("backgroundImageLink", lnk);
             model.addAttribute("speed",speed);
+            model.addAttribute("mainWarnings", mainWarnings);
+            model.addAttribute("mainBanner", mainBannerForm1);
+            model.addAttribute("newsBanner", newsBannerForm);
+            model.addAttribute("backgroundImage", backgroundImageForm);
             return "banner/banners";
         }
+
         int i = 0;
         mainBanners.get(0).setStatus(mainBannerForm.getMainBannerList().get(0).getStatus());
         for(MainBanner mainBanner: mainBannerForm.getMainBannerList()){
@@ -100,19 +158,72 @@ public class BannerController {
         return "redirect:/admin/banners";
     }
     @PostMapping("/admin/banners/news")
-    public String saveNewsBanner(@Valid @ModelAttribute("newsBanner") NewsBannerForm newsBannerForm, BindingResult bindingResult,
+    public String saveNewsBanner(@ModelAttribute("newsBanner") NewsBannerForm newsBannerForm,
                                  @RequestParam("newsImage0") MultipartFile newsImage0, @RequestParam("newsImageName0")String newsImageName0,
                                  @RequestParam("newsImage1") MultipartFile newsImage1, @RequestParam("newsImageName1")String newsImageName1,
                                  @RequestParam("newsImage2") MultipartFile newsImage2, @RequestParam("newsImageName2")String newsImageName2,
                                  @RequestParam("newsImage3") MultipartFile newsImage3, @RequestParam("newsImageName3")String newsImageName3,
                                  @RequestParam("newsImage4") MultipartFile newsImage4, @RequestParam("newsImageName4")String newsImageName4,
                                  @RequestParam("newsImages") MultipartFile[] newsImages, Model model) throws IOException {
-        saveNewsBannerImage(newsImage0,newsImages,0, newsImageName0);
-        saveNewsBannerImage(newsImage1,newsImages,1, newsImageName1);
-        saveNewsBannerImage(newsImage2,newsImages,2, newsImageName2);
-        saveNewsBannerImage(newsImage3,newsImages,3, newsImageName3);
-        saveNewsBannerImage(newsImage4,newsImages,4, newsImageName4);
-        if (bindingResult.hasErrors()) {
+        String [] newsWarnings = new String[5];
+        if((isSupportedExtension(FilenameUtils.getExtension(
+                newsImage0.getOriginalFilename())) && !newsImage0.getOriginalFilename().equals("")) ||
+                (0 < newsImages.length && isSupportedExtension(FilenameUtils.getExtension(
+                        newsImages[0].getOriginalFilename())) && !newsImages[0].getOriginalFilename().equals(""))) {
+            saveNewsBannerImage(newsImage0, newsImages, 0, newsImageName0);
+        } else if(!newsImage0.getOriginalFilename().equals("") || (0 < newsImages.length && !newsImages[0].getOriginalFilename().equals(""))){
+            newsWarnings[0] =  "Некоректний тип файлу";
+        }
+        if((isSupportedExtension(FilenameUtils.getExtension(
+                newsImage1.getOriginalFilename())) && !newsImage1.getOriginalFilename().equals("")) ||
+                (1 < newsImages.length && isSupportedExtension(FilenameUtils.getExtension(
+                        newsImages[1].getOriginalFilename())) && !newsImages[1].getOriginalFilename().equals(""))) {
+            saveNewsBannerImage(newsImage1, newsImages, 1, newsImageName1);
+        }else if(!newsImage1.getOriginalFilename().equals("") || (1 < newsImages.length && !newsImages[1].getOriginalFilename().equals(""))){
+            newsWarnings[1] =  "Некоректний тип файлу";
+        }
+        if((isSupportedExtension(FilenameUtils.getExtension(
+                newsImage2.getOriginalFilename())) && !newsImage2.getOriginalFilename().equals("")) ||
+                (2 < newsImages.length && isSupportedExtension(FilenameUtils.getExtension(
+                        newsImages[2].getOriginalFilename())) && !newsImages[2].getOriginalFilename().equals(""))) {
+            saveNewsBannerImage(newsImage2, newsImages, 2, newsImageName2);
+        } else if(!newsImage2.getOriginalFilename().equals("") || (2 < newsImages.length && !newsImages[2].getOriginalFilename().equals(""))){
+            newsWarnings[2] =  "Некоректний тип файлу";
+        }
+        if((isSupportedExtension(FilenameUtils.getExtension(
+                newsImage3.getOriginalFilename())) && !newsImage3.getOriginalFilename().equals("")) ||
+                (3 < newsImages.length && isSupportedExtension(FilenameUtils.getExtension(
+                        newsImages[3].getOriginalFilename())) && !newsImages[3].getOriginalFilename().equals(""))) {
+            saveNewsBannerImage(newsImage3,newsImages,3, newsImageName3);
+        } else if(!newsImage3.getOriginalFilename().equals("") || (3 < newsImages.length && !newsImages[3].getOriginalFilename().equals(""))){
+            newsWarnings[3] =  "Некоректний тип файлу";
+        }
+        if((isSupportedExtension(FilenameUtils.getExtension(
+                newsImage4.getOriginalFilename())) && !newsImage4.getOriginalFilename().equals("")) ||
+                (4 < newsImages.length && isSupportedExtension(FilenameUtils.getExtension(
+                        newsImages[4].getOriginalFilename())) && !newsImages[4].getOriginalFilename().equals(""))) {
+            saveNewsBannerImage(newsImage4, newsImages, 4, newsImageName4);
+        } else if(!newsImage4.getOriginalFilename().equals("") || (4 < newsImages.length && !newsImages[4].getOriginalFilename().equals(""))){
+            newsWarnings[4] =  "Некоректний тип файлу";
+        }
+        if (((!isSupportedExtension(FilenameUtils.getExtension(newsImage0.getOriginalFilename())) && !newsImage0.getOriginalFilename().equals("")) ||
+                (0 < newsImages.length && !isSupportedExtension(FilenameUtils.getExtension(newsImages[0].getOriginalFilename())) && !newsImages[0].getOriginalFilename().equals(""))) ||
+                ((!isSupportedExtension(FilenameUtils.getExtension(newsImage1.getOriginalFilename())) && !newsImage1.getOriginalFilename().equals("")) ||
+                        (1 < newsImages.length && !isSupportedExtension(FilenameUtils.getExtension(newsImages[1].getOriginalFilename())) && !newsImages[1].getOriginalFilename().equals(""))) ||
+                ((!isSupportedExtension(FilenameUtils.getExtension(newsImage2.getOriginalFilename())) && !newsImage2.getOriginalFilename().equals("")) ||
+                        (2 < newsImages.length && !isSupportedExtension(FilenameUtils.getExtension(newsImages[2].getOriginalFilename())) && !newsImages[2].getOriginalFilename().equals(""))) ||
+                ((!isSupportedExtension(FilenameUtils.getExtension(newsImage3.getOriginalFilename())) && !newsImage3.getOriginalFilename().equals("")) ||
+                        (3 < newsImages.length && !isSupportedExtension(FilenameUtils.getExtension(newsImages[3].getOriginalFilename())) && !newsImages[3].getOriginalFilename().equals(""))) ||
+                ((!isSupportedExtension(FilenameUtils.getExtension(newsImage4.getOriginalFilename())) && !newsImage4.getOriginalFilename().equals("")) ||
+                        (4 < newsImages.length && !isSupportedExtension(FilenameUtils.getExtension(newsImages[4].getOriginalFilename())) && !newsImages[4].getOriginalFilename().equals("")))
+        ) {
+            MainBannerForm mainBannerForm = new MainBannerForm();
+            mainBanners = bannerService.getAllMainBanners();
+            mainBannerForm.setMainBannerList(mainBanners);
+            BackgroundImageForm backgroundImageForm = new BackgroundImageForm();
+            backgroundImageForm.setBackgroundImageList(bannerService.getBackgroundImages());
+            NewsBannerForm newsBannerForm1 = new NewsBannerForm();
+            newsBannerForm1.setNewsBannerList(newsBanners);
             String l = "banners/main";
             String ln = "banners/news";
             String lnk = "banners/background";
@@ -121,6 +232,10 @@ public class BannerController {
             model.addAttribute("newsBannerLink", ln);
             model.addAttribute("backgroundImageLink", lnk);
             model.addAttribute("speed",speed);
+            model.addAttribute("newsWarnings", newsWarnings);
+            model.addAttribute("mainBanner", mainBannerForm);
+            model.addAttribute("newsBanner", newsBannerForm1);
+            model.addAttribute("backgroundImage", backgroundImageForm);
             return "banner/banners";
         }
         int i = 0;
@@ -136,27 +251,37 @@ public class BannerController {
 
     @PostMapping("/admin/banners/background")
     public String saveBackgroundImage(@Valid @ModelAttribute("backgroundImage") BackgroundImageForm backgroundImage, BindingResult bindingResult,
-                                      @RequestParam(name="mainImage", required = false)MultipartFile mainImage, @RequestParam("mainImageName")String mainImageName,
+                                      @RequestParam(name="mainImage", required = false) MultipartFile mainImage, @RequestParam("mainImageName")String mainImageName,
                                       Model model){
-//
-
+    System.out.println(backgroundImage.getBackgroundImageList().get(1).getImage());
+        System.out.println(mainImage.getOriginalFilename());
         if(backgroundImage.getBackgroundImageList().get(1).getImage().equals("image")) {
-            if (!mainImage.getOriginalFilename().equals("")) {
-                BackgroundImage backgroundImageInDb = bannerService.getBackgroundImageById(1L);
-                File file = new File(uploadPath + "/" + backgroundImageInDb.getImage());
-                file.delete();
-                String uuidFile = UUID.randomUUID().toString();
-                String uniqueName = uuidFile + "." + mainImage.getOriginalFilename();
-                backgroundImageInDb.setImage(uniqueName);
-                bannerService.saveBackgroundImage(backgroundImageInDb);
-                Path path = Paths.get(uploadPath + "/" + uniqueName);
-                try {
-                    mainImage.transferTo(new File(path.toUri()));
-                } catch (IOException e) {
+            if(isSupportedExtension(FilenameUtils.getExtension(
+                    mainImage.getOriginalFilename()))) {
+                if (!mainImage.getOriginalFilename().equals("")) {
+                    BackgroundImage backgroundImageInDb = bannerService.getBackgroundImageById(1L);
+                    File file = new File(uploadPath + "/" + backgroundImageInDb.getImage());
+                    file.delete();
+                    String uuidFile = UUID.randomUUID().toString();
+                    String uniqueName = uuidFile + "." + mainImage.getOriginalFilename();
+                    backgroundImageInDb.setImage(uniqueName);
+                    bannerService.saveBackgroundImage(backgroundImageInDb);
+                    Path path = Paths.get(uploadPath + "/" + uniqueName);
+                    try {
+                        mainImage.transferTo(new File(path.toUri()));
+                    } catch (IOException e) {
+                    }
                 }
+            }else if(!mainImage.getOriginalFilename().equals("")){
+                model.addAttribute("backgroundWarning", "Некоректний тип файлу");
             }
         }
         if (bindingResult.hasErrors()) {
+            NewsBannerForm newsBannerForm = new NewsBannerForm();
+            newsBannerForm.setNewsBannerList(bannerService.getAllNewsBanners());
+            MainBannerForm mainBannerForm = new MainBannerForm();
+            mainBannerForm.setMainBannerList(bannerService.getAllMainBanners());
+            backgroundImage.setBackgroundImageList(bannerService.getBackgroundImages());
             String l = "banners/main";
             String ln = "banners/news";
             String lnk = "banners/background";
@@ -165,12 +290,41 @@ public class BannerController {
             model.addAttribute("newsBannerLink", ln);
             model.addAttribute("backgroundImageLink", lnk);
             model.addAttribute("speed",speed);
+            model.addAttribute("mainBanner", mainBannerForm);
+            model.addAttribute("newsBanner", newsBannerForm);
+            model.addAttribute("backgroundImage", backgroundImage);
+            return "banner/banners";
+        }
+        if(!mainImage.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(mainImage.getOriginalFilename()))){
+            NewsBannerForm newsBannerForm = new NewsBannerForm();
+            newsBannerForm.setNewsBannerList(bannerService.getAllNewsBanners());
+            MainBannerForm mainBannerForm = new MainBannerForm();
+            mainBannerForm.setMainBannerList(bannerService.getAllMainBanners());
+            backgroundImage.setBackgroundImageList(bannerService.getBackgroundImages());
+            String l = "banners/main";
+            String ln = "banners/news";
+            String lnk = "banners/background";
+            model.addAttribute("pageNUMB", n);
+            model.addAttribute("mainBannerLink", l);
+            model.addAttribute("newsBannerLink", ln);
+            model.addAttribute("backgroundImageLink", lnk);
+            model.addAttribute("speed",speed);
+            model.addAttribute("mainBanner", mainBannerForm);
+            model.addAttribute("newsBanner", newsBannerForm);
+            model.addAttribute("backgroundImage", backgroundImage);
             return "banner/banners";
         }
         BackgroundImage img =  bannerService.getBackgroundImageById(2L);
         img.setImage(backgroundImage.getBackgroundImageList().get(1).getImage());
         bannerService.saveBackgroundImage(img);
         return "redirect:/admin/banners";
+    }
+
+    private boolean isSupportedExtension(String extension) {
+        return extension != null && (
+                extension.equals("png")
+                        || extension.equals("jpg")
+                        || extension.equals("jpeg"));
     }
 
     private void saveNewsBannerImage(MultipartFile image, MultipartFile[] images, int i, String fileName) {

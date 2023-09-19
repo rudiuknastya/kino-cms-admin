@@ -62,4 +62,20 @@ public class PublicFilmController {
         model.addAttribute("contactPage", contactsService.getContact());
         return "soonPage/soon_page";
     }
+    @GetMapping("/poster_soon")
+    public String getPosterSoonFilms(Model model){
+        model.addAttribute("posterFilms", filmService.getSoonFilms());
+        model.addAttribute("mainPage",mainPageService.getMainPage());
+        model.addAttribute("pagenumb", 5);
+        model.addAttribute("number", 2);
+        model.addAttribute("title", "Скоро");
+        model.addAttribute("newPages",newPageService.getEnabledNewPages());
+        model.addAttribute("aboutCinemaPage",aboutCinemaService.getAboutCinema());
+        model.addAttribute("cafePage",cafeService.getCafe());
+        model.addAttribute("vipHallPage",vipHallService.getVipHall());
+        model.addAttribute("adPage",advertisementService.getAd());
+        model.addAttribute("childrenRoomPage",childrenRoomService.getChildrenRoom());
+        model.addAttribute("contactPage", contactsService.getContact());
+        return "posterPage/poster_page";
+    }
 }

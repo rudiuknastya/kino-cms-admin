@@ -1,6 +1,7 @@
 package project.controller;
 
 import jakarta.validation.Valid;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,18 +55,61 @@ public class NewPageController {
                            @RequestParam("image5")MultipartFile image5, @RequestParam("image5Name")String image5Name,
                            Model model) throws IOException {
         newPage.setImageGallery(new Gallery());
-        saveImage(mainImage,"mainImage", newPage, mainImageName);
-        saveImage(image1,"image1", newPage, image1Name);
-        saveImage(image2,"image2", newPage, image2Name);
-        saveImage(image3,"image3", newPage, image3Name);
-        saveImage(image4,"image4", newPage, image4Name);
-        saveImage(image5,"image5", newPage, image5Name);
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                mainImage.getOriginalFilename()))) {
+            saveImage(mainImage, "mainImage", newPage, mainImageName);
+        } else if(!mainImage.getOriginalFilename().equals("")){
+            model.addAttribute("mainWarning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image1.getOriginalFilename()))) {
+            saveImage(image1, "image1", newPage, image1Name);
+        } else if(!image1.getOriginalFilename().equals("")){
+            model.addAttribute("image1Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image2.getOriginalFilename()))) {
+            saveImage(image2, "image2", newPage, image2Name);
+        } else if(!image2.getOriginalFilename().equals("")){
+            model.addAttribute("image2Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image3.getOriginalFilename()))) {
+            saveImage(image3, "image3", newPage, image3Name);
+        } else if(!image3.getOriginalFilename().equals("")){
+            model.addAttribute("image3Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image4.getOriginalFilename()))) {
+            saveImage(image4, "image4", newPage, image4Name);
+        } else if(!image4.getOriginalFilename().equals("")){
+            model.addAttribute("image4Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image5.getOriginalFilename()))) {
+            saveImage(image5, "image5", newPage, image5Name);
+        } else if(!image5.getOriginalFilename().equals("")){
+            model.addAttribute("image5Warning", "Некоректний тип файлу");
+        }
         if (bindingResult.hasErrors()) {
             String l ="new/new_page";
             model.addAttribute("pageNum", n);
             model.addAttribute("link", l);
             model.addAttribute("object", newPage);
             return "page/common_page";
+        }
+        if((!mainImage.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(mainImage.getOriginalFilename()))) ||
+                (!image1.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename()))) ||
+                (!image2.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename()))) ||
+                (!image3.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename()))) ||
+                (!image4.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename()))) ||
+                (!image5.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename())))
+        ){
+            String l ="new/new_page";
+            model.addAttribute("object", newPage);
+            model.addAttribute("pageNum", n);
+            model.addAttribute("link",l);
+            return "newsPage/edit_news";
         }
         newPage.setCreationDate(LocalDate.now());
         newPageService.saveNewPage(newPage);
@@ -91,14 +135,57 @@ public class NewPageController {
                              @RequestParam("image5")MultipartFile image5, @RequestParam("image5Name")String image5Name,
                              Model model) {
         NewPage newPageInDB = newPageService.getNewPageById(id);
-        saveImage(mainImage,"mainImage", newPageInDB, mainImageName);
-        saveImage(image1,"image1", newPageInDB, image1Name);
-        saveImage(image2,"image2", newPageInDB, image2Name);
-        saveImage(image3,"image3", newPageInDB, image3Name);
-        saveImage(image4,"image4", newPageInDB, image4Name);
-        saveImage(image5,"image5", newPageInDB, image5Name);
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                mainImage.getOriginalFilename()))) {
+            saveImage(mainImage, "mainImage", newPageInDB, mainImageName);
+        } else if(!mainImage.getOriginalFilename().equals("")){
+            model.addAttribute("mainWarning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image1.getOriginalFilename()))) {
+            saveImage(image1, "image1", newPageInDB, image1Name);
+        } else if(!image1.getOriginalFilename().equals("")){
+            model.addAttribute("image1Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image2.getOriginalFilename()))) {
+            saveImage(image2, "image2", newPageInDB, image2Name);
+        } else if(!image2.getOriginalFilename().equals("")){
+            model.addAttribute("image2Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image3.getOriginalFilename()))) {
+            saveImage(image3, "image3", newPageInDB, image3Name);
+        } else if(!image3.getOriginalFilename().equals("")){
+            model.addAttribute("image3Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image4.getOriginalFilename()))) {
+            saveImage(image4, "image4", newPageInDB, image4Name);
+        } else if(!image4.getOriginalFilename().equals("")){
+            model.addAttribute("image4Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image5.getOriginalFilename()))) {
+            saveImage(image5, "image5", newPageInDB, image5Name);
+        } else if(!image5.getOriginalFilename().equals("")){
+            model.addAttribute("image5Warning", "Некоректний тип файлу");
+        }
         newPage.setImageGallery(newPageInDB.getImageGallery());
         if (bindingResult.hasErrors()) {
+            String l ="edit/new_page/"+id;
+            model.addAttribute("object", newPage);
+            model.addAttribute("pageNum", n);
+            model.addAttribute("link",l);
+            return "newsPage/edit_news";
+        }
+        if((!mainImage.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(mainImage.getOriginalFilename()))) ||
+                (!image1.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename()))) ||
+                (!image2.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename()))) ||
+                (!image3.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename()))) ||
+                (!image4.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename()))) ||
+                (!image5.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename())))
+        ){
             String l ="edit/new_page/"+id;
             model.addAttribute("object", newPage);
             model.addAttribute("pageNum", n);
@@ -114,6 +201,13 @@ public class NewPageController {
         newPageInDB.getSeoBlock().setDescription(newPage.getSeoBlock().getDescription());
         newPageService.saveNewPage(newPageInDB);
         return "redirect:/admin/pages";
+    }
+
+    private boolean isSupportedExtension(String extension) {
+        return extension != null && (
+                extension.equals("png")
+                        || extension.equals("jpg")
+                        || extension.equals("jpeg"));
     }
     private void saveImage(MultipartFile image, String fileName, NewPage newPage, String name) {
 

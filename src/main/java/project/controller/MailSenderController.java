@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class MailSenderController {
@@ -32,8 +33,8 @@ public class MailSenderController {
         this.userService = userService;
         this.mailSenderService = mailSenderService;
     }
-    @Value("${upload.path}")
-    private String uploadPath;
+    //@Value("${upload.path}")
+    private String uploadPath = "C:\\Users\\Anastassia\\IdeaProjects\\Kino-CMS_admin\\uploads";
     private Integer n = 9;
     private String userCheck = "";
     String emails = "";
@@ -54,24 +55,28 @@ public class MailSenderController {
                               @RequestParam("inputUser") String inputUser, @RequestParam("inputLetter") MultipartFile inputLetter,
                               @RequestParam("deleteInput") String deleteInput,Model model){
         String fileName = "";
+        boolean delete = false;
+        deleteMailFiles(deleteInput);
         if(!inputLetter.getOriginalFilename().equals("")) {
-            Path path = Paths.get(uploadPath + "/" + inputLetter.getOriginalFilename());
+            String uuidFile = UUID.randomUUID().toString();
+            String uniqueName = uuidFile + "." + inputLetter.getOriginalFilename();
+            Path path = Paths.get(uploadPath + "/" + uniqueName);
             try {
                 inputLetter.transferTo(new File(path.toUri()));
             } catch (IOException e) {
             }
-            fileName = inputLetter.getOriginalFilename();
+            fileName = uniqueName;
             int size = mailFilesService.getAllMailFiles().size();
             if (size < 5) {
                 MailFile mailFiles = new MailFile();
-                mailFiles.setFile(inputLetter.getOriginalFilename());
+                mailFiles.setFile(uniqueName);
                 //emailForm.getMailFilesList().add(mailFiles);
                 mailFilesService.saveMailFiles(mailFiles);
             }
             if (size >= 5){
-                //delete = true;
-                File file = new File(uploadPath+"/"+inputLetter.getOriginalFilename());
-                file.delete();
+                delete = true;
+//                File file = new File(uploadPath+"/"+inputLetter.getOriginalFilename());
+//                file.delete();
             }
 
         } else if(radioFile != null){
@@ -90,8 +95,8 @@ public class MailSenderController {
                 }
             }
         }
-        mailSenderService.sendEmail(emails,fileName);
-        deleteMailFiles(deleteInput);
+        mailSenderService.sendEmail(emails,fileName, delete);
+        //deleteMailFiles(deleteInput);
         userCheck = "";
         emails = "";
         usersNumber = "";

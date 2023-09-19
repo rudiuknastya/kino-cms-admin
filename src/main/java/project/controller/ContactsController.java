@@ -1,6 +1,7 @@
 package project.controller;
 
 import jakarta.validation.Valid;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,11 +51,7 @@ public class ContactsController {
 
     @GetMapping("/admin/pages/edit/contacts/new")
     public String createContacts(Model model) {
-        //ContactsForm contactsForm = new ContactsForm();
         contacts.add(new Contact());
-//        contactsForm.setContactsList(contacts);
-//        model.addAttribute("contacts", contactsForm);
-//        model.addAttribute("pagenuM", n);
         update = false;
         return "redirect:/admin/pages/edit/contacts";
     }
@@ -76,12 +73,29 @@ public class ContactsController {
     public String updateContacts(@Valid @ModelAttribute("contacts") ContactsForm contactsForm, BindingResult bindingResult,
                                  @RequestParam("logoImage") MultipartFile[] logoImages, Model model) {
         List<Contact> contactsInDb = contactsService.getAllContacts();
-        saveImages(contactsInDb, contactsForm.getContactsList(), logoImages);
+        String [] warnings = new String[logoImages.length];
+        for(int i = 0; i < logoImages.length; i++) {
+            if(isSupportedExtension(FilenameUtils.getExtension(
+                    logoImages[i].getOriginalFilename()))) {
+                saveImage(contactsInDb, contactsForm.getContactsList(), logoImages[i], i);
+            } else if(!logoImages[i].getOriginalFilename().equals("")) {
+                warnings[i] = "Некоректний тип файлу";
+            }
+        }
         System.out.println(logoImages.length);
         System.out.println(logoImages[0].getOriginalFilename());
-
+        model.addAttribute("warnings", warnings);
         if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult.getAllErrors().get(0));
+            model.addAttribute("pagenuM", n);
+            model.addAttribute("contacts", contactsForm);
+            return "page/contacts_page";
+        }
+        boolean warn = false;
+        for(int i = 0; i < logoImages.length; i++) {
+            boolean l = !logoImages[i].getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(logoImages[i].getOriginalFilename()));
+            warn = warn || l;
+        }
+        if(warn == true){
             model.addAttribute("pagenuM", n);
             model.addAttribute("contacts", contactsForm);
             return "page/contacts_page";
@@ -110,36 +124,40 @@ public class ContactsController {
 
         return "redirect:/admin/pages";
     }
+    private boolean isSupportedExtension(String extension) {
+        return extension != null && (
+                extension.equals("png")
+                        || extension.equals("jpg")
+                        || extension.equals("jpeg"));
+    }
 
-    private void saveImages(List<Contact> contactsInDb, List<Contact> contactsList, MultipartFile[] logoImages) {
-        //int i=0;
-        for (int i=0; i<logoImages.length; i++) {
-            if(i<contactsInDb.size() && !logoImages[i].getOriginalFilename().equals("")) {
+    private void saveImage(List<Contact> contactsInDb, List<Contact> contactsList, MultipartFile logoImage, int i) {
+
+            if(i<contactsInDb.size() && !logoImage.getOriginalFilename().equals("")) {
                 System.out.println("1 if here i: "+i);
                 String uuidFile = UUID.randomUUID().toString();
-                String uniqueName = uuidFile + "." + logoImages[i].getOriginalFilename();
+                String uniqueName = uuidFile + "." + logoImage.getOriginalFilename();
                 contactsList.get(i).setLogo(uniqueName);
                 Path path = Paths.get(uploadPath + "/" + uniqueName);
                 try {
-                    logoImages[i].transferTo(new File(path.toUri()));
+                    logoImage.transferTo(new File(path.toUri()));
                 } catch (IOException e) {
                 }
                 File file = new File(uploadPath+"/"+contactsInDb.get(i).getLogo());
                 if(file.exists()) {
                     file.delete();
                 }
-            } else if (i >= contactsInDb.size() && !logoImages[i].getOriginalFilename().equals("")){
+            } else if (i >= contactsInDb.size() && !logoImage.getOriginalFilename().equals("")){
                 System.out.println("2 if here i: "+i);
                 String uuidFile = UUID.randomUUID().toString();
-                String uniqueName = uuidFile + "." + logoImages[i].getOriginalFilename();
+                String uniqueName = uuidFile + "." + logoImage.getOriginalFilename();
                 contactsList.get(i).setLogo(uniqueName);
                 Path path = Paths.get(uploadPath + "/" + uniqueName);
                 try {
-                    logoImages[i].transferTo(new File(path.toUri()));
+                    logoImage.transferTo(new File(path.toUri()));
                 } catch (IOException e) {
                 }
             }
-        }
 
     }
 }

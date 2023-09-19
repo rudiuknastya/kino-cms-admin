@@ -31,6 +31,7 @@ public class News {
     private LocalDate publicationDate;
     @Column(columnDefinition="BOOLEAN NOT NULL")
     private Boolean status;
+    private String cinemas;
     @Valid
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="seo_block_id", referencedColumnName = "id")
@@ -38,6 +39,14 @@ public class News {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="image_gallery_id", referencedColumnName = "id")
     private Gallery imageGallery;
+
+    public String getCinemas() {
+        return cinemas;
+    }
+
+    public void setCinemas(String cinemas) {
+        this.cinemas = cinemas;
+    }
 
     public Long getId() {
         return id;

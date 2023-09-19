@@ -51,6 +51,7 @@
                                         </div>
                                         <div class="col-auto">
                                             <label class="input-group-text col-form-label" th:for="logoImage+${stat.index}" style="color:black;">Завантажити</label>
+                                            <div th:if="${warnings != null}" th:text="${warnings[__${stat.index}__]}" style="color: red"></div>
                                             <input type="text" class="d-none"  th:field = "*{contactsList[__${stat.index}__].logo}" th:id="logoImageName+${stat.index}" name="logoImageName">
                                             <div class="text-danger" th:if="${#fields.hasErrors('contactsList[__${stat.index}__].logo')}" th:errors="*{contactsList[__${stat.index}__].logo}"> </div>
                                         </div>

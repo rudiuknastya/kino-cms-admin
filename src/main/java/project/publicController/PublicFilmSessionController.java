@@ -41,8 +41,11 @@ public class PublicFilmSessionController {
     private Integer n = 10;
     @GetMapping("/poster")
     public String showPoster(Model model){
+        Integer num = 1;
         model.addAttribute("posterFilms", filmSessionService.getFilmSessionsForToday());
         model.addAttribute("pagenumb", 5);
+        model.addAttribute("title", "Сьогодні в прокаті");
+        model.addAttribute("number", num);
         model.addAttribute("mainPage",mainPageService.getMainPage());
         model.addAttribute("newPages",newPageService.getEnabledNewPages());
         model.addAttribute("aboutCinemaPage",aboutCinemaService.getAboutCinema());

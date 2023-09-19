@@ -1,6 +1,7 @@
 package project.controller;
 
 import jakarta.validation.Valid;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -102,13 +103,48 @@ public class CinemaController {
                            @RequestParam("image5") MultipartFile image5, @RequestParam("image5Name") String image5Name,
                            @RequestParam("redirect") String redirect, Model model) {
         hall.setImageGallery(new Gallery());
-        saveHallImage(schemaImg, "schemaImg", hall, schemaImageName);
-        saveHallImage(mainImage, "mainImage", hall, mainImageName);
-        saveHallImage(image1, "image1", hall, image1Name);
-        saveHallImage(image2, "image2", hall, image2Name);
-        saveHallImage(image3, "image3", hall, image3Name);
-        saveHallImage(image4, "image4", hall, image4Name);
-        saveHallImage(image5, "image5", hall, image5Name);
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                schemaImg.getOriginalFilename()))) {
+            saveHallImage(schemaImg, "schemaImg", hall, schemaImageName);
+        } else if(!schemaImg.getOriginalFilename().equals("")){
+            model.addAttribute("schemaWarning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                mainImage.getOriginalFilename()))) {
+            saveHallImage(mainImage, "mainImage", hall, mainImageName);
+        } else if(!mainImage.getOriginalFilename().equals("")){
+            model.addAttribute("mainWarning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image1.getOriginalFilename()))) {
+            saveHallImage(image1, "image1", hall, image1Name);
+        } else if(!image1.getOriginalFilename().equals("")){
+            model.addAttribute("image1Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image2.getOriginalFilename()))) {
+            saveHallImage(image2, "image2", hall, image2Name);
+        } else if(!image2.getOriginalFilename().equals("")){
+            model.addAttribute("image2Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image3.getOriginalFilename()))) {
+            saveHallImage(image3, "image3", hall, image3Name);
+        } else if(!image3.getOriginalFilename().equals("")){
+            model.addAttribute("image3Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image4.getOriginalFilename()))) {
+            saveHallImage(image4, "image4", hall, image4Name);
+        } else if(!image4.getOriginalFilename().equals("")){
+            model.addAttribute("image4Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image5.getOriginalFilename()))) {
+            saveHallImage(image5, "image5", hall, image5Name);
+        } else if(!image5.getOriginalFilename().equals("")){
+            model.addAttribute("image5Warning", "Некоректний тип файлу");
+        }
         if (bindingResult.hasErrors()) {
             String l = "hall/new";
             model.addAttribute("object", hall);
@@ -117,7 +153,21 @@ public class CinemaController {
             model.addAttribute("redirect", redirect);
             return "hall/add_hall";
         }
-
+        if((!mainImage.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(mainImage.getOriginalFilename()))) ||
+                (!image1.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename()))) ||
+                (!image2.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image2.getOriginalFilename()))) ||
+                (!image3.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image3.getOriginalFilename()))) ||
+                (!image4.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image4.getOriginalFilename()))) ||
+                (!image5.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image5.getOriginalFilename()))) ||
+                (!schemaImg.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(schemaImg.getOriginalFilename())))
+        ){
+            String l = "hall/new";
+            model.addAttribute("object", hall);
+            model.addAttribute("lin",l);
+            model.addAttribute("pageM", n);
+            model.addAttribute("redirect", redirect);
+            return "hall/add_hall";
+        }
 
         hall.setCreationDate(LocalDate.now());
         if(redirect.contains("new")){
@@ -169,16 +219,66 @@ public class CinemaController {
         } else if(redirect.contains("edit")){
             hallInDB = editHallList.get(id);
         }
-        saveHallImage(schemaImg, "schemaImg", hallInDB, schemaImageName);
-        saveHallImage(mainImage, "mainImage", hallInDB, mainImageName);
-        saveHallImage(image1, "image1", hallInDB, image1Name);
-        saveHallImage(image2, "image2", hallInDB, image2Name);
-        saveHallImage(image3, "image3", hallInDB, image3Name);
-        saveHallImage(image4, "image4", hallInDB, image4Name);
-        saveHallImage(image5, "image5", hallInDB, image5Name);
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                schemaImg.getOriginalFilename()))) {
+            saveHallImage(schemaImg, "schemaImg", hallInDB, schemaImageName);
+        } else if(!schemaImg.getOriginalFilename().equals("")){
+            model.addAttribute("schemaWarning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image1.getOriginalFilename()))) {
+            saveHallImage(mainImage, "mainImage", hallInDB, mainImageName);
+        } else if(!image1.getOriginalFilename().equals("")){
+            model.addAttribute("image1Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image2.getOriginalFilename()))) {
+            saveHallImage(image1, "image1", hallInDB, image1Name);
+        } else if(!image2.getOriginalFilename().equals("")){
+            model.addAttribute("image2Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image3.getOriginalFilename()))) {
+            saveHallImage(image2, "image2", hallInDB, image2Name);
+        } else if(!image3.getOriginalFilename().equals("")){
+            model.addAttribute("image3Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image4.getOriginalFilename()))) {
+            saveHallImage(image3, "image3", hallInDB, image3Name);
+        } else if(!image4.getOriginalFilename().equals("")){
+            model.addAttribute("image4Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image4.getOriginalFilename()))) {
+            saveHallImage(image4, "image4", hallInDB, image4Name);
+        } else if(!image4.getOriginalFilename().equals("")){
+            model.addAttribute("image4Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image5.getOriginalFilename()))) {
+            saveHallImage(image5, "image5", hallInDB, image5Name);
+        } else if(!image5.getOriginalFilename().equals("")){
+            model.addAttribute("image5Warning", "Некоректний тип файлу");
+        }
         hall.setImageGallery(hallInDB.getImageGallery());
         hall.setSchemaImage(hallInDB.getSchemaImage());
         if (bindingResult.hasErrors()) {
+            String l = "hall/edit/"+id;
+            model.addAttribute("lin",l);
+            model.addAttribute("object", hall);
+            model.addAttribute("pageM", n);
+            model.addAttribute("redirect", redirect);
+            return "hall/edit_hall";
+        }
+        if((!mainImage.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(mainImage.getOriginalFilename()))) ||
+                (!image1.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename()))) ||
+                (!image2.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image2.getOriginalFilename()))) ||
+                (!image3.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image3.getOriginalFilename()))) ||
+                (!image4.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image4.getOriginalFilename()))) ||
+                (!image5.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image5.getOriginalFilename()))) ||
+                (!schemaImg.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(schemaImg.getOriginalFilename())))
+        ){
             String l = "hall/edit/"+id;
             model.addAttribute("lin",l);
             model.addAttribute("object", hall);
@@ -235,14 +335,70 @@ public class CinemaController {
                              @RequestParam("image4") MultipartFile image4, @RequestParam("image4Name") String image4Name,
                              @RequestParam("image5") MultipartFile image5, @RequestParam("image5Name") String image5Name, Model model) throws IOException {
         cinema.setImageGallery(new Gallery());
-        saveCinemaImage(logoImage, "logoImage", cinema, logoImageName);
-        saveCinemaImage(mainImage, "mainImage", cinema, mainImageName);
-        saveCinemaImage(image1, "image1", cinema, image1Name);
-        saveCinemaImage(image2, "image2", cinema, image2Name);
-        saveCinemaImage(image3, "image3", cinema, image3Name);
-        saveCinemaImage(image4, "image4", cinema, image4Name);
-        saveCinemaImage(image5, "image5", cinema, image5Name);
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                logoImage.getOriginalFilename()))) {
+            saveCinemaImage(logoImage, "logoImage", cinema, logoImageName);
+        } else if(!logoImage.getOriginalFilename().equals("")){
+            model.addAttribute("logoWarning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                mainImage.getOriginalFilename()))) {
+            saveCinemaImage(mainImage, "mainImage", cinema, mainImageName);
+        } else if(!mainImage.getOriginalFilename().equals("")){
+            model.addAttribute("mainWarning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image1.getOriginalFilename()))) {
+            saveCinemaImage(image1, "image1", cinema, image1Name);
+        } else if(!image1.getOriginalFilename().equals("")){
+            model.addAttribute("image1Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image2.getOriginalFilename()))) {
+            saveCinemaImage(image2, "image2", cinema, image2Name);
+        } else if(!image2.getOriginalFilename().equals("")){
+            model.addAttribute("image2Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image3.getOriginalFilename()))) {
+            saveCinemaImage(image3, "image3", cinema, image3Name);
+        } else if(!image3.getOriginalFilename().equals("")){
+            model.addAttribute("image3Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image4.getOriginalFilename()))) {
+            saveCinemaImage(image4, "image4", cinema, image4Name);
+        } else if(!image4.getOriginalFilename().equals("")){
+            model.addAttribute("image4Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image5.getOriginalFilename()))) {
+            saveCinemaImage(image5, "image5", cinema, image5Name);
+        } else if(!image5.getOriginalFilename().equals("")){
+            model.addAttribute("image5Warning", "Некоректний тип файлу");
+        }
         if (bindingResult.hasErrors()) {
+            String l = "cinemas/new";
+            String editLink = "cinemas/new/hall/edit";
+            String deleteLink = "cinemas/new/hall/delete";
+            String createLink = "cinemas/new/hall/new";
+            model.addAttribute("pageNUM", n);
+            model.addAttribute("object", cinema);
+            model.addAttribute("lin",l);
+            model.addAttribute("hallList", hallList);
+            model.addAttribute("editLink",editLink);
+            model.addAttribute("deleteLink",deleteLink);
+            model.addAttribute("createLink",createLink);
+            return "cinema/add_cinema";
+        }
+        if((!mainImage.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(mainImage.getOriginalFilename()))) ||
+                (!image1.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename()))) ||
+                (!image2.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image2.getOriginalFilename()))) ||
+                (!image3.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image3.getOriginalFilename()))) ||
+                (!image4.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image4.getOriginalFilename()))) ||
+                (!image5.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image5.getOriginalFilename()))) ||
+                (!logoImage.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(logoImage.getOriginalFilename())))
+        ){
             String l = "cinemas/new";
             String editLink = "cinemas/new/hall/edit";
             String deleteLink = "cinemas/new/hall/delete";
@@ -298,15 +454,49 @@ public class CinemaController {
                                @RequestParam("image3") MultipartFile image3, @RequestParam("image3Name") String image3Name,
                                @RequestParam("image4") MultipartFile image4, @RequestParam("image4Name") String image4Name,
                                @RequestParam("image5") MultipartFile image5, @RequestParam("image5Name") String image5Name, Model model) throws IOException {
-        System.out.println(cinema.getImageGallery());
         Cinema cinemaInDb = cinemaService.getCinemaById(id);
-        saveCinemaImage(logoImage, "logoImage", cinemaInDb, logoImageName);
-        saveCinemaImage(mainImage, "mainImage", cinemaInDb, mainImageName);
-        saveCinemaImage(image1, "image1", cinemaInDb, image1Name);
-        saveCinemaImage(image2, "image2", cinemaInDb, image2Name);
-        saveCinemaImage(image3, "image3", cinemaInDb, image3Name);
-        saveCinemaImage(image4, "image4", cinemaInDb, image4Name);
-        saveCinemaImage(image5, "image5", cinemaInDb, image5Name);
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                logoImage.getOriginalFilename()))) {
+            saveCinemaImage(logoImage, "logoImage", cinemaInDb, logoImageName);
+        } else if(!logoImage.getOriginalFilename().equals("")){
+            model.addAttribute("logoWarning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                mainImage.getOriginalFilename()))) {
+            saveCinemaImage(mainImage, "mainImage", cinemaInDb, mainImageName);
+        } else if(!mainImage.getOriginalFilename().equals("")){
+            model.addAttribute("mainWarning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image1.getOriginalFilename()))) {
+            saveCinemaImage(image1, "image1", cinemaInDb, image1Name);
+        } else if(!image1.getOriginalFilename().equals("")){
+            model.addAttribute("image1Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image2.getOriginalFilename()))) {
+            saveCinemaImage(image2, "image2", cinemaInDb, image2Name);
+        } else if(!image2.getOriginalFilename().equals("")){
+            model.addAttribute("image2Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image3.getOriginalFilename()))) {
+            saveCinemaImage(image3, "image3", cinemaInDb, image3Name);
+        } else if(!image3.getOriginalFilename().equals("")){
+            model.addAttribute("image3Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image4.getOriginalFilename()))) {
+            saveCinemaImage(image4, "image4", cinemaInDb, image4Name);
+        } else if(!image4.getOriginalFilename().equals("")){
+            model.addAttribute("image4Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image5.getOriginalFilename()))) {
+            saveCinemaImage(image5, "image5", cinemaInDb, image5Name);
+        } else if(!image5.getOriginalFilename().equals("")){
+            model.addAttribute("image5Warning", "Некоректний тип файлу");
+        }
         cinema.setImageGallery(cinemaInDb.getImageGallery());
         cinema.setLogo(cinemaInDb.getLogo());
         if (bindingResult.hasErrors()) {
@@ -323,9 +513,29 @@ public class CinemaController {
             model.addAttribute("createLink",createLink);
             return "cinema/edit_cinema";
         }
-        //cinemaInDb.setHalls(editHallList);
 
-        //cinemaInDb.setHalls(editHallList);
+        if((!mainImage.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(mainImage.getOriginalFilename()))) ||
+                (!image1.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename()))) ||
+                (!image2.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image2.getOriginalFilename()))) ||
+                (!image3.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image3.getOriginalFilename()))) ||
+                (!image4.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image4.getOriginalFilename()))) ||
+                (!image5.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image5.getOriginalFilename()))) ||
+                (!logoImage.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(logoImage.getOriginalFilename())))
+        ){
+            String l = "cinemas/edit/"+id;
+            String editLink = "cinemas/edit/hall/edit";
+            String deleteLink = "cinemas/edit/hall/delete";
+            String createLink = "cinemas/edit/hall/new";
+            model.addAttribute("object", cinema);
+            model.addAttribute("lin",l);
+            model.addAttribute("pageM", n);
+            model.addAttribute("hallList", editHallList);
+            model.addAttribute("editLink",editLink);
+            model.addAttribute("deleteLink",deleteLink);
+            model.addAttribute("createLink",createLink);
+            return "cinema/edit_cinema";
+        }
+
         int i = 0;
         for(Hall hall:cinemaInDb.getHalls()){
             if(i < editHallList.size()) {
@@ -372,7 +582,12 @@ public class CinemaController {
         count = 0;
         return "redirect:/admin/cinemas";
     }
-
+    private boolean isSupportedExtension(String extension) {
+        return extension != null && (
+                extension.equals("png")
+                        || extension.equals("jpg")
+                        || extension.equals("jpeg"));
+    }
 
     private void saveCinemaImage(MultipartFile image, String fileName, Cinema cinema, String name) {
 

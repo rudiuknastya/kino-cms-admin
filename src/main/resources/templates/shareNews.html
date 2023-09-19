@@ -37,6 +37,7 @@
         </div>
         <div class="col-auto">
             <label class="input-group-text col-form-label" for="inputMainImage" style="color:black;">Завантажити</label>
+            <div th:text="${mainWarning}" style="color: red"></div>
             <input type="text" class="d-none"  th:value = "*{imageGallery?.mainImage}" id="mainImageName" name="mainImageName">
         </div>
         <div class="col-auto">
@@ -55,6 +56,7 @@
             </div>
             <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="Image1" onchange="img1.src=window.URL.createObjectURL(this.files[0])" name="image1">
             <label class="input-group-text col-form-label px-3 my-2" for="Image1" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+            <div th:text="${image1Warning}" style="color: red; font-size: 11px"></div>
             <input type="text" class="d-none"  th:value = "*{imageGallery.image1}" id="image1Name" name="image1Name">
         </div>
         <div class="col-auto mx-1">
@@ -64,6 +66,7 @@
             </div>
             <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="Image2" onchange="img_2.src=window.URL.createObjectURL(this.files[0])" name="image2">
             <label class="input-group-text col-form-label px-3 my-2" for="Image2" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+            <div th:text="${image2Warning}" style="color: red; font-size: 11px"></div>
             <input type="text" class="d-none"  th:value = "*{imageGallery.image2}" id="image2Name" name="image2Name">
         </div>
         <div class="col-auto mx-1">
@@ -73,6 +76,7 @@
                 <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="Image3" onchange="img_3.src=window.URL.createObjectURL(this.files[0])" name="image3">
             </div>
             <label class="input-group-text col-form-label px-3 my-2" for="Image3" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+            <div th:text="${image3Warning}" style="color: red; font-size: 11px"></div>
             <input type="text" class="d-none"  th:value = "*{imageGallery.image3}" id="image3Name" name="image3Name">
         </div>
         <div class="col-auto mx-1">
@@ -82,6 +86,7 @@
                 <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="Image4" onchange="img_4.src=window.URL.createObjectURL(this.files[0])" name="image4">
             </div>
             <label class="input-group-text col-form-label px-3 my-2" for="Image4" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+            <div th:text="${image4Warning}" style="color: red; font-size: 11px"></div>
             <input type="text" class="d-none"  th:value = "*{imageGallery.image4}" id="image4Name" name="image4Name">
         </div>
         <div class="col-auto mx-1">
@@ -91,6 +96,7 @@
                 <input type="file" accept="image/jpeg, image/jpg, image/png" class="form-control d-none"  id="Image5" onchange="img_5.src=window.URL.createObjectURL(this.files[0])" name="image5">
             </div>
             <label class="input-group-text col-form-label px-3 my-2" for="Image5" style="color:black; width:120px; font-size:13px;">Завантажити</label>
+            <div th:text="${image5Warning}" style="color: red; font-size: 11px"></div>
             <input type="text" class="d-none"  th:value = "*{imageGallery.image5}" id="image5Name" name="image5Name">
         </div>
     </div>
@@ -101,6 +107,12 @@
         <div class="col-md-9">
             <input type="text" class="form-control" id="inputLink"  th:field = "*{videoLink}">
         </div>
+    </div>
+    <div class="col-md-6">
+        <label for="multipleSelect" class="form-label">Кінотеатри</label>
+        <select class="form-select" aria-label=".form-select-lg example" id="multipleSelect" name="cinemas" multiple>
+            <option th:each="c : ${keyCinemas}" th:value="${c.name}" th:text="${c.name}" th:selected="${object.getCinemas() != null and #strings.contains(object.getCinemas(), c.name)}"></option>
+        </select>
     </div>
     <label class="col-form-label" for="inputSeoTitle" style="color:black;">SEO блок</label>
     <div class="row align-items-center d-flex justify-content-center">
@@ -141,9 +153,13 @@
         <button type="submit" class="btn btn-primary">Зберегти</button>
     </div>
 </form>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
     $('#publDate').val(new Date().toJSON().slice(0,10));
+<!--    $(document).ready(function() {-->
+        $( '#multipleSelect' ).select2();
+<!--    });-->
     </script>
     <script type="text/javascript">
     window.onload=function(){
@@ -151,7 +167,7 @@
     document.getElementById('publDate').setAttribute('min', today);
     document.getElementById('publDate').setAttribute('max', today);
     }
-      </script>
+    </script>
 </div>
 </body>
 </html>

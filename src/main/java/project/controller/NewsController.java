@@ -1,6 +1,7 @@
 package project.controller;
 
 import jakarta.validation.Valid;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,9 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.entity.Gallery;
 import project.entity.News;
-import project.service.BannerService;
-import project.service.MainPageService;
-import project.service.NewsService;
+import project.service.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,8 +23,11 @@ public class NewsController {
     @Value("${upload.path}")
     private String uploadPath;
     private final NewsService newsService;
-    public NewsController(NewsService newsService) {
+    private final CinemaService cinemaService;
+
+    public NewsController(NewsService newsService, CinemaService cinemaService) {
         this.newsService = newsService;
+        this.cinemaService = cinemaService;
     }
 
     private Integer n = 5;
@@ -50,6 +52,7 @@ public class NewsController {
         model.addAttribute("object",newsService.getNewById(id));
         model.addAttribute("lin",l);
         model.addAttribute("pageNm", n);
+        model.addAttribute("keyCinemas",cinemaService.getAllCinemas());
         return "newsPage/edit_news";
     }
     @PostMapping("/admin/news/{id}")
@@ -60,22 +63,78 @@ public class NewsController {
                            @RequestParam("image3")MultipartFile image3, @RequestParam("image3Name")String image3Name,
                            @RequestParam("image4")MultipartFile image4, @RequestParam("image4Name")String image4Name,
                            @RequestParam("image5")MultipartFile image5, @RequestParam("image5Name")String image5Name,
-                           Model model) {
+                             @RequestParam(name="cinemas", required = false) String [] cinemas, Model model) {
         News newsInDB = newsService.getNewById(id);
-        saveImage(mainImage,"mainImage", newsInDB, mainImageName);
-        saveImage(image1,"image1", newsInDB, image1Name);
-        saveImage(image2,"image2", newsInDB, image2Name);
-        saveImage(image3,"image3", newsInDB, image3Name);
-        saveImage(image4,"image4", newsInDB, image4Name);
-        saveImage(image5,"image5", newsInDB, image5Name);
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                mainImage.getOriginalFilename()))) {
+            saveImage(mainImage, "mainImage", newsInDB, mainImageName);
+        } else if(!mainImage.getOriginalFilename().equals("")){
+            model.addAttribute("mainWarning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image1.getOriginalFilename()))) {
+            saveImage(image1, "image1", newsInDB, image1Name);
+        } else if(!image1.getOriginalFilename().equals("")){
+            model.addAttribute("image1Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image2.getOriginalFilename()))) {
+            saveImage(image2, "image2", newsInDB, image2Name);
+        } else if(!image2.getOriginalFilename().equals("")){
+            model.addAttribute("image2Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image3.getOriginalFilename()))) {
+            saveImage(image3, "image3", newsInDB, image3Name);
+        } else if(!image3.getOriginalFilename().equals("")){
+            model.addAttribute("image3Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image4.getOriginalFilename()))) {
+            saveImage(image4, "image4", newsInDB, image4Name);
+        } else if(!image4.getOriginalFilename().equals("")){
+            model.addAttribute("image4Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image5.getOriginalFilename()))) {
+            saveImage(image5, "image5", newsInDB, image5Name);
+        } else if(!image5.getOriginalFilename().equals("")){
+            model.addAttribute("image5Warning", "Некоректний тип файлу");
+        }
         news.setImageGallery(newsInDB.getImageGallery());
+        if(cinemas != null) {
+            System.out.println(cinemas[0]);
+            String keywordCinemas = "";
+            for (String c : cinemas) {
+                keywordCinemas += c + ",";
+            }
+            news.setCinemas(keywordCinemas);
+        } else {
+            news.setCinemas(null);
+        }
         if (bindingResult.hasErrors()) {
             String l ="news/"+id;
             model.addAttribute("object",news);
             model.addAttribute("pageNm", n);
             model.addAttribute("lin",l);
+            model.addAttribute("keyCinemas",cinemaService.getAllCinemas());
             return "newsPage/edit_news";
         }
+        if((!mainImage.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(mainImage.getOriginalFilename()))) ||
+                (!image1.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename()))) ||
+                (!image2.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image2.getOriginalFilename()))) ||
+                (!image3.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image3.getOriginalFilename()))) ||
+                (!image4.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image4.getOriginalFilename()))) ||
+                (!image5.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image5.getOriginalFilename())))
+        ){
+            String l ="news/"+id;
+            model.addAttribute("object",news);
+            model.addAttribute("pageNm", n);
+            model.addAttribute("lin",l);
+            model.addAttribute("keyCinemas",cinemaService.getAllCinemas());
+            return "newsPage/edit_news";
+        }
+        newsInDB.setCinemas(news.getCinemas());
         newsInDB.setStatus(news.getStatus());
         newsInDB.setName(news.getName());
         newsInDB.setDescription(news.getDescription());
@@ -99,6 +158,7 @@ public class NewsController {
         model.addAttribute("object", news);
         model.addAttribute("lin", l);
         model.addAttribute("pageN", n);
+        model.addAttribute("keyCinemas",cinemaService.getAllCinemas());
         return "newsPage/add_news";
     }
     @PostMapping("/admin/news/new")
@@ -109,24 +169,82 @@ public class NewsController {
                            @RequestParam("image3")MultipartFile image3, @RequestParam("image3Name")String image3Name,
                            @RequestParam("image4")MultipartFile image4, @RequestParam("image4Name")String image4Name,
                            @RequestParam("image5")MultipartFile image5, @RequestParam("image5Name")String image5Name,
-                           Model model) throws IOException {
+                           @RequestParam(name="cinemas", required = false) String [] cinemas, Model model) throws IOException {
         news.setImageGallery(new Gallery());
-        saveImage(mainImage,"mainImage", news, mainImageName);
-        saveImage(image1,"image1", news, image1Name);
-        saveImage(image2,"image2", news, image2Name);
-        saveImage(image3,"image3", news, image3Name);
-        saveImage(image4,"image4", news, image4Name);
-        saveImage(image5,"image5", news, image5Name);
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                mainImage.getOriginalFilename()))) {
+            saveImage(mainImage, "mainImage", news, mainImageName);
+        } else if(!mainImage.getOriginalFilename().equals("")){
+            model.addAttribute("mainWarning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image1.getOriginalFilename()))) {
+            saveImage(image1, "image1", news, image1Name);
+        } else if(!image1.getOriginalFilename().equals("")){
+            model.addAttribute("image1Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image2.getOriginalFilename()))) {
+            saveImage(image2, "image2", news, image2Name);
+        } else if(!image2.getOriginalFilename().equals("")){
+            model.addAttribute("image2Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image3.getOriginalFilename()))) {
+            saveImage(image3, "image3", news, image3Name);
+        } else if(!image3.getOriginalFilename().equals("")){
+            model.addAttribute("image3Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image4.getOriginalFilename()))) {
+            saveImage(image4, "image4", news, image4Name);
+        } else if(!image4.getOriginalFilename().equals("")){
+            model.addAttribute("image4Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image5.getOriginalFilename()))) {
+            saveImage(image5, "image5", news, image5Name);
+        } else if(!image5.getOriginalFilename().equals("")){
+            model.addAttribute("image5Warning", "Некоректний тип файлу");
+        }
+        if(cinemas != null) {
+            String keywordCinemas = "";
+            for (String c : cinemas) {
+                keywordCinemas += c + ",";
+            }
+            news.setCinemas(keywordCinemas);
+        }
         if (bindingResult.hasErrors()) {
             String l ="news/new";
             model.addAttribute("pageN", n);
             model.addAttribute("lin", l);
             model.addAttribute("object", news);
+            model.addAttribute("keyCinemas",cinemaService.getAllCinemas());
+            return "newsPage/add_news";
+        }
+        if((!mainImage.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(mainImage.getOriginalFilename()))) ||
+                (!image1.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename()))) ||
+                (!image2.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image2.getOriginalFilename()))) ||
+                (!image3.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image3.getOriginalFilename()))) ||
+                (!image4.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image4.getOriginalFilename()))) ||
+                (!image5.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image5.getOriginalFilename())))
+        ){
+            String l ="news/new";
+            model.addAttribute("pageN", n);
+            model.addAttribute("lin", l);
+            model.addAttribute("object", news);
+            model.addAttribute("keyCinemas",cinemaService.getAllCinemas());
             return "newsPage/add_news";
         }
         news.setVideoLink(news.getVideoLink().substring(news.getVideoLink().lastIndexOf("=") + 1));
         newsService.saveNews(news);
         return "redirect:/admin/news";
+    }
+    private boolean isSupportedExtension(String extension) {
+        return extension != null && (
+                extension.equals("png")
+                        || extension.equals("jpg")
+                        || extension.equals("jpeg"));
     }
     private void saveImage(MultipartFile image,String fileName, News news, String name){
 

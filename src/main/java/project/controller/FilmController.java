@@ -1,6 +1,7 @@
 package project.controller;
 
 import jakarta.validation.Valid;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -70,12 +71,42 @@ public class FilmController {
                            @RequestParam(name="checkBox3D",required=false)String checkBox3D, @RequestParam(name="checkBox2D", required=false)String checkBox2D,
                            @RequestParam(name="checkBoxImax", required=false)String checkBoxImax, Model model) throws IOException {
         film.setImageGallery(new Gallery());
-        saveImage(mainImage,"mainImage", film, mainImageName);
-        saveImage(image1,"image1", film, image1Name);
-        saveImage(image2,"image2", film, image2Name);
-        saveImage(image3,"image3", film, image3Name);
-        saveImage(image4,"image4", film, image4Name);
-        saveImage(image5,"image5", film, image5Name);
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                mainImage.getOriginalFilename()))) {
+            saveImage(mainImage, "mainImage", film, mainImageName);
+        } else if(!mainImage.getOriginalFilename().equals("")){
+            model.addAttribute("mainWarning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image1.getOriginalFilename()))) {
+            saveImage(image1, "image1", film, image1Name);
+        }else if(!image1.getOriginalFilename().equals("")){
+            model.addAttribute("image1Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image2.getOriginalFilename()))) {
+            saveImage(image2, "image2", film, image2Name);
+        } else if(!image2.getOriginalFilename().equals("")){
+            model.addAttribute("image2Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image3.getOriginalFilename()))) {
+            saveImage(image3, "image3", film, image3Name);
+        } else if(!image3.getOriginalFilename().equals("")){
+            model.addAttribute("image3Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image4.getOriginalFilename()))) {
+            saveImage(image4, "image4", film, image4Name);
+        } else if(!image4.getOriginalFilename().equals("")){
+            model.addAttribute("image4Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image5.getOriginalFilename()))) {
+            saveImage(image5, "image5", film, image5Name);
+        } else if(!image5.getOriginalFilename().equals("")){
+            model.addAttribute("image5Warning", "Некоректний тип файлу");
+        }
         String type = "";
         if(checkBox3D !=null){
             checkBox3D = checkBox3D.substring(0,2);
@@ -100,6 +131,18 @@ public class FilmController {
         }
         System.out.println(type);
         if (bindingResult.hasErrors()) {
+            String l = "films/new";
+            model.addAttribute("pagenUm", n);
+            model.addAttribute("link", l);
+            return "film/film_page";
+        }
+        if((!mainImage.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(mainImage.getOriginalFilename()))) ||
+                (!image1.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename()))) ||
+                (!image2.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image2.getOriginalFilename()))) ||
+                (!image3.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image3.getOriginalFilename()))) ||
+                (!image4.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image4.getOriginalFilename()))) ||
+                (!image5.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image5.getOriginalFilename())))
+        ){
             String l = "films/new";
             model.addAttribute("pagenUm", n);
             model.addAttribute("link", l);
@@ -143,12 +186,42 @@ public class FilmController {
                            @RequestParam(name="checkBox3D",required=false)String checkBox3D, @RequestParam(name="checkBox2D", required=false)String checkBox2D,
                            @RequestParam(name="checkBoxImax", required=false)String checkBoxImax, Model model) throws IOException {
         Film filmInDb = filmService.getFilmById(id);
-        saveImage(mainImage,"mainImage", filmInDb, mainImageName);
-        saveImage(image1,"image1", filmInDb, image1Name);
-        saveImage(image2,"image2", filmInDb, image2Name);
-        saveImage(image3,"image3", filmInDb, image3Name);
-        saveImage(image4,"image4", filmInDb, image4Name);
-        saveImage(image5,"image5", filmInDb, image5Name);
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                mainImage.getOriginalFilename()))) {
+            saveImage(mainImage, "mainImage", filmInDb, mainImageName);
+        } else if(!mainImage.getOriginalFilename().equals("")){
+            model.addAttribute("mainWarning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image1.getOriginalFilename()))) {
+            saveImage(image1, "image1", filmInDb, image1Name);
+        } else if(!image1.getOriginalFilename().equals("")){
+            model.addAttribute("image1Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image2.getOriginalFilename()))) {
+            saveImage(image2, "image2", filmInDb, image2Name);
+        } else if(!image2.getOriginalFilename().equals("")){
+            model.addAttribute("image2Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image3.getOriginalFilename()))) {
+            saveImage(image3, "image3", filmInDb, image3Name);
+        } else if(!image3.getOriginalFilename().equals("")){
+            model.addAttribute("image3Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image4.getOriginalFilename()))) {
+            saveImage(image4, "image4", filmInDb, image4Name);
+        } else if(!image4.getOriginalFilename().equals("")){
+            model.addAttribute("image4Warning", "Некоректний тип файлу");
+        }
+        if(isSupportedExtension(FilenameUtils.getExtension(
+                image5.getOriginalFilename()))) {
+            saveImage(image5, "image5", filmInDb, image5Name);
+        } else if(!image5.getOriginalFilename().equals("")){
+            model.addAttribute("image5Warning", "Некоректний тип файлу");
+        }
         film.setImageGallery(filmInDb.getImageGallery());
         String type = "";
         System.out.println();
@@ -181,6 +254,18 @@ public class FilmController {
             model.addAttribute("link", l);
             return "film/film_page";
         }
+        if((!mainImage.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(mainImage.getOriginalFilename()))) ||
+                (!image1.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image1.getOriginalFilename()))) ||
+                (!image2.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image2.getOriginalFilename()))) ||
+                (!image3.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image3.getOriginalFilename()))) ||
+                (!image4.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image4.getOriginalFilename()))) ||
+                (!image5.getOriginalFilename().equals("") && !isSupportedExtension(FilenameUtils.getExtension(image5.getOriginalFilename())))
+        ){
+            String l = "films/edit/"+id;
+            model.addAttribute("pagenUm", n);
+            model.addAttribute("link", l);
+            return "film/film_page";
+        }
         filmInDb.setName(film.getName());
         filmInDb.setDirector(film.getDescription());
         film.setTrailer(film.getTrailer().substring(film.getTrailer().lastIndexOf("=") + 1));
@@ -197,6 +282,12 @@ public class FilmController {
         return "redirect:/admin/films";
     }
 
+    private boolean isSupportedExtension(String extension) {
+        return extension != null && (
+                extension.equals("png")
+                        || extension.equals("jpg")
+                        || extension.equals("jpeg"));
+    }
     private void checkType(Model model, String type, int i, int length){
         if(type.equals("3D")){
             if(length==2){

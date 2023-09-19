@@ -54,12 +54,25 @@ public class FilmSessionController {
     }
     @PostMapping("/admin/sessions/new")
     public String saveFilmSession(@Valid @ModelAttribute("object") FilmSession filmSession, BindingResult bindingResult, Model model){
+        Film film = filmService.getFilmById(filmSession.getFilm().getId());
         if (bindingResult.hasErrors()) {
             String l ="sessions/new";
             model.addAttribute("films", filmService.getAllFilms());
             model.addAttribute("halls", hallService.getAllHalls());
             model.addAttribute("link", l);
             model.addAttribute("pageNumb", n);
+            if(!film.getType().contains(filmSession.getType())){
+                model.addAttribute("typeWarning", "Тип фільму може бути тільки "+film.getType());
+            }
+            return "filmSession/film_session";
+        }
+        if(!film.getType().contains(filmSession.getType())){
+            String l ="sessions/new";
+            model.addAttribute("films", filmService.getAllFilms());
+            model.addAttribute("halls", hallService.getAllHalls());
+            model.addAttribute("link", l);
+            model.addAttribute("pageNumb", n);
+            model.addAttribute("typeWarning", "Тип фільму може бути тільки "+film.getType());
             return "filmSession/film_session";
         }
         System.out.println(filmSession.getFilm().getId());
@@ -67,7 +80,6 @@ public class FilmSessionController {
         System.out.println(filmSession.getSessionTime());
         Hall hall = hallService.getHallById(filmSession.getHall().getId());
         filmSession.setHall(hall);
-        Film film = filmService.getFilmById(filmSession.getFilm().getId());
         filmSession.setFilm(film);
         filmSessionService.saveFilmSession(filmSession);
         return "redirect:/admin/sessions";
@@ -86,18 +98,31 @@ public class FilmSessionController {
     }
     @PostMapping("/admin/sessions/edit/{id}")
     public String updateFilmSession(@PathVariable("id") Long id,@Valid @ModelAttribute("object") FilmSession filmSession, BindingResult bindingResult, Model model){
+        Film film = filmService.getFilmById(filmSession.getFilm().getId());
         if (bindingResult.hasErrors()) {
             String l ="sessions/edit/"+id;
             model.addAttribute("films", filmService.getAllFilms());
             model.addAttribute("halls", hallService.getAllHalls());
             model.addAttribute("link", l);
             model.addAttribute("pageNumb", n);
+            if(!film.getType().contains(filmSession.getType())){
+                model.addAttribute("typeWarning", "Тип фільму може бути тільки "+film.getType());
+            }
+            return "filmSession/film_session";
+        }
+        if(!film.getType().contains(filmSession.getType())){
+            String l ="sessions/edit/"+id;
+            model.addAttribute("films", filmService.getAllFilms());
+            model.addAttribute("halls", hallService.getAllHalls());
+            model.addAttribute("link", l);
+            model.addAttribute("pageNumb", n);
+            model.addAttribute("typeWarning", "Тип фільму може бути тільки "+film.getType());
             return "filmSession/film_session";
         }
         FilmSession filmSessionInDb = filmSessionService.getFilmSessionById(id);
         Hall hall = hallService.getHallById(filmSession.getHall().getId());
         filmSessionInDb.setHall(hall);
-        Film film = filmService.getFilmById(filmSession.getFilm().getId());
+        //Film film = filmService.getFilmById(filmSession.getFilm().getId());
         filmSessionInDb.setFilm(film);
         filmSessionInDb.setSessionDate(filmSession.getSessionDate());
         filmSessionInDb.setSessionTime(filmSession.getSessionTime());
