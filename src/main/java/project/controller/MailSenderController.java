@@ -33,8 +33,8 @@ public class MailSenderController {
         this.userService = userService;
         this.mailSenderService = mailSenderService;
     }
-    //@Value("${upload.path}")
-    private String uploadPath = "C:\\Users\\Anastassia\\IdeaProjects\\Kino-CMS_admin\\uploads";
+    @Value("${upload.path}")
+    private String uploadPath;
     private Integer n = 9;
     private String userCheck = "";
     String emails = "";

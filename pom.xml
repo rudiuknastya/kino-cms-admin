@@ -9,7 +9,7 @@
         <version>3.1.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-<!--    <packaging>war</packaging>-->
+    <packaging>war</packaging>
     <groupId>org.example</groupId>
     <artifactId>Kino-CMS_admin</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -20,7 +20,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -82,12 +81,11 @@
             <artifactId>spring-boot-starter-mail</artifactId>
             <version>3.1.2</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-tomcat</artifactId>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -96,7 +94,6 @@
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity6</artifactId>
-            <!-- Temporary explicit version to fix Thymeleaf bug -->
             <version>3.1.1.RELEASE</version>
         </dependency>
         <dependency>
@@ -115,7 +112,7 @@
     </dependencies>
 
     <build>
-<!--        <finalName>Kino_CMS_A_Rudiuk</finalName>-->
+        <finalName>Kino_CMS_A_Rudiuk</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

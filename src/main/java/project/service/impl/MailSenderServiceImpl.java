@@ -19,8 +19,8 @@ public class MailSenderServiceImpl implements MailSenderService {
     @Autowired
     private JavaMailSender mailSender;
     private Logger logger = LogManager.getLogger("serviceLogger");
-    //@Value("${upload.path}")
-    private String uploadPath = "C:\\Users\\Anastassia\\IdeaProjects\\Kino-CMS_admin\\uploads";
+    @Value("${upload.path}")
+    private String uploadPath;
     @Override
     public void sendEmail(String to, String file, boolean delete) {
         logger.info("sendEmail() - sending email to user "+to+" with file "+file);
