@@ -96,7 +96,7 @@
                                 <label class="col-form-label" style="color:black;">Останні завантажені шаблони</label>
                                 <div th:each="mailFile, stat : *{mailFilesList}">
                                     <input class="form-check-input" type="radio" name="radioFile" th:id="file+${stat.index}" th:onchange="|showUpload('fileLabel${stat.index}')|" th:value="*{mailFilesList[__${stat.index}__].id}">
-                                    <label class="form-check-label" th:for="file+${stat.index}"  th:id="fileLabel+${stat.index}" th:text="*{mailFilesList[__${stat.index}__].file}"> Default radio</label>
+                                    <label class="form-check-label" th:for="file+${stat.index}"  th:id="fileLabel+${stat.index}" th:text="*{#strings.substringAfter(mailFilesList[__${stat.index}__].file,'.')}"> Default radio</label>
                                     <button type="button" th:id="delButton+${stat.index}" th:onclick="|deleteFile('${stat.index}')|" class="btn btn-outline-danger" style="height:25px; font-size:12px;">Видалити</button>
                                 </div>
                                 <input type="text" class="d-none" id="deleteInput" name="deleteInput">

@@ -128,6 +128,6 @@ public class PublicUserController {
         user.setPassword(encodedPassword);
         user.setRole("USER");
         userService.saveUser(user);
-        return "redirect:/main_page";
+        return "redirect:/";
     }
 }
