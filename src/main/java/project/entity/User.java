@@ -33,7 +33,7 @@ public class User {
     private String email;
     @Column(columnDefinition="VARCHAR(255) NOT NULL UNIQUE")
     private String password;
-    @Column(name = "card_number", columnDefinition="VARCHAR(20) UNIQUE")
+    @Column(name = "card_number", columnDefinition="VARCHAR(20)")
     private String cardNumber;
     @Column(columnDefinition="ENUM('male','female') NOT NULL")
     private String sex;

@@ -76,6 +76,6 @@ public class PublicFilmController {
         model.addAttribute("adPage",advertisementService.getAd());
         model.addAttribute("childrenRoomPage",childrenRoomService.getChildrenRoom());
         model.addAttribute("contactPage", contactsService.getContact());
-        return "posterPage/poster_page";
+        return "posterPage/poster_soon";
     }
 }
