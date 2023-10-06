@@ -303,13 +303,13 @@
     <!--Nav End-->
 </div>
 
-
-<header th:fragment="header(mainPage, linkNumber, newPages, aboutCinemaPage, cafePage, vipHallPage, adPage, childrenRoomPage, contactPage)" class="pt-3" style="width:1030px; position:fixed; z-index:1; top:0px; left:9.25%; background-color:white;">
-    <div class="row align-items-center mb-4">
+<header th:fragment="header(mainPage, linkNumber, newPages, aboutCinemaPage, cafePage, vipHallPage, adPage, childrenRoomPage, contactPage)" class="container w-100 ms-5 ps-4" style="position:fixed; z-index:1; top:0px; background-color:white;">
+<!--    <div class="d-flex justify-content-center">-->
+    <div class="row align-items-center my-3 ms-5">
         <!--          Logo start-->
 
-<!--        <div class="col-5 d-flex flex-row ms-4">-->
-            <a class="col-4 d-flex flex-row ms-4" th:href="@{/}" style="text-decoration:none; color:black">
+        <!--        <div class="col-5 d-flex flex-row ms-4">-->
+        <a class="col-4 d-flex flex-row" th:href="@{/}" style="text-decoration:none; color:black">
             <svg fill="blue" height="22" width="22" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                  viewBox="0 0 297 297" xml:space="preserve">
 <g>
@@ -336,8 +336,8 @@
 
 
             <h5 class="logo-title ms-3">Movie Club</h5>
-            </a>
-<!--        </div>-->
+        </a>
+        <!--        </div>-->
 
         <div class="col-2 d-flex justify-content-between">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#3b5998" class="bi bi-facebook" viewBox="0 0 16 16">
@@ -355,8 +355,8 @@
         </div>
         <div class="col-2">
             <th:block th:if="${mainPage.status == true}">
-            <div style="color:black;" th:text="${mainPage.phone1}"></div>
-            <div style="color:black;" th:text="${mainPage.phone2}"></div>
+                <div style="color:black;" th:text="${mainPage.phone1}"></div>
+                <div style="color:black;" th:text="${mainPage.phone2}"></div>
             </th:block>
         </div>
         <div class="col-4 row">
@@ -364,14 +364,14 @@
                 <div class="col-4"><a th:href="@{/user/profile}" style="color:black; text-decoration:none;"><h7>Увійти </h7></a></div>
                 <div class="col-4"><a th:href="@{/register}" style="color:black; text-decoration:none;"><h7>Зареєструватися </h7></a></div>
             </div>
-        <h7 class ="col-2" >
-            <a th:href="@{/user/profile}" style="text-decoration:none; color:black">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-person-circle" viewBox="0 0 16 16">
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                </svg>
-            </a>
-        </h7>
+            <h7 class ="col-2" >
+                <a th:href="@{/user/profile}" style="text-decoration:none; color:black">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                    </svg>
+                </a>
+            </h7>
             <a sec:authorize="isAuthenticated()" th:href="@{/logout_user}" class="d-block col-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
@@ -381,6 +381,84 @@
             <div class="col-2" sec:authorize="isAuthenticated()" sec:authentication="name"></div>
         </div>
     </div>
+<!--    </div>-->
+<!--<header  class="pt-3 d-flex justify-content-center" >-->
+<!--    <div class="row align-items-center mb-4">-->
+<!--        &lt;!&ndash;          Logo start&ndash;&gt;-->
+
+<!--&lt;!&ndash;        <div class="col-5 d-flex flex-row ms-4">&ndash;&gt;-->
+<!--            <a class="col-4 d-flex flex-row ms-4" th:href="@{/}" style="text-decoration:none; color:black">-->
+<!--            <svg fill="blue" height="22" width="22" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"-->
+<!--                 viewBox="0 0 297 297" xml:space="preserve">-->
+<!--<g>-->
+<!--	<path d="M176.123,89.156l-51.766-34.511c-0.519-0.346-1.12-0.528-1.741-0.528c-0.514,0-1.023,0.128-1.476,0.371-->
+<!--		c-1.025,0.548-1.661,1.608-1.661,2.768v69.021c0,1.159,0.635,2.219,1.658,2.766c1.002,0.539,2.274,0.474,3.22-0.155l51.766-34.511-->
+<!--		c0.875-0.583,1.397-1.559,1.397-2.61S176.998,89.74,176.123,89.156z"/>-->
+<!--    <path d="M286.542,3.66H10.458C4.682,3.66,0,8.343,0,14.118v155.298c0,5.775,4.682,10.458,10.458,10.458h276.085-->
+<!--		c5.775,0,10.458-4.682,10.458-10.458V14.118C297,8.343,292.318,3.66,286.542,3.66z M184.244,106.559l-51.766,34.511-->
+<!--		c-2.93,1.954-6.341,2.986-9.862,2.986c-2.918,0-5.819-0.728-8.391-2.105c-5.789-3.1-9.386-9.106-9.386-15.673V57.256-->
+<!--		c0-6.568,3.598-12.574,9.388-15.674c2.568-1.377,5.47-2.105,8.389-2.105c3.523,0,6.934,1.034,9.864,2.988l51.764,34.51-->
+<!--		c4.957,3.304,7.917,8.834,7.917,14.792C192.161,97.725,189.201,103.255,184.244,106.559z"/>-->
+<!--    <path d="M193.468,220.658v-16.732c0-5.775-4.682-10.458-10.458-10.458h-69.021c-5.775,0-10.458,4.682-10.458,10.458v16.732h27.713-->
+<!--		c8.353,0,15.359,5.797,17.255,13.575c1.896-7.777,8.902-13.575,17.255-13.575H193.468z"/>-->
+<!--    <path d="M234.776,235.299h-69.021c-1.73,0-3.137,1.407-3.137,3.137v51.766c0,1.73,1.407,3.137,3.137,3.137h69.021-->
+<!--		c1.73,0,3.137-1.407,3.137-3.137v-51.766C237.914,236.707,236.506,235.299,234.776,235.299z"/>-->
+<!--    <path d="M131.245,235.299H62.224c-1.73,0-3.137,1.407-3.137,3.137v51.766c0,1.73,1.407,3.137,3.137,3.137h69.021-->
+<!--		c1.73,0,3.137-1.407,3.137-3.137v-51.766C134.382,236.707,132.975,235.299,131.245,235.299z"/>-->
+<!--    <path d="M286.542,193.468h-69.021c-5.775,0-10.458,4.682-10.458,10.458v16.732h27.713c9.803,0,17.778,7.975,17.778,17.778v27.713-->
+<!--		h33.988c5.775,0,10.458-4.682,10.458-10.458v-51.766C297,198.151,292.318,193.468,286.542,193.468z"/>-->
+<!--    <path d="M89.937,220.658v-16.732c0-5.775-4.683-10.458-10.458-10.458H10.458C4.682,193.468,0,198.151,0,203.926v51.766-->
+<!--		c0,5.775,4.682,10.458,10.458,10.458h33.988v-27.713c0-9.803,7.975-17.778,17.778-17.778H89.937z"/>-->
+<!--</g>-->
+<!--</svg>-->
+
+
+<!--            <h5 class="logo-title ms-3">Movie Club</h5>-->
+<!--            </a>-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+
+<!--        <div class="col-2 d-flex justify-content-between">-->
+<!--            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#3b5998" class="bi bi-facebook" viewBox="0 0 16 16">-->
+<!--                <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>-->
+<!--            </svg>-->
+<!--            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#1DA1F2" class="bi bi-twitter" viewBox="0 0 16 16">-->
+<!--                <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>-->
+<!--            </svg>-->
+<!--            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">-->
+<!--                <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>-->
+<!--            </svg>-->
+<!--            <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="#FF0000" class="bi bi-youtube" viewBox="0 0 16 16">-->
+<!--                <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>-->
+<!--            </svg>-->
+<!--        </div>-->
+<!--        <div class="col-2">-->
+<!--            <th:block th:if="${mainPage.status == true}">-->
+<!--            <div style="color:black;" th:text="${mainPage.phone1}"></div>-->
+<!--            <div style="color:black;" th:text="${mainPage.phone2}"></div>-->
+<!--            </th:block>-->
+<!--        </div>-->
+<!--        <div class="col-4 row">-->
+<!--            <div sec:authorize="!isAuthenticated()" class="col-9 row">-->
+<!--                <div class="col-4"><a th:href="@{/user/profile}" style="color:black; text-decoration:none;"><h7>Увійти </h7></a></div>-->
+<!--                <div class="col-4"><a th:href="@{/register}" style="color:black; text-decoration:none;"><h7>Зареєструватися </h7></a></div>-->
+<!--            </div>-->
+<!--        <h7 class ="col-2" >-->
+<!--            <a th:href="@{/user/profile}" style="text-decoration:none; color:black">-->
+<!--                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-person-circle" viewBox="0 0 16 16">-->
+<!--                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>-->
+<!--                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>-->
+<!--                </svg>-->
+<!--            </a>-->
+<!--        </h7>-->
+<!--            <a sec:authorize="isAuthenticated()" th:href="@{/logout_user}" class="d-block col-2">-->
+<!--                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">-->
+<!--                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>-->
+<!--                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>-->
+<!--                </svg>-->
+<!--            </a>-->
+<!--            <div class="col-2" sec:authorize="isAuthenticated()" sec:authentication="name"></div>-->
+<!--        </div>-->
+<!--    </div>-->
     <nav class="bg-body-tertiary py-2">
         <div class="container-fluid">
                     <ul class="nav nav-underline justify-content-center">
@@ -415,8 +493,8 @@
                     </ul>
         </div>
     </nav>        <!--Nav End-->
+<!--</header>-->
 </header>
-
 
 
 
